@@ -862,7 +862,7 @@
     <div style="text-align:center;">
     <div class="eyebrow"><span class="bar"></span>The Process</div>
     <h2 class="section-title">From sign-up to <span style="color: var(--mustang-red);">team Placement.</span></h2>
-    <p class="section-lede" style="margin-left:auto; margin-right:auto;">Four steps. Two weeks. One Mustang family.</p>
+    <p class="section-lede" style="margin-left:auto; margin-right:auto;">Four steps. Nine days. One Mustang family.</p>
     </div>
 
     <div class="process">
@@ -1288,11 +1288,30 @@
     ctx.beginPath(); ctx.moveTo(3, 0);    ctx.lineTo(3, 1024);    ctx.stroke();
     ctx.beginPath(); ctx.moveTo(2045, 0); ctx.lineTo(2045, 1024); ctx.stroke();
 
-
+    // Side seams: one smooth closed loop around each side of the ball (left and right),
+    // so the front view shows the real pattern: vertical, equator, and a ")" and "(" curve.
+    // Each loop is a rounded superellipse in longitude/latitude, centered on the ball's side
+    // (lon +/-90): it crosses the equator ~17 deg from the front meridian and reaches
+    // +/-53 deg latitude at the side, then wraps around the back.
+    function px(lonDeg) { return 1024 + (lonDeg / 360) * 2048; }
+    function py(latDeg) { return 512 - (latDeg / 180) * 1024; }
+    const LON_R = 73, LAT_R = 55, P = 1.9, STEPS = 240;
+    function sp(v) { return Math.sign(v) * Math.pow(Math.abs(v), 2 / P); }
+    [-1, 1].forEach(function (side) {
+      ctx.beginPath();
+      for (let i = 0; i <= STEPS; i++) {
+        const t = (i / STEPS) * Math.PI * 2;
+        const lon = side * (90 - LON_R * sp(Math.cos(t)));
+        const lat = LAT_R * sp(Math.sin(t));
+        if (i === 0) ctx.moveTo(px(lon), py(lat)); else ctx.lineTo(px(lon), py(lat));
+      }
+      ctx.closePath();
+      ctx.stroke();
+    });
     ctx.restore();
   }
   // Single clean stroke for both seams — uniform thickness, no offset shadow.
-  drawSeams(0, 0, '#1a0a04', 7);
+  drawSeams(0, 0, '#1a0a04', 9);
 
   // Highlight wash near top to suggest light
   const hl = ctx.createRadialGradient(1024, 220, 30, 1024, 220, 700);
