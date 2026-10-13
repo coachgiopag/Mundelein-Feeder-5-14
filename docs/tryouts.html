@@ -1378,8 +1378,8 @@
   // texture x=512 (u=0.25), not x=1024, at the +Z (camera-facing) side.
   const ROTY_OFFSET = Math.PI / 2;
 
-  // Slow constant spin (about 20 s per turn) plus extra turn as the page scrolls.
-  const SPIN_RAD_PER_SEC = 0.32;
+  // Slow constant spin (about 17 s per turn) plus extra turn as the page scrolls.
+  const SPIN_RAD_PER_SEC = 0.368;
   const SCROLL_RAD_PER_PX = 0.018;
   const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let idleRot = 0;       // grows steadily, independent of scrolling
