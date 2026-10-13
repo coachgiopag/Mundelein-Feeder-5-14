@@ -59,8 +59,8 @@ PAGES = {
     ),
     "tryouts.html": dict(
         path="/tryouts", crumb="Tryouts", type="WebPage",
-        title="Jr. Mustangs Tryouts Nov 14, 15 & 21 (Tentative) | Mundelein Basketball",
-        desc="Register free for Mundelein Jr. Mustangs basketball tryouts, tentatively November 14, 15 and 21, 2026, at Mundelein High School. Boys and girls, grades 4–8. No fee to try out.",
+        title="Jr. Mustangs Tryouts Nov 7 & 8 | Mundelein Basketball",
+        desc="Register free for Mundelein Jr. Mustangs basketball tryouts, November 7 and 8, 2026, at Mundelein High School. Boys and girls, grades 4–8. No fee to try out.",
     ),
     "camps.html": dict(
         path="/camps", crumb="Camps", type="WebPage",
@@ -130,7 +130,7 @@ def faq(src):
     return {"@type": "FAQPage", "@id": SITE + "/tryouts#faq", "mainEntity": items} if items else None
 
 
-TRYOUT_DATES = ["2026-11-14", "2026-11-15", "2026-11-21"]  # update each season
+TRYOUT_DATES = ["2026-11-07", "2026-11-08"]  # update each season
 
 
 def tryout_events():
@@ -141,7 +141,7 @@ def tryout_events():
             "@type": "Event",
             "@id": SITE + "/tryouts#tryout-day-%d" % i,
             "name": "Mundelein Jr. Mustangs Basketball Tryouts, Day %d of %d" % (i, len(TRYOUT_DATES)),
-            "description": "Tryouts for the 2026–27 Jr. Mustangs winter travel season (dates tentative until confirmed). Boys and girls in grades 4–8. "
+            "description": "Tryouts for the 2026–27 Jr. Mustangs winter travel season. Boys and girls in grades 4–8. "
                            "60-minute evaluation by the coaching staff; each player's time is emailed after registration.",
             "startDate": day,
             "endDate": day,
