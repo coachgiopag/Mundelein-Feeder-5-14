@@ -1241,21 +1241,21 @@
 
   // Base orange — deeper, more saturated basketball tone
   const grad = ctx.createLinearGradient(0, 0, 0, 1024);
-  grad.addColorStop(0.00, '#7c3613');
-  grad.addColorStop(0.15, '#a64a1d');
-  grad.addColorStop(0.40, '#c25e26');
-  grad.addColorStop(0.60, '#c25e26');
-  grad.addColorStop(0.85, '#a64a1d');
-  grad.addColorStop(1.00, '#7c3613');
+  grad.addColorStop(0.00, '#a24a17');
+  grad.addColorStop(0.15, '#c8601f');
+  grad.addColorStop(0.40, '#e0742a');
+  grad.addColorStop(0.60, '#e0742a');
+  grad.addColorStop(0.85, '#c8601f');
+  grad.addColorStop(1.00, '#a24a17');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, 2048, 1024);
 
   // Pebble grain — denser, deeper dimples (the dark dots that read as bump)
-  for (let i = 0; i < 26000; i++) {
+  for (let i = 0; i < 42000; i++) {
     const x = Math.random() * 2048;
     const y = Math.random() * 1024;
-    const r = Math.random() * 1.8 + 0.4;
-    ctx.fillStyle = 'rgba(30, 12, 4, ' + (Math.random() * 0.5 + 0.15) + ')';
+    const r = Math.random() * 1.2 + 0.35;
+    ctx.fillStyle = 'rgba(40, 16, 4, ' + (Math.random() * 0.34 + 0.1) + ')';
     ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
   }
   // Pebble highlights — small light specks for grain-against-light
@@ -1292,7 +1292,7 @@
     ctx.restore();
   }
   // Single clean stroke for both seams — uniform thickness, no offset shadow.
-  drawSeams(0, 0, '#1a0a04', 11);
+  drawSeams(0, 0, '#1a0a04', 7);
 
   // Highlight wash near top to suggest light
   const hl = ctx.createRadialGradient(1024, 220, 30, 1024, 220, 700);
@@ -1314,8 +1314,8 @@
   const mat = new THREE.MeshPhysicalMaterial({
     map: texture,
     bumpMap: bump,
-    bumpScale: 0.028,
-    roughness: 0.68,
+    bumpScale: 0.02,
+    roughness: 0.62,
     metalness: 0.0,
     clearcoat: 0.18,
     clearcoatRoughness: 0.55,
@@ -1323,15 +1323,18 @@
     sheenColor: new THREE.Color(0xffb070),
   });
   const ball = new THREE.Mesh(geom, mat);
-  ball.rotation.x = -0.15;
-  scene.add(ball);
+  // Tilted spin axis, like a ball turning slowly on a display stand
+  const spinGroup = new THREE.Group();
+  spinGroup.rotation.set(0.28, 0, -0.38);
+  spinGroup.add(ball);
+  scene.add(spinGroup);
 
   // Lights
-  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-  const key = new THREE.DirectionalLight(0xfff0d8, 1.5);
-  key.position.set(3, 4, 5);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+  const key = new THREE.DirectionalLight(0xfff0d8, 1.25);
+  key.position.set(-3, 4, 5);
   scene.add(key);
-  const rim = new THREE.DirectionalLight(0xff5a3a, 0.55);
+  const rim = new THREE.DirectionalLight(0xff8a50, 0.4);
   rim.position.set(-4, -1, -2);
   scene.add(rim);
   const fill = new THREE.DirectionalLight(0xffddbb, 0.35);
@@ -1356,36 +1359,28 @@
   // texture x=512 (u=0.25), not x=1024, at the +Z (camera-facing) side.
   const ROTY_OFFSET = Math.PI / 2;
 
-  let targetRotY = ROTY_OFFSET;
-  let targetRotX = -0.15;
-  let targetRotZ = 0;
-  let curRotY = ROTY_OFFSET;
-  let curRotX = -0.15;
-  let curRotZ = 0;
-  let scrollY = window.scrollY;
+  // Slow constant spin (about 20 s per turn) plus extra turn as the page scrolls.
+  const SPIN_RAD_PER_SEC = 0.32;
+  const SCROLL_RAD_PER_PX = 0.018;
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let idleRot = 0;       // grows steadily, independent of scrolling
+  let scrollTarget = 0;  // where scrolling says the ball should be
+  let scrollRot = 0;     // eased toward scrollTarget
   let lastT = performance.now();
 
   function onScroll() {
-    scrollY = window.scrollY;
-    targetRotY = ROTY_OFFSET + scrollY * 0.018;
-    targetRotX = -0.15 + Math.sin(scrollY * 0.0025) * 0.28;
-    targetRotZ = Math.sin(scrollY * 0.0018) * 0.18;
+    scrollTarget = window.scrollY * SCROLL_RAD_PER_PX;
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+  scrollRot = scrollTarget;
 
   function tick(t) {
     const dt = Math.min(0.05, (t - lastT) / 1000);
     lastT = t;
-    // Constant idle spin so it always feels alive
-    curRotY += (targetRotY - curRotY) * 0.09 + dt * 0.25;
-    curRotX += (targetRotX - curRotX) * 0.07;
-    curRotZ += (targetRotZ - curRotZ) * 0.07;
-    ball.rotation.y = curRotY;
-    ball.rotation.x = curRotX;
-    ball.rotation.z = curRotZ;
-    // Gentle bob
-    ball.position.y = Math.sin(t / 1100) * 0.06;
+    if (!reduceMotion) idleRot += dt * SPIN_RAD_PER_SEC;
+    scrollRot += (scrollTarget - scrollRot) * 0.09;
+    ball.rotation.y = ROTY_OFFSET + idleRot + scrollRot;
     renderer.render(scene, camera);
     requestAnimationFrame(tick);
   }
