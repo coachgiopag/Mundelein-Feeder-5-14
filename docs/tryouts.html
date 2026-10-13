@@ -1267,51 +1267,7 @@
     ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
   }
 
-  // Seams — real basketball pattern:
-  //   1 equator + 1 meridian great circle (front+back verticals)
-  //   + 4 "C" curves (2 around front meridian, 2 around back meridian)
-  // Drawn twice (offset + shadow) for a stitched, slightly recessed look.
-  function drawSeams(offX, offY, color, width) {
-    ctx.save();
-    ctx.translate(offX, offY);
-    ctx.strokeStyle = color;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.lineWidth = width;
-
-    // Equator
-    ctx.beginPath(); ctx.moveTo(0, 512); ctx.lineTo(2048, 512); ctx.stroke();
-
-    // Front meridian at u=0.5
-    ctx.beginPath(); ctx.moveTo(1024, 0); ctx.lineTo(1024, 1024); ctx.stroke();
-    // Back meridian at u=0 / u=1 (drawn on both UV edges for wrap)
-    ctx.beginPath(); ctx.moveTo(3, 0);    ctx.lineTo(3, 1024);    ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(2045, 0); ctx.lineTo(2045, 1024); ctx.stroke();
-
-    // Side seams: one smooth closed loop around each side of the ball (left and right),
-    // so the front view shows the real pattern: vertical, equator, and a ")" and "(" curve.
-    // Each loop is a rounded superellipse in longitude/latitude, centered on the ball's side
-    // (lon +/-90): it crosses the equator ~17 deg from the front meridian and reaches
-    // +/-53 deg latitude at the side, then wraps around the back.
-    function px(lonDeg) { return 1024 + (lonDeg / 360) * 2048; }
-    function py(latDeg) { return 512 - (latDeg / 180) * 1024; }
-    const LON_R = 73, LAT_R = 55, P = 1.9, STEPS = 240;
-    function sp(v) { return Math.sign(v) * Math.pow(Math.abs(v), 2 / P); }
-    [-1, 1].forEach(function (side) {
-      ctx.beginPath();
-      for (let i = 0; i <= STEPS; i++) {
-        const t = (i / STEPS) * Math.PI * 2;
-        const lon = side * (90 - LON_R * sp(Math.cos(t)));
-        const lat = LAT_R * sp(Math.sin(t));
-        if (i === 0) ctx.moveTo(px(lon), py(lat)); else ctx.lineTo(px(lon), py(lat));
-      }
-      ctx.closePath();
-      ctx.stroke();
-    });
-    ctx.restore();
-  }
-  // Single clean stroke for both seams — uniform thickness, no offset shadow.
-  drawSeams(0, 0, '#1a0a04', 9);
+  // (Seams are real 3D tubes added below, so every seam has the same thickness.)
 
   // Highlight wash near top to suggest light
   const hl = ctx.createRadialGradient(1024, 220, 30, 1024, 220, 700);
@@ -1346,6 +1302,38 @@
   const spinGroup = new THREE.Group();
   spinGroup.rotation.set(0.28, 0, -0.38);
   spinGroup.add(ball);
+
+  // --- Seams as 3D tubes: equal thickness everywhere (a flat texture line thins out near the poles) ---
+  // lon/lat (degrees) -> point on the ball, using the same mapping as SphereGeometry so the
+  // front meridian (lon 0) still faces the camera at ROTY_OFFSET.
+  function seamPoint(lonDeg, latDeg, r) {
+    const a = (0.5 + lonDeg / 360) * Math.PI * 2, f = latDeg * Math.PI / 180;
+    return new THREE.Vector3(-Math.cos(a) * Math.cos(f) * r, Math.sin(f) * r, Math.sin(a) * Math.cos(f) * r);
+  }
+  const seamMat = new THREE.MeshStandardMaterial({ color: 0x140a05, roughness: 0.7, metalness: 0 });
+  const SEAM_R = 0.0135;
+  function addSeam(points, closed) {
+    const curve = new THREE.CatmullRomCurve3(points, closed, 'centripetal');
+    ball.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 400, SEAM_R, 8, closed), seamMat));
+  }
+  const NPTS = 180;
+  function loop(fn) { const out = []; for (let i = 0; i < NPTS; i++) out.push(fn(i / NPTS)); return out; }
+  // Equator
+  addSeam(loop(function (t) { return seamPoint(-180 + 360 * t, 0, 1); }), true);
+  // Vertical seam: over the top and back down the far side (a full great circle through the poles)
+  addSeam(loop(function (t) {
+    const d = t * 360;                       // 0..180 up the front, 180..360 down the back
+    return d <= 180 ? seamPoint(0, -90 + d, 1) : seamPoint(180, 90 - (d - 180), 1);
+  }), true);
+  // Side seams: a smooth loop around each side of the ball (the ")" and "(" curves on the front)
+  const LON_R = 73, LAT_R = 55, P = 1.9;
+  function sp(v) { return Math.sign(v) * Math.pow(Math.abs(v), 2 / P); }
+  [-1, 1].forEach(function (side) {
+    addSeam(loop(function (t) {
+      const a = t * Math.PI * 2;
+      return seamPoint(side * (90 - LON_R * sp(Math.cos(a))), LAT_R * sp(Math.sin(a)), 1);
+    }), true);
+  });
   scene.add(spinGroup);
 
   // Lights
