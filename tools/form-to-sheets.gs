@@ -115,7 +115,8 @@ function doPost(e) {
       row[col] = safe_(values[field].join(', '));
     });
     for (var i = 0; i < headers.length; i++) if (row[i] === undefined) row[i] = '';
-    sheet.appendRow(row.slice(0, headers.length));
+    var merged = form === 'tryouts' && mergeIntoHighlighted_(sheet, hRow, headers, row);
+    if (!merged) sheet.appendRow(row.slice(0, headers.length));
     if (form === 'tryouts') sortTryouts_(sheet, hRow);
   } finally {
     lock.releaseLock();
@@ -190,19 +191,95 @@ function gradeRank_(v) {
   return m ? Number(m[0]) : 99;   // "5th Grade", "5th", "5" -> 5; blank/unknown last
 }
 
-// Yellow or green fill (any shade); white, gray, or no fill is not highlighted.
-function isYellowOrGreen_(hex) {
+// 'yellow' or 'green' for a yellow/green fill (any shade); null for white, gray, other colors, or no fill.
+function colorOf_(hex) {
   var m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(String(hex || ''));
-  if (!m) return false;
+  if (!m) return null;
   var r = parseInt(m[1], 16) / 255, g = parseInt(m[2], 16) / 255, b = parseInt(m[3], 16) / 255;
   var max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
-  if (max === 0 || d / max < 0.15) return false;           // too gray/white to be a highlight
+  if (max === 0 || d / max < 0.15) return null;            // too gray/white to be a highlight
   var h;
   if (max === r) h = 60 * (((g - b) / d) % 6);
   else if (max === g) h = 60 * ((b - r) / d + 2);
   else h = 60 * ((r - g) / d + 4);
   if (h < 0) h += 360;
-  return h >= 40 && h <= 170;                              // yellow (~60) through green (~120)
+  if (h >= 40 && h < 80) return 'yellow';
+  if (h >= 80 && h <= 170) return 'green';
+  return null;
+}
+function isYellowOrGreen_(hex) { return colorOf_(hex) !== null; }
+
+// ----- Merging a registration into a highlighted (not-yet-registered) row -----
+// Match: same first + last name (ignoring case, spaces, punctuation) on exactly one yellow/green row.
+// Each column: empty -> filled; same value (allowing format differences) -> kept; different -> "new / old".
+// Then the yellow/green fill is cleared and Source Records Merged notes where the row came from.
+// Two or more highlighted rows with the same name: not merged; the new row gets a Review Notes flag.
+function mergeIntoHighlighted_(sheet, hRow, headers, row) {
+  var cF = findColumn_(headers, 'First Name'), cL = findColumn_(headers, 'Last Name');
+  if (cF < 0 || cL < 0) return false;
+  var key = nameKey_(row[cF], row[cL]);
+  var first = hRow + 1, n = sheet.getLastRow() - hRow;
+  if (!key || n < 1) return false;
+  var range = sheet.getRange(first, 1, n, headers.length);
+  var vals = range.getValues(), bgs = range.getBackgrounds();
+  var hits = [];
+  vals.forEach(function (r, i) {
+    var color = colorOf_(bgs[i][cF]) || colorOf_(bgs[i][cL]);
+    if (color && nameKey_(r[cF], r[cL]) === key) hits.push({ i: i, color: color });
+  });
+  if (hits.length !== 1) {
+    var cNote = findColumn_(headers, 'Review Notes');
+    if (hits.length > 1 && cNote >= 0) row[cNote] = 'Name matches ' + hits.length + ' highlighted rows; not merged. Check for duplicates.';
+    return false;
+  }
+  var hit = hits[0], old = vals[hit.i], rowNum = first + hit.i;
+  var tz = SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone();
+  for (var c = 0; c < headers.length; c++) {
+    var nv = row[c];
+    if (nv === '' || nv === null || nv === undefined) continue;
+    var out;
+    if (nv instanceof Date || old[c] === '' || old[c] === null) {
+      out = nv;
+    } else {
+      var oldText = asText_(old[c], tz);
+      var dup = oldText.split(' / ').some(function (part) { return sameValue_(headers[c], part, nv); });
+      if (dup) continue;
+      out = String(nv).replace(/^'/, '') + ' / ' + oldText;
+      out = /^[=+\-@]/.test(out) ? "'" + out : out;
+    }
+    sheet.getRange(rowNum, c + 1).setValue(out);
+  }
+  var cSrc = findColumn_(headers, 'Source Records Merged');
+  if (cSrc >= 0) {
+    var label = (hit.color === 'yellow' ? 'Summer camp list' : 'Winter feeder last season') +
+                ' + tryout form ' + Utilities.formatDate(new Date(), tz, 'MMM d, yyyy');
+    var prev = asText_(old[cSrc], tz);
+    sheet.getRange(rowNum, cSrc + 1).setValue(prev ? prev + '; ' + label : label);
+  }
+  sheet.getRange(rowNum, 1, 1, headers.length)
+    .setBackgrounds([bgs[hit.i].map(function (b) { return colorOf_(b) ? null : b; })]);
+  return true;
+}
+
+function nameKey_(firstName, lastName) {
+  return (String(firstName) + '|' + String(lastName)).toLowerCase().replace(/[^a-z|]/g, '');
+}
+
+function asText_(v, tz) {
+  if (v instanceof Date) return Utilities.formatDate(v, tz, 'yyyy-MM-dd');
+  return String(v === null || v === undefined ? '' : v).trim();
+}
+
+// Same value for this column, allowing harmless format differences.
+function sameValue_(header, a, b) {
+  var h = norm_(header);
+  a = String(a).replace(/^'/, '').trim(); b = String(b).replace(/^'/, '').trim();
+  if (/name/.test(h)) return a.toLowerCase().replace(/[^a-z]/g, '') === b.toLowerCase().replace(/[^a-z]/g, '');
+  if (/grade/.test(h)) return gradeRank_(a) === gradeRank_(b);
+  if (/gender/.test(h)) return genderRank_(a) === genderRank_(b);
+  if (/phone/.test(h)) return a.replace(/\D/g, '').slice(-10) === b.replace(/\D/g, '').slice(-10);
+  if (/birthday|birth|dob/.test(h)) { var da = new Date(a), db = new Date(b); if (!isNaN(da) && !isNaN(db)) return da.toISOString().slice(0, 10) === db.toISOString().slice(0, 10); }
+  return norm_(a) === norm_(b);
 }
 
 // ----- helpers -----
