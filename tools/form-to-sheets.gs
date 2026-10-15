@@ -116,6 +116,7 @@ function doPost(e) {
     });
     for (var i = 0; i < headers.length; i++) if (row[i] === undefined) row[i] = '';
     sheet.appendRow(row.slice(0, headers.length));
+    if (form === 'tryouts') sortTryouts_(sheet, hRow);
   } finally {
     lock.releaseLock();
   }
@@ -123,6 +124,86 @@ function doPost(e) {
 }
 
 function doGet() { return reply_('MundyBall form endpoint is running.'); }
+
+// ----- Tryout tab ordering -----
+// Registered players: Boys first, then Girls, each by grade 3rd -> 8th (ties keep their current order).
+// Rows whose First or Last Name cell is highlighted yellow (summer camp, not registered yet) or
+// green (played winter feeder last season, not registered yet) stay at the bottom, in their current order.
+// Rows move whole (values, colors, notes, formulas), and only rows that are out of place are moved.
+// Also available from the sheet menu: MundyBall -> Sort tryout registrations.
+
+function onOpen() {
+  SpreadsheetApp.getUi().createMenu('MundyBall')
+    .addItem('Sort tryout registrations', 'sortTryoutsNow')
+    .addToUi();
+}
+
+function sortTryoutsNow() {
+  var sheet = sheet_(TABS.tryouts);
+  var lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try { sortTryouts_(sheet, headerRow_(sheet)); } finally { lock.releaseLock(); }
+}
+
+function sortTryouts_(sheet, hRow) {
+  var headers = headers_(sheet, hRow);
+  var cFirst = findColumn_(headers, 'First Name'), cLast = findColumn_(headers, 'Last Name');
+  var cGender = findColumn_(headers, 'Gender'), cGrade = findColumn_(headers, 'Grade');
+  var first = hRow + 1, n = sheet.getLastRow() - hRow;
+  if (n < 2 || cFirst < 0) return;
+
+  var vals = sheet.getRange(first, 1, n, headers.length).getValues();
+  var bgs = sheet.getRange(first, 1, n, headers.length).getBackgrounds();
+  var main = [], highlighted = [], blank = [];
+  vals.forEach(function (r, i) {
+    var name = String(r[cFirst]).trim() + String(cLast >= 0 ? r[cLast] : '').trim();
+    if (!name) blank.push(i);
+    else if (isYellowOrGreen_(bgs[i][cFirst]) || (cLast >= 0 && isYellowOrGreen_(bgs[i][cLast]))) highlighted.push(i);
+    else main.push(i);
+  });
+  main.sort(function (a, b) {
+    return genderRank_(cGender >= 0 ? vals[a][cGender] : '') - genderRank_(cGender >= 0 ? vals[b][cGender] : '') ||
+           gradeRank_(cGrade >= 0 ? vals[a][cGrade] : '') - gradeRank_(cGrade >= 0 ? vals[b][cGrade] : '') ||
+           a - b;
+  });
+  var target = main.concat(highlighted, blank);
+
+  // Move rows into place one at a time, skipping any already where they belong.
+  var cur = vals.map(function (_, i) { return i; });
+  for (var pos = 0; pos < target.length; pos++) {
+    var from = cur.indexOf(target[pos]);
+    if (from === pos) continue;
+    sheet.moveRows(sheet.getRange(first + from, 1), first + pos);
+    cur.splice(pos, 0, cur.splice(from, 1)[0]);
+  }
+}
+
+function genderRank_(v) {
+  var s = String(v).trim().toLowerCase();
+  if (/^(boy|male|m$)/.test(s)) return 0;
+  if (/^(girl|female|f$)/.test(s)) return 1;
+  return 2;
+}
+
+function gradeRank_(v) {
+  var m = String(v).match(/\d+/);
+  return m ? Number(m[0]) : 99;   // "5th Grade", "5th", "5" -> 5; blank/unknown last
+}
+
+// Yellow or green fill (any shade); white, gray, or no fill is not highlighted.
+function isYellowOrGreen_(hex) {
+  var m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(String(hex || ''));
+  if (!m) return false;
+  var r = parseInt(m[1], 16) / 255, g = parseInt(m[2], 16) / 255, b = parseInt(m[3], 16) / 255;
+  var max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+  if (max === 0 || d / max < 0.15) return false;           // too gray/white to be a highlight
+  var h;
+  if (max === r) h = 60 * (((g - b) / d) % 6);
+  else if (max === g) h = 60 * ((b - r) / d + 2);
+  else h = 60 * ((r - g) / d + 4);
+  if (h < 0) h += 360;
+  return h >= 40 && h <= 170;                              // yellow (~60) through green (~120)
+}
 
 // ----- helpers -----
 function first_(v) { return Array.isArray(v) ? v[0] : (v || ''); }
