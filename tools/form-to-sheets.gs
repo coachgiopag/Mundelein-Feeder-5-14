@@ -204,7 +204,7 @@ function colorOf_(hex) {
   if (!m) return null;
   var r = parseInt(m[1], 16) / 255, g = parseInt(m[2], 16) / 255, b = parseInt(m[3], 16) / 255;
   var max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
-  if (max === 0 || d / max < 0.15) return null;            // too gray/white to be a highlight
+  if (max === 0 || d / max < 0.05) return null;            // white or gray: not a highlight (pale fills like #d9ead3 still count)
   var h;
   if (max === r) h = 60 * (((g - b) / d) % 6);
   else if (max === g) h = 60 * ((b - r) / d + 2);
