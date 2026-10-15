@@ -117,13 +117,12 @@ function doPost(e) {
     for (var i = 0; i < headers.length; i++) if (row[i] === undefined) row[i] = '';
     var merged = form === 'tryouts' && mergeIntoHighlighted_(sheet, hRow, headers, row);
     if (!merged) {
-      // Add directly under the last data row (not below anything further down the tab).
-      var endRow = hRow + dataRowCount_(sheet, hRow, headers.length);
-      if (endRow >= sheet.getLastRow()) sheet.appendRow(row.slice(0, headers.length));
-      else {
-        sheet.insertRowAfter(endRow);
-        sheet.getRange(endRow + 1, 1, 1, headers.length).setValues([row.slice(0, headers.length)]);
-      }
+      // Insert inside the player list (above its last row), so the table and any formulas that count
+      // its range grow to include the new row; the sort below then puts it in its place.
+      var count = dataRowCount_(sheet, hRow, headers.length);
+      var at = count >= 2 ? hRow + count : hRow + count + 1;
+      if (count >= 2) sheet.insertRowBefore(at); else sheet.insertRowAfter(at - 1);
+      sheet.getRange(at, 1, 1, headers.length).setValues([row.slice(0, headers.length)]);
     }
     if (form === 'tryouts') sortTryouts_(sheet, hRow);
   } finally {
@@ -327,14 +326,25 @@ function headerRow_(sheet) {
   return best;
 }
 
-// Number of data rows under the header: up to (not including) the first completely empty row,
-// so anything further down the tab (notes, another table) is never touched.
+// Number of player rows under the header. The list ends at the first row that is completely empty,
+// has no first or last name, or mentions one of the other tables on the tab (see OTHER_TABLES), so the
+// small tables under the registration list are never moved, sorted, or merged into.
+var OTHER_TABLES = ['tryout registration counts', 'coaching interest', 'coaches assignments'];
+
 function dataRowCount_(sheet, hRow, width) {
   var n = sheet.getLastRow() - hRow;
   if (n < 1) return 0;
   var vals = sheet.getRange(hRow + 1, 1, n, width).getValues();
+  var headers = headers_(sheet, hRow);
+  var cF = findColumn_(headers, 'First Name'), cL = findColumn_(headers, 'Last Name');
   for (var i = 0; i < vals.length; i++) {
-    if (vals[i].every(function (c) { return String(c).trim() === ''; })) return i;
+    var r = vals[i];
+    var cells = r.map(norm_);
+    if (cells.every(function (c) { return c === ''; })) return i;
+    if (cF >= 0 && cells[cF] === '') return i;
+    if (cL >= 0 && cells[cL] === '') return i;
+    if (cells.some(function (c) { return OTHER_TABLES.some(function (t) { return c.indexOf(t) >= 0; }); })) return i;
+    if (cF >= 0 && cells[cF] === 'first name') return i;      // another header row
   }
   return n;
 }
