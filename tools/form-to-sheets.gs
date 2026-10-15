@@ -12,10 +12,33 @@
 
 // ===== Settings: change the tab names on the right to match your spreadsheet =====
 var TABS = {
-  tryouts:  'tryout registration',
+  tryouts:  '2026 Tryout Registration',
   camp:     '2027 Camp Interest Form',
   contact:  'MundyBall Contact Us Page',
   coaching: 'Coaching Applicants'
+};
+
+// Form field -> exact column name, for tabs with their own established headers.
+// Fields not listed here fall back to header matching with SYNONYMS below.
+var FIELD_MAP = {
+  tryouts: {
+    'Camper First Name':              'First Name',
+    'Camper Last Name':               'Last Name',
+    'Camper Gender':                  'Gender',
+    'Camper Grade':                   'Grade',
+    'Camper Birthday':                'Birthday',
+    'Camper School':                  'School',
+    'Camper Experience':              'Experience',
+    'Parent Name':                    'Parent/Guardian Name(s)',
+    'Parent Phone Number':            'Parent Phone(s)',
+    'Email':                          'Parent Email(s)',
+    'Emergency Contact Name':         'Emergency Contact Name(s)',
+    'Emergency Contact Phone Number': 'Emergency Phone(s)',
+    'Allergies/Medical Notes':        'Allergies / Medical Notes',
+    'Jersey Size':                    'Jersey Size',
+    'Shorts Size':                    'Shorts Size',
+    'T-Shirt Size':                   'Shirt Size'
+  }
 };
 
 // Must match the token in the website code. Not a password; it just filters out random junk posts.
@@ -80,13 +103,15 @@ function doPost(e) {
   lock.waitLock(20000);
   try {
     var sheet = sheet_(TABS[form]);
-    var headers = headers_(sheet);
+    var hRow = headerRow_(sheet);
+    var headers = headers_(sheet, hRow);
     var row = new Array(headers.length).fill('');
-    row[ensureColumn_(sheet, headers, 'Timestamp')] = new Date();
+    row[ensureColumn_(sheet, headers, 'Timestamp', hRow)] = new Date();
     if (row.length < headers.length) row.length = headers.length;
     order.forEach(function (field) {
-      var col = findColumn_(headers, field);
-      if (col < 0) col = ensureColumn_(sheet, headers, field);
+      var target = (FIELD_MAP[form] || {})[field] || field;
+      var col = findColumn_(headers, target);
+      if (col < 0) col = ensureColumn_(sheet, headers, target, hRow);
       row[col] = safe_(values[field].join(', '));
     });
     for (var i = 0; i < headers.length; i++) if (row[i] === undefined) row[i] = '';
@@ -118,18 +143,30 @@ function sheet_(name) {
   return match || ss.insertSheet(name);
 }
 
-function headers_(sheet) {
-  var last = sheet.getLastColumn();
-  if (last === 0) return [];
-  return sheet.getRange(1, 1, 1, last).getValues()[0].map(String);
+// The header row is the fullest of the first 10 rows (so a title row above the table is skipped).
+function headerRow_(sheet) {
+  var last = sheet.getLastColumn(), rows = Math.min(sheet.getLastRow(), 10);
+  if (last === 0 || rows === 0) return 1;
+  var grid = sheet.getRange(1, 1, rows, last).getValues(), best = 1, bestCount = 0;
+  grid.forEach(function (r, i) {
+    var n = r.filter(function (c) { return String(c).trim() !== ''; }).length;
+    if (n > bestCount) { bestCount = n; best = i + 1; }
+  });
+  return best;
 }
 
-function ensureColumn_(sheet, headers, name) {
+function headers_(sheet, hRow) {
+  var last = sheet.getLastColumn();
+  if (last === 0) return [];
+  return sheet.getRange(hRow || 1, 1, 1, last).getValues()[0].map(String);
+}
+
+function ensureColumn_(sheet, headers, name, hRow) {
   var col = findColumn_(headers, name);
   if (col >= 0) return col;
   headers.push(name);
-  sheet.getRange(1, headers.length).setValue(name).setFontWeight('bold');
-  if (sheet.getFrozenRows() === 0) sheet.setFrozenRows(1);
+  sheet.getRange(hRow || 1, headers.length).setValue(name).setFontWeight('bold');
+  if (sheet.getFrozenRows() === 0) sheet.setFrozenRows(hRow || 1);
   return headers.length - 1;
 }
 
