@@ -646,6 +646,7 @@
     <p class="section-lede" style="margin-bottom: 36px; max-width: none;">We're always looking for passionate coaches who want to develop young players and be part of something bigger than the game.<br>Drop your info below and Coach Gio will reach out personally.</p>
 
     <form id="coaching-interest-form" style="display:grid; gap: 20px;">
+      <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off">
       <input type="hidden" name="form-name" value="Coaching Interest">
 
       <!-- Name / Phone -->
@@ -742,6 +743,7 @@
       .then(function(res) { return res.json(); })
       .then(function(data) {
         if (data.success) {
+          window.sendToSheets && window.sendToSheets('coaching', fd);
           form.style.display = 'none';
           var success = document.getElementById('coaching-success');
           success.style.display = 'block';
@@ -882,4 +884,5 @@
   }
 </style>
 
+<script src="/assets/sheets.js"></script>
 </body></html>

@@ -904,6 +904,7 @@
 
     <div class="reg-grid">
       <form class="reg-form" id="registration-form">
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off">
 
         <div class="form-head">
           <div class="title">Tryout Registration</div>
@@ -1547,7 +1548,7 @@
       fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
         .then(function(r){ return r.json(); })
         .then(function(res){
-          if (res && res.success) { showSuccess(); return; }
+          if (res && res.success) { window.sendToSheets && window.sendToSheets('tryouts', fd); showSuccess(); return; }
           console.error('Web3Forms rejected tryout registration:', res);
           showError('Your registration did not go through' + (res && res.message ? ' (' + res.message + ')' : '') + '. Please wait a moment and tap Reserve Tryout Slot again, or email mundeleinboysbasketball@gmail.com.');
         })
@@ -1571,4 +1572,5 @@
     });
   })();
 </script>
+<script src="/assets/sheets.js"></script>
 </body></html>

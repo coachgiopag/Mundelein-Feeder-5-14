@@ -800,6 +800,7 @@
 
     <div class="reg-grid" >
       <form class="reg-form" id="camp-reg-form">
+          <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off">
 
         <div class="form-head" >
           <div class="title" >Summer 2027 Interest Form</div>
@@ -1157,6 +1158,7 @@
         .then(function(r){ return r.json(); })
         .then(function(res){
           if (!res || !res.success) throw new Error(res && res.message);
+          window.sendToSheets && window.sendToSheets('camp', fd);
           var first = (fd.get('Parent Name') || '').trim().split(' ')[0];
           document.getElementById('camp-interest-name').textContent = first ? ', ' + first : '';
           form.style.display = 'none';
@@ -1170,5 +1172,6 @@
   })();
 </script>
 
+<script src="/assets/sheets.js"></script>
 </body>
 </html>

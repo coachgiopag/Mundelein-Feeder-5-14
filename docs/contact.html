@@ -460,6 +460,7 @@ If you're not sure, just choose "General" and we'll figure it out.</p>
 
     <div class="form-grid">
       <form class="form-card" id="contact-form">
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off">
         <h3>Contact form</h3>
         <p class="subtle">All fields marked with <span style="color: var(--mustang-red); font-weight: 800;">*</span> are required.</p>
 
@@ -735,6 +736,7 @@ MAIN GYM</h4>
       .then(function(res) { return res.json(); })
       .then(function(data) {
         if (data.success) {
+          window.sendToSheets && window.sendToSheets('contact', fd);
           form.style.display = 'none';
           var success = document.getElementById('contact-success');
           success.style.display = 'block';
@@ -817,5 +819,6 @@ MAIN GYM</h4>
   }
 </style>
 
+<script src="/assets/sheets.js"></script>
 </body>
 </html>

@@ -38,11 +38,27 @@ var SYNONYMS = {
 
 var SKIP = { access_key: 1, botcheck: 1, subject: 1, from_name: 1, _form: 1, _token: 1, 'form-name': 1 };
 
+// Light protection, since the token is visible in the page source:
+// - each form must include these fields (a row without them is ignored)
+// - every cell is capped at MAX_CELL characters, and a post with more than MAX_FIELDS fields is ignored
+// - text starting with = + - @ is stored as plain text, never run as a spreadsheet formula
+var REQUIRED = {
+  tryouts:  ['Camper First Name', 'Camper Last Name', 'Email'],
+  camp:     ['Camper First Name', 'Email'],
+  contact:  ['Email', 'Message'],
+  coaching: ['Applicant Name', 'Applicant Email']
+};
+var MAX_CELL = 2000;
+var MAX_FIELDS = 60;
+
 function doPost(e) {
   var p = (e && e.parameters) || {};
   var form = first_(p._form);
   if (first_(p._token) !== TOKEN || !TABS[form]) return reply_('ignored');
   if (first_(p.botcheck)) return reply_('ignored'); // honeypot filled in = bot
+  if (Object.keys(p).length > MAX_FIELDS) return reply_('ignored');
+  var missing = REQUIRED[form].some(function (k) { return !String(first_(p[k])).trim(); });
+  if (missing) return reply_('ignored');
 
   // Build field -> value. Checkbox groups like "Grade: 4th" (value "on") become one "Grade" cell.
   var values = {}, order = [];
@@ -50,7 +66,7 @@ function doPost(e) {
     if (SKIP[key]) return;
     var vals = p[key].filter(function (v) { return String(v).trim() !== ''; });
     var m = key.match(/^([^:]+):\s*(.+)$/);
-    if (m && vals.length && vals.every(function (v) { return v === 'on' || v === 'true' || v === m[2]; })) {
+    if (m && vals.length && vals.every(function (v) { return /^(on|true|yes)$/i.test(v) || v === m[2]; })) {
       var group = m[1].trim();
       if (!(group in values)) { values[group] = []; order.push(group); }
       values[group].push(m[2].trim());
@@ -71,7 +87,7 @@ function doPost(e) {
     order.forEach(function (field) {
       var col = findColumn_(headers, field);
       if (col < 0) col = ensureColumn_(sheet, headers, field);
-      row[col] = values[field].join(', ');
+      row[col] = safe_(values[field].join(', '));
     });
     for (var i = 0; i < headers.length; i++) if (row[i] === undefined) row[i] = '';
     sheet.appendRow(row.slice(0, headers.length));
@@ -85,6 +101,10 @@ function doGet() { return reply_('MundyBall form endpoint is running.'); }
 
 // ----- helpers -----
 function first_(v) { return Array.isArray(v) ? v[0] : (v || ''); }
+function safe_(v) {
+  var s = String(v).slice(0, MAX_CELL);
+  return /^[=+\-@]/.test(s) ? "'" + s : s;   // leading ' keeps it as text (e.g. phone "+1 847...")
+}
 function norm_(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); }
 function reply_(msg) { return ContentService.createTextOutput(msg).setMimeType(ContentService.MimeType.TEXT); }
 
