@@ -224,7 +224,8 @@ function isYellowOrGreen_(hex) { return colorOf_(hex) !== null; }
 
 // ----- Merging a registration into a highlighted (not-yet-registered) row -----
 // Match: same first + last name (ignoring case, spaces, punctuation) on exactly one yellow/green row.
-// Each column: empty -> filled; same value (allowing format differences) -> kept; different -> "new / old".
+// Each column: empty -> filled; same value (allowing format differences) -> kept; different -> "new / old",
+// except Grade, where the new value replaces the old one.
 // Then the yellow/green fill is cleared and Source Records Merged notes where the row came from.
 // Two or more highlighted rows with the same name: not merged; the new row gets a Review Notes flag.
 function mergeIntoHighlighted_(sheet, hRow, headers, row) {
@@ -251,7 +252,8 @@ function mergeIntoHighlighted_(sheet, hRow, headers, row) {
     var nv = row[c];
     if (nv === '' || nv === null || nv === undefined) continue;
     var out;
-    if (nv instanceof Date || old[c] === '' || old[c] === null) {
+    // Grade: the new registration always wins (returning players move up a grade each season).
+    if (nv instanceof Date || old[c] === '' || old[c] === null || norm_(headers[c]) === 'grade') {
       out = nv;
     } else {
       var oldText = asText_(old[c], tz);
