@@ -18,6 +18,9 @@ var TABS = {
   coaching: 'Coaching Applicants'
 };
 
+// Tabs that should not get an automatic Timestamp column.
+var NO_TIMESTAMP = { tryouts: true };
+
 // Form field -> exact column name, for tabs with their own established headers.
 // Fields not listed here fall back to header matching with SYNONYMS below.
 var FIELD_MAP = {
@@ -106,7 +109,10 @@ function doPost(e) {
     var hRow = headerRow_(sheet);
     var headers = headers_(sheet, hRow);
     var row = new Array(headers.length).fill('');
-    row[ensureColumn_(sheet, headers, 'Timestamp', hRow)] = new Date();
+    // Timestamp column: added automatically except on tabs listed in NO_TIMESTAMP
+    // (there it is filled only if you add a 'Timestamp' column yourself).
+    if (!NO_TIMESTAMP[form]) row[ensureColumn_(sheet, headers, 'Timestamp', hRow)] = new Date();
+    else { var cTs = findColumn_(headers, 'Timestamp'); if (cTs >= 0) row[cTs] = new Date(); }
     if (row.length < headers.length) row.length = headers.length;
     order.forEach(function (field) {
       var target = (FIELD_MAP[form] || {})[field] || field;
