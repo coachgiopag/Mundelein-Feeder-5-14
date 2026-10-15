@@ -116,7 +116,15 @@ function doPost(e) {
     });
     for (var i = 0; i < headers.length; i++) if (row[i] === undefined) row[i] = '';
     var merged = form === 'tryouts' && mergeIntoHighlighted_(sheet, hRow, headers, row);
-    if (!merged) sheet.appendRow(row.slice(0, headers.length));
+    if (!merged) {
+      // Add directly under the last data row (not below anything further down the tab).
+      var endRow = hRow + dataRowCount_(sheet, hRow, headers.length);
+      if (endRow >= sheet.getLastRow()) sheet.appendRow(row.slice(0, headers.length));
+      else {
+        sheet.insertRowAfter(endRow);
+        sheet.getRange(endRow + 1, 1, 1, headers.length).setValues([row.slice(0, headers.length)]);
+      }
+    }
     if (form === 'tryouts') sortTryouts_(sheet, hRow);
   } finally {
     lock.releaseLock();
@@ -150,7 +158,7 @@ function sortTryouts_(sheet, hRow) {
   var headers = headers_(sheet, hRow);
   var cFirst = findColumn_(headers, 'First Name'), cLast = findColumn_(headers, 'Last Name');
   var cGender = findColumn_(headers, 'Gender'), cGrade = findColumn_(headers, 'Grade');
-  var first = hRow + 1, n = sheet.getLastRow() - hRow;
+  var first = hRow + 1, n = dataRowCount_(sheet, hRow, headers.length);
   if (n < 2 || cFirst < 0) return;
 
   var vals = sheet.getRange(first, 1, n, headers.length).getValues();
@@ -218,7 +226,7 @@ function mergeIntoHighlighted_(sheet, hRow, headers, row) {
   var cF = findColumn_(headers, 'First Name'), cL = findColumn_(headers, 'Last Name');
   if (cF < 0 || cL < 0) return false;
   var key = nameKey_(row[cF], row[cL]);
-  var first = hRow + 1, n = sheet.getLastRow() - hRow;
+  var first = hRow + 1, n = dataRowCount_(sheet, hRow, headers.length);
   if (!key || n < 1) return false;
   var range = sheet.getRange(first, 1, n, headers.length);
   var vals = range.getValues(), bgs = range.getBackgrounds();
@@ -301,16 +309,34 @@ function sheet_(name) {
   return match || ss.insertSheet(name);
 }
 
-// The header row is the fullest of the first 10 rows (so a title row above the table is skipped).
+// The header row: the first of the top 30 rows that has both a "First Name" and a "Last Name" cell;
+// otherwise the fullest of the top 10 rows (so a title row above the table is skipped).
 function headerRow_(sheet) {
-  var last = sheet.getLastColumn(), rows = Math.min(sheet.getLastRow(), 10);
+  var last = sheet.getLastColumn(), rows = Math.min(sheet.getLastRow(), 30);
   if (last === 0 || rows === 0) return 1;
-  var grid = sheet.getRange(1, 1, rows, last).getValues(), best = 1, bestCount = 0;
-  grid.forEach(function (r, i) {
+  var grid = sheet.getRange(1, 1, rows, last).getValues();
+  for (var i = 0; i < grid.length; i++) {
+    var cells = grid[i].map(norm_);
+    if (cells.indexOf('first name') >= 0 && cells.indexOf('last name') >= 0) return i + 1;
+  }
+  var best = 1, bestCount = 0;
+  grid.slice(0, 10).forEach(function (r, i) {
     var n = r.filter(function (c) { return String(c).trim() !== ''; }).length;
     if (n > bestCount) { bestCount = n; best = i + 1; }
   });
   return best;
+}
+
+// Number of data rows under the header: up to (not including) the first completely empty row,
+// so anything further down the tab (notes, another table) is never touched.
+function dataRowCount_(sheet, hRow, width) {
+  var n = sheet.getLastRow() - hRow;
+  if (n < 1) return 0;
+  var vals = sheet.getRange(hRow + 1, 1, n, width).getValues();
+  for (var i = 0; i < vals.length; i++) {
+    if (vals[i].every(function (c) { return String(c).trim() === ''; })) return i;
+  }
+  return n;
 }
 
 function headers_(sheet, hRow) {
