@@ -3,10 +3,10 @@
  * Runs only after Web3Forms has accepted the submission, and never blocks or changes what the
  * visitor sees: if the Sheets copy fails, the email from Web3Forms still went out.
  *
- * Until SHEETS_URL is set to the Apps Script web app URL (ends in /exec), this does nothing.
+ * SHEETS_URL is the Apps Script web app (Deploy > Manage deployments > Web app URL). Empty = off.
  */
 (function () {
-  var SHEETS_URL = '';
+  var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyvOsuSemzCcTGBpOMrG7dusSdwy2uTQUM-HnnMOLhQW2K8-fLxt8vBWH7j1XdjfXm4NQ/exec';
   var TOKEN = 'mundyball-forms-v1'; // must match TOKEN in tools/form-to-sheets.gs (not a password)
   var SKIP = { access_key: 1, subject: 1, from_name: 1, redirect: 1 };
 
