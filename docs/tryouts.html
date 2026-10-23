@@ -693,7 +693,7 @@
           Register for Tryouts<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
         </a>
       </div>
-      <p style="margin: 16px 0 0; font-weight: 700; font-size: 14px; letter-spacing: 0.02em; color: #fff;">Registration closes October 23rd.<br><span style="font-weight: 500; color: var(--mustang-lite-gray);">Uniforms are ordered right after, so register on time to get yours with the first order.</span></p>
+      <p id="reg-deadline-hero" style="margin: 16px 0 0; font-weight: 700; font-size: 14px; letter-spacing: 0.02em; color: #fff;">Registration closes October 23rd at 11:59pm CT.<br><span style="font-weight: 500; color: var(--mustang-lite-gray);">Uniforms are ordered right after, so register on time to get yours with the first order.</span></p>
     </div>
     <div class="hero-right">
       <div class="ball-stage" id="ballStage" aria-hidden="true"></div>
@@ -900,9 +900,17 @@
   <div class="container">
     <div class="eyebrow"><span class="bar"></span>Register Now</div>
     <h2 class="section-title">Lock in your <span style="color:var(--mustang-red);">spot.</span></h2>
-    <p class="section-lede" style="margin-bottom: 48px;"><strong>Registration closes October 23rd.</strong> Uniforms are ordered right after, so register on time to get yours with the first order. Once tryouts are scheduled, you will be emailed your child's tryout dates &amp; times, as well as a blank waiver to fill out before you come if you have not done one for us before.</p>
+    <p class="section-lede" id="reg-deadline-lede" style="margin-bottom: 48px;"><strong>Registration closes October 23rd at 11:59pm CT.</strong> Uniforms are ordered right after, so register on time to get yours with the first order. Once tryouts are scheduled, you will be emailed your child's tryout dates &amp; times, as well as a blank waiver to fill out before you come if you have not done one for us before.</p>
 
     <div class="reg-grid">
+      <div id="reg-closed-note" style="display:none; margin: 0 0 20px; padding: 20px 22px; border: 2px solid var(--mustang-red); border-radius: 12px; background: #fff;">
+        <h3 style="font-weight:900; font-size:18px; text-transform:uppercase; color:var(--mustang-charcoal); margin:0 0 8px;">Registration is closed</h3>
+        <p style="font-weight:500; font-size:15px; line-height:1.55; color:var(--fg-2); margin:0 0 14px;">Online registration closed October 23rd at 11:59pm CT. Still want to try out? Request a late registration and we'll do our best to fit your player in.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:10px;">
+          <a class="btn btn-primary" href="mailto:mundeleinboysbasketball@gmail.com?subject=Late%20Tryout%20Registration%20Request&amp;body=Player%20name%3A%0AGrade%3A%0ABoys%20or%20Girls%3A%0AParent%20name%20and%20phone%3A%0A">Email a late request</a>
+          <a class="btn" href="/contact?topic=Tryouts&amp;subject=Late%20Tryout%20Registration%20Request#contact-form" style="border:2px solid var(--mustang-charcoal); color:var(--mustang-charcoal);">Use the contact form</a>
+        </div>
+      </div>
       <form class="reg-form" id="registration-form">
         <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off">
 
@@ -1574,6 +1582,35 @@
       form.elements['Camper First Name'].focus({ preventScroll: true });
     });
   })();
+</script>
+<script>
+// Tryout registration closes Oct 23, 2026 at 11:59pm CT (= Oct 24 00:00 CDT = 05:00 UTC).
+// After that the form is greyed out and families are pointed to a late-registration request.
+// Add ?closed=1 to the URL to preview the closed state.
+(function () {
+  var CLOSES_AT = Date.UTC(2026, 9, 24, 5, 0, 0);
+  if (Date.now() < CLOSES_AT && !/[?&]closed=1/.test(location.search)) return;
+  var form = document.getElementById('registration-form');
+  var note = document.getElementById('reg-closed-note');
+  if (!form) return;
+  window.MUNDY_REG_CLOSED = true;
+  form.style.opacity = '0.4';
+  form.style.filter = 'grayscale(1)';
+  form.style.pointerEvents = 'none';
+  form.setAttribute('aria-disabled', 'true');
+  form.querySelectorAll('input, select, textarea, button').forEach(function (el) { el.disabled = true; });
+  form.addEventListener('submit', function (e) { e.preventDefault(); e.stopImmediatePropagation(); }, true);
+  if (note) note.style.display = 'block';
+  var hero = document.getElementById('reg-deadline-hero');
+  if (hero) hero.innerHTML = 'Registration closed October 23rd at 11:59pm CT.<br><span style="font-weight: 500; color: var(--mustang-lite-gray);"><a href="#register" style="color:#fff; text-decoration:underline;">Request a late registration</a> by email or the contact form.</span>';
+  var lede = document.getElementById('reg-deadline-lede');
+  if (lede) lede.innerHTML = '<strong>Registration closed October 23rd at 11:59pm CT.</strong> To be considered, request a late registration below.';
+  var crumb = document.querySelector('.hero .crumb');
+  if (crumb) crumb.innerHTML = '<span class="live" style="background:#929296; box-shadow:none;"></span>Registration Closed · 2026 Winter Season';
+  document.querySelectorAll('a.btn[href="#register"]').forEach(function (a) {
+    a.firstChild.nodeValue = 'Request Late Registration';
+  });
+})();
 </script>
 <script src="/assets/sheets.js"></script>
 </body></html>

@@ -717,6 +717,16 @@ MAIN GYM</h4>
     });
   });
 
+  // Prefill from links like /contact?topic=Tryouts&subject=Late%20Tryout%20Registration%20Request
+  (function () {
+    var q = new URLSearchParams(location.search);
+    var topic = q.get('topic'), subject = q.get('subject');
+    if (topic) document.querySelectorAll('#topicRow .topic-pill').forEach(function (p) {
+      if (p.dataset.topic === topic) p.click();
+    });
+    if (subject) { var s = document.getElementById('cf-subject'); if (s && !s.value) s.value = subject.slice(0, 120); }
+  })();
+
   document.getElementById('contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
     var form = this;
