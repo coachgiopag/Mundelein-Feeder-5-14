@@ -907,7 +907,7 @@
         <h3 style="font-weight:900; font-size:18px; text-transform:uppercase; color:var(--mustang-charcoal); margin:0 0 8px;">Registration is closed</h3>
         <p style="font-weight:500; font-size:15px; line-height:1.55; color:var(--fg-2); margin:0 0 14px;">Online registration closed October 23rd at 11:59pm CT. Still want to try out? Request a late registration and we'll do our best to fit your player in.</p>
         <div style="display:flex; flex-wrap:wrap; gap:10px;">
-          <a class="btn btn-primary" href="mailto:mundeleinboysbasketball@gmail.com?subject=Late%20Tryout%20Registration%20Request&amp;body=Hello%2C%0D%0A%0D%0AI%20understand%20tryout%20registration%20has%20closed%2C%20but%20if%20you%20have%20any%20more%20space%20available%20for%20my%20son/daughter%20%28Player%20Name%2C%20Grade%29%2C%20we%20would%20still%20be%20interested%20in%20registering.%20Here%20is%20our%20form%20information%20in%20case%20we%20are%20able%20to%20squeeze%20in%3A%0D%0A%0D%0APlayer%20First%20Name%3A%20%0D%0APlayer%20Last%20Name%3A%20%0D%0AGrade%20%282026%E2%80%9327%29%3A%20%0D%0ABoys%20/%20Girls%3A%20%0D%0ADate%20of%20Birth%20%28mm/dd/yyyy%29%3A%20%0D%0ASchool%3A%20%0D%0AYears%20of%20Organized%20Basketball%3A%20%0D%0AT-Shirt%20Size%3A%20%0D%0AJersey%20Size%3A%20%0D%0AShorts%20Size%3A%20%0D%0AParent%20Name%3A%20%0D%0AParent%20Phone%3A%20%0D%0AParent%20Email%3A%20%0D%0AEmergency%20Contact%20Name%20%28if%20different%20from%20above%29%3A%20%0D%0AEmergency%20Contact%20Phone%20%28if%20different%20from%20above%29%3A%20%0D%0AMedical%20Notes%20/%20Allergies%3A%20%0D%0A%0D%0AThank%20you%0D%0A">Email a late request</a>
+          <a class="btn btn-primary" id="late-email-btn" href="mailto:mundeleinboysbasketball@gmail.com?subject=Late%20Tryout%20Registration%20Request&amp;body=Hello%2C%0D%0A%0D%0AI%20understand%20tryout%20registration%20has%20closed%2C%20but%20if%20you%20have%20any%20more%20space%20available%20for%20my%20son/daughter%20%28Player%20Name%2C%20Grade%29%2C%20we%20would%20still%20be%20interested%20in%20registering.%20Here%20is%20our%20form%20information%20in%20case%20we%20are%20able%20to%20squeeze%20in%3A%0D%0A%0D%0APlayer%20First%20Name%3A%20%0D%0APlayer%20Last%20Name%3A%20%0D%0AGrade%20%282026%E2%80%9327%29%3A%20%0D%0ABoys%20/%20Girls%3A%20%0D%0ADate%20of%20Birth%20%28mm/dd/yyyy%29%3A%20%0D%0ASchool%3A%20%0D%0AYears%20of%20Organized%20Basketball%3A%20%0D%0AT-Shirt%20Size%3A%20%0D%0AJersey%20Size%3A%20%0D%0AShorts%20Size%3A%20%0D%0AParent%20Name%3A%20%0D%0AParent%20Phone%3A%20%0D%0AParent%20Email%3A%20%0D%0AEmergency%20Contact%20Name%20%28if%20different%20from%20above%29%3A%20%0D%0AEmergency%20Contact%20Phone%20%28if%20different%20from%20above%29%3A%20%0D%0AMedical%20Notes%20/%20Allergies%3A%20%0D%0A%0D%0AThank%20you%0D%0A">Email a late request</a>
           <a class="btn" href="/contact?topic=Tryouts&amp;subject=Late%20Tryout%20Registration%20Request#contact-form" style="border:2px solid var(--mustang-charcoal); color:var(--mustang-charcoal);">Use the contact form</a>
         </div>
       </div>
@@ -1609,6 +1609,64 @@
   if (crumb) crumb.innerHTML = '<span class="live" style="background:#929296; box-shadow:none;"></span>Registration Closed · 2026 Winter Season';
   document.querySelectorAll('a.btn[href="#register"]').forEach(function (a) {
     a.firstChild.nodeValue = 'Request Late Registration';
+  });
+})();
+</script>
+<script>
+// "Email a late request": let the parent pick where to write the email (Gmail, Outlook, Yahoo,
+// their default mail app, or copy the text) instead of always launching the device's mail app.
+(function () {
+  var btn = document.getElementById('late-email-btn');
+  if (!btn) return;
+  var mailto = btn.getAttribute('href');
+  var q = new URLSearchParams(mailto.split('?')[1] || '');
+  var to = mailto.slice(7).split('?')[0], subject = q.get('subject') || '', body = q.get('body') || '';
+  var e = encodeURIComponent;
+  var options = [
+    ['Gmail', 'https://mail.google.com/mail/?view=cm&fs=1&to=' + e(to) + '&su=' + e(subject) + '&body=' + e(body)],
+    ['Outlook / Hotmail', 'https://outlook.live.com/mail/0/deeplink/compose?to=' + e(to) + '&subject=' + e(subject) + '&body=' + e(body)],
+    ['Yahoo Mail', 'https://compose.mail.yahoo.com/?to=' + e(to) + '&subject=' + e(subject) + '&body=' + e(body)],
+    ['Default mail app', mailto]
+  ];
+  var box = document.createElement('div');
+  box.id = 'late-email-chooser';
+  box.setAttribute('role', 'dialog');
+  box.setAttribute('aria-modal', 'true');
+  box.setAttribute('aria-label', 'Choose how to send your late registration request');
+  box.style.cssText = 'display:none; position:fixed; inset:0; z-index:9999; background:rgba(20,20,22,0.6); align-items:center; justify-content:center; padding:16px;';
+  var card = '<div style="background:#fff; border-radius:12px; max-width:380px; width:100%; padding:24px; box-shadow:0 20px 60px rgba(0,0,0,0.35); font-family:inherit;">' +
+    '<h3 style="font-weight:900; font-size:18px; text-transform:uppercase; color:var(--mustang-charcoal); margin:0 0 6px;">Send your request with</h3>' +
+    '<p style="font-weight:500; font-size:14px; color:var(--fg-2); margin:0 0 16px;">Pick the email you use. The message opens pre-filled for you to complete.</p>';
+  options.forEach(function (o) {
+    var ext = o[1].indexOf('http') === 0;
+    card += '<a href="' + o[1].replace(/"/g, '&quot;') + '"' + (ext ? ' target="_blank" rel="noopener"' : '') +
+      ' class="late-opt" style="display:block; padding:13px 16px; margin:0 0 8px; border:2px solid var(--border); border-radius:8px; font-weight:800; font-size:14px; color:var(--mustang-charcoal); text-decoration:none;">' + o[0] + '</a>';
+  });
+  card += '<button type="button" id="late-copy" style="display:block; width:100%; text-align:left; padding:13px 16px; margin:0 0 8px; border:2px solid var(--border); border-radius:8px; background:#fff; font:inherit; font-weight:800; font-size:14px; color:var(--mustang-charcoal); cursor:pointer;">Copy the message instead</button>' +
+    '<p id="late-copy-done" style="display:none; font-weight:600; font-size:13px; color:#1a8f4f; margin:4px 0 8px;">Copied. Paste it into an email to ' + to + '.</p>' +
+    '<button type="button" id="late-close" style="margin-top:6px; background:none; border:0; font:inherit; font-weight:700; font-size:13px; color:var(--fg-3); cursor:pointer; text-decoration:underline;">Cancel</button></div>';
+  box.innerHTML = card;
+  document.body.appendChild(box);
+  function close() { box.style.display = 'none'; btn.focus(); }
+  btn.addEventListener('click', function (ev) {
+    ev.preventDefault();
+    box.style.display = 'flex';
+    var first = box.querySelector('.late-opt'); if (first) first.focus();
+  });
+  box.addEventListener('click', function (ev) { if (ev.target === box) close(); });
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && box.style.display === 'flex') close(); });
+  box.querySelector('#late-close').addEventListener('click', close);
+  box.querySelectorAll('.late-opt').forEach(function (a) { a.addEventListener('click', function () { setTimeout(close, 300); }); });
+  box.querySelector('#late-copy').addEventListener('click', function () {
+    var text = 'To: ' + to + '\nSubject: ' + subject + '\n\n' + body.replace(/\r\n/g, '\n');
+    var done = box.querySelector('#late-copy-done');
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () {
+      done.style.display = 'block';
+    }, function () {
+      var t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); done.style.display = 'block'; } catch (x) {}
+      t.remove();
+    });
   });
 })();
 </script>
