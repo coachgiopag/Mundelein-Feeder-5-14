@@ -1657,6 +1657,34 @@
   document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && box.style.display === 'flex') close(); });
   box.querySelector('#late-close').addEventListener('click', close);
   box.querySelectorAll('.late-opt').forEach(function (a) { a.addEventListener('click', function () { setTimeout(close, 300); }); });
+
+  // On phones, "Gmail" opens the Gmail app's compose screen; if the app isn't installed it falls back
+  // to Gmail in the browser (Android: built into the link; iPhone: after ~1.5 s if the app didn't open).
+  var gmailWeb = options[0][1];
+  var ua = navigator.userAgent || '';
+  var isAndroid = /Android/i.test(ua);
+  var isIOS = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  var gmailLink = box.querySelector('.late-opt');
+  if (gmailLink && (isAndroid || isIOS)) {
+    gmailLink.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      setTimeout(close, 300);
+      var qs = 'subject=' + e(subject) + '&body=' + e(body);
+      if (isAndroid) {
+        location.href = 'intent:' + to + '?' + qs + '#Intent;scheme=mailto;package=com.google.android.gm;' +
+          'S.browser_fallback_url=' + e(gmailWeb) + ';end';
+        return;
+      }
+      var left = false;
+      var onHide = function () { if (document.hidden) left = true; };
+      document.addEventListener('visibilitychange', onHide);
+      setTimeout(function () {
+        document.removeEventListener('visibilitychange', onHide);
+        if (!left && !document.hidden) location.href = gmailWeb;   // app not installed: use Gmail on the web
+      }, 1500);
+      location.href = 'googlegmail://co?to=' + e(to) + '&' + qs;
+    });
+  }
   box.querySelector('#late-copy').addEventListener('click', function () {
     var text = 'To: ' + to + '\nSubject: ' + subject + '\n\n' + body.replace(/\r\n/g, '\n');
     var done = box.querySelector('#late-copy-done');
