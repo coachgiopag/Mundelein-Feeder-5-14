@@ -15,7 +15,8 @@ var TABS = {
   tryouts:  '2026 Tryout Registration',
   camp:     '2027 Camp Interest Form',
   contact:  'MundyBall Contact Us Page',
-  coaching: 'Coaching Applicants'
+  coaching: 'Coaching Applicants',
+  wintercamp: 'Winter Camp 2026'
 };
 
 // Tabs that should not get an automatic Timestamp column.
@@ -72,7 +73,8 @@ var REQUIRED = {
   tryouts:  ['Camper First Name', 'Camper Last Name', 'Email'],
   camp:     ['Camper First Name', 'Email'],
   contact:  ['Email', 'Message'],
-  coaching: ['Applicant Name', 'Applicant Email']
+  coaching: ['Applicant Name', 'Applicant Email'],
+  wintercamp: ['Camper First Name', 'Email', 'Session']
 };
 var MAX_CELL = 2000;
 var MAX_FIELDS = 60;
