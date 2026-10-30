@@ -204,7 +204,7 @@
   .hero-inner { position: relative; max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; } /* single column since the 2026 flyer was retired */
   .hero .crumb { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mustang-lite-gray); margin-bottom: 22px; }
   .hero .crumb-row { margin-bottom: 22px; }
-  @media (max-width: 480px) { .hero .crumb-row .wc-long { display: none; } }
+  @media (max-width: 600px) { .hero .crumb-row { flex-wrap: wrap !important; } .hero .crumb-row .wc-long { display: none; } }
   .hero .crumb .live { width: 9px; height: 9px; border-radius: 50%; background: #21c46c; box-shadow: 0 0 0 0 rgba(33,196,108,.6); animation: pulse-g 1.8s var(--ease-out) infinite; }
   @keyframes pulse-g { 0% { box-shadow: 0 0 0 0 rgba(33,196,108,.6); } 70% { box-shadow: 0 0 0 10px rgba(33,196,108,0); } 100% { box-shadow: 0 0 0 0 rgba(33,196,108,0); } }
   .hero .eyebrow-tag { font-weight: 900; font-size: 13px; letter-spacing: 0.34em; color: var(--mustang-red); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
@@ -570,9 +570,9 @@
 <section class="hero" id="top" >
   <div class="hero-inner" >
     <div >
-      <div class="crumb-row" style="display:flex; flex-wrap:wrap; gap:8px 28px; align-items:center;">
-        <div class="crumb" style="margin-bottom:0;"><span class="live"></span>Summer 2027 · Interest Form Open</div>
-        <a class="crumb" id="wc-crumb" href="#winter-camp" style="margin-bottom:0; text-decoration:none;"><span class="live" style="background:#f5a524; box-shadow:none; animation:none;"></span><span id="wc-crumb-text">Winter 2026 · <span class="wc-long">Registration </span>Opening Soon</span></a>
+      <div class="crumb-row" style="display:flex; flex-wrap:nowrap; gap:8px 28px; align-items:center;">
+        <a class="crumb" id="wc-crumb" href="#winter-camp" style="margin-bottom:0; text-decoration:none; white-space:nowrap;"><span class="live" style="background:#f5a524; box-shadow:none; animation:none;"></span><span id="wc-crumb-text">Winter Camp 2026 · <span class="wc-long">Registration </span>Opening Soon</span></a>
+        <div class="crumb" style="margin-bottom:0; white-space:nowrap;"><span class="live"></span>Summer 2027 · Interest Form Open</div>
       </div>
       <div class="eyebrow-tag" >Building the Foundation for Future Mustangs</div>
       <h1 style="font-size: 93px;">Jr. Mustangs <span class="red" style="font-size: 93px;">Feeder</span><br><span class="red" style="font-size: 93px;">Basketball</span> Camp</h1>
@@ -668,7 +668,7 @@
         <div class="name" >Ball Handling</div>
       </div>
       <div class="skill" >
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19l-5-3 5-9 5 3 5-3 5 9-5 3-5-3"></path><path d="M9 11l5 3"></path></svg></div>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"></path><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"></path><path d="M16 17h4"></path><path d="M4 13h4"></path></svg></div>
         <div class="num" >03</div>
         <div class="name" >Footwork</div>
       </div>
@@ -748,7 +748,7 @@
 
     <div class="pricing-card">
       <div class="pricing-left">
-        <h3>What's Included &amp; What You'll Save</h3>
+        <h3 style="white-space:nowrap; font-size:clamp(15px, 2.4vw, 26px);">What's Included &amp; What You'll Save</h3>
         <div class="sub">Pick one session or both. Every session runs all three days, Mon–Wed.</div>
         <div class="price-row">
           <div class="label-l">AM Session<small>9:00–11:45 AM · High level coaching on Mundelein's home court</small></div>
@@ -758,13 +758,9 @@
           <div class="label-l">PM Session<small>12:15–3:00 PM · High level coaching on Mundelein's home court</small></div>
           <div class="val">$149</div>
         </div>
-        <div class="price-row">
+        <div class="price-row" style="border-bottom: 0px;">
           <div class="label-l">Full Day (AM + PM)<small>Both sessions plus coach-supervised lunch · Save $19</small></div>
           <div class="val">$279</div>
-        </div>
-        <div class="price-row" style="border-bottom: 0px;">
-          <div class="label-l">Need-Based Scholarship<small>Email mundeleinboysbasketball@gmail.com confidentially</small></div>
-          <div class="val discount">Confidential</div>
         </div>
       </div>
       <div class="pricing-right">
@@ -1261,6 +1257,7 @@
     .price-row .val { font-size: 16px !important; }
     .price-row .label-l { min-width: 0 !important; flex: 1 1 60% !important; }
     .pricing-left h3 { font-size: 22px !important; }
+    #winter-pricing .pricing-left h3 { font-size: clamp(12px, 3.75vw, 22px) !important; letter-spacing: -0.02em; }
     .pricing-right .price-big { font-size: 52px !important; }
   }
 </style>
@@ -1344,7 +1341,7 @@
     document.getElementById('wc-open-line').textContent = 'Sign-ups are open.';
     var crumbText = document.getElementById('wc-crumb-text');
     if (crumbText) {
-      crumbText.textContent = 'Winter 2026 · Registration Open';
+      crumbText.textContent = 'Winter Camp 2026 · Registration Open';
       var dot = document.querySelector('#wc-crumb .live');
       if (dot) dot.removeAttribute('style');   // back to the pulsing green dot
     }
