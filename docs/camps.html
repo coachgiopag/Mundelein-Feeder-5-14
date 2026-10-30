@@ -203,6 +203,8 @@
     background-size: 80px 80px; mask-image: linear-gradient(180deg, #000, transparent 80%); }
   .hero-inner { position: relative; max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; } /* single column since the 2026 flyer was retired */
   .hero .crumb { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mustang-lite-gray); margin-bottom: 22px; }
+  .hero .crumb-row { margin-bottom: 22px; }
+  @media (max-width: 480px) { .hero .crumb-row .wc-long { display: none; } }
   .hero .crumb .live { width: 9px; height: 9px; border-radius: 50%; background: #21c46c; box-shadow: 0 0 0 0 rgba(33,196,108,.6); animation: pulse-g 1.8s var(--ease-out) infinite; }
   @keyframes pulse-g { 0% { box-shadow: 0 0 0 0 rgba(33,196,108,.6); } 70% { box-shadow: 0 0 0 10px rgba(33,196,108,0); } 100% { box-shadow: 0 0 0 0 rgba(33,196,108,0); } }
   .hero .eyebrow-tag { font-weight: 900; font-size: 13px; letter-spacing: 0.34em; color: var(--mustang-red); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
@@ -229,6 +231,7 @@
   @media (min-width: 481px) {
     .hero { padding-top: 40px !important; padding-bottom: 56px !important; }
     .hero .crumb { margin-bottom: 14px; }
+    .hero .crumb-row { margin-bottom: 14px; }
     .hero .cta-row { margin-bottom: 18px; }
     .hero .stat-strip { margin-top: 22px !important; }
   }
@@ -567,7 +570,10 @@
 <section class="hero" id="top" >
   <div class="hero-inner" >
     <div >
-      <div class="crumb" ><span class="live"></span>Summer 2027 · Interest Form Open</div>
+      <div class="crumb-row" style="display:flex; flex-wrap:wrap; gap:8px 28px; align-items:center;">
+        <div class="crumb" style="margin-bottom:0;"><span class="live"></span>Summer 2027 · Interest Form Open</div>
+        <a class="crumb" id="wc-crumb" href="#winter-camp" style="margin-bottom:0; text-decoration:none;"><span class="live" style="background:#f5a524; box-shadow:none; animation:none;"></span><span id="wc-crumb-text">Winter 2026 · <span class="wc-long">Registration </span>Opening Soon</span></a>
+      </div>
       <div class="eyebrow-tag" >Building the Foundation for Future Mustangs</div>
       <h1 style="font-size: 93px;">Jr. Mustangs <span class="red" style="font-size: 93px;">Feeder</span><br><span class="red" style="font-size: 93px;">Basketball</span> Camp</h1>
       <div class="tagline" >Learn<span class="sep"></span>Compete<span class="sep"></span>Develop</div>
@@ -592,7 +598,7 @@
         </div>
         <div class="stat" >
           <div class="lab" >Weeks</div>
-          <div class="val" >5 to choose</div>
+          <div class="val" >6 to choose</div>
         </div>
         <div class="stat" >
           <div class="lab" >Per Week</div>
@@ -665,7 +671,7 @@
               </select>
             </div>
           </div>
-          <span class="hint" style="display:block; margin-top:8px;">Your session runs all three days, Mon–Wed, Dec 21–23.<br><strong>Full day campers:</strong> we strongly recommend packing a lunch to eat between the AM &amp; PM sessions. A coach supervises lunch from 11:45 to 12:15. Because peanut and tree nut allergies can be life-threatening, and campers eat together where cross-contamination can happen, we kindly ask that you not pack peanut butter or other nut-based foods.</span>
+          <span class="hint" style="display:block; margin-top:8px;"><strong>Full day campers:</strong> we strongly recommend packing a lunch to eat between the AM &amp; PM sessions. A coach supervises lunch from 11:45 to 12:15. Because peanut and tree nut allergies can be life-threatening, and campers eat together where cross-contamination can happen, we kindly ask that you not pack peanut butter or other nut-based foods.</span>
         </div>
 
         <div class="form-section">
@@ -1313,6 +1319,12 @@
       return;
     }
     document.getElementById('wc-open-line').textContent = 'Sign-ups are open.';
+    var crumbText = document.getElementById('wc-crumb-text');
+    if (crumbText) {
+      crumbText.textContent = 'Winter 2026 · Registration Open';
+      var dot = document.querySelector('#wc-crumb .live');
+      if (dot) dot.removeAttribute('style');   // back to the pulsing green dot
+    }
     var btnHTML = btn.innerHTML;
     function showError(msg){
       var el = document.getElementById('wc-error');
