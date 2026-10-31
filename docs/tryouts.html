@@ -401,6 +401,16 @@
   .quick-cell .lab { font-weight: 800; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mustang-red); margin-bottom: 8px; }
   .quick-cell .val { font-weight: 900; font-size: 22px; color: var(--mustang-charcoal); margin-bottom: 6px; line-height: 1.15; }
   .quick-cell .desc { font-weight: 500; font-size: 13px; color: var(--fg-2); line-height: 1.5; }
+  .tryout-times { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 16px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .tt-card { padding: 28px; background: #fff; border-right: 1px solid var(--border); }
+  .tt-card:last-child { border-right: 0; }
+  .tt-card .lab { font-weight: 800; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mustang-red); margin-bottom: 12px; text-align: center; }
+  .tt-list { list-style: none; margin: 0; padding: 0; }
+  .tt-list li { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px dashed var(--border); font-size: 15px; }
+  .tt-list li:last-child { border-bottom: 0; }
+  .tt-group { font-weight: 600; color: var(--fg-2); }
+  .tt-time { font-weight: 800; color: var(--mustang-charcoal); white-space: nowrap; }
+  @media (max-width: 700px) { .tryout-times { grid-template-columns: 1fr; } .tt-card { border-right: 0; border-bottom: 1px solid var(--border); padding: 22px 20px; } .tt-card:last-child { border-bottom: 0; } .tt-list li { font-size: 14px; } }
 
   /* ===== Schedule table ===== */
   section.schedule-section { background: var(--mustang-gray-50); }
@@ -731,7 +741,7 @@
         </div>
         <div class="lab" style="">When</div>
         <div class="val" style="white-space: nowrap;">November 7th &amp; 8th, 2026</div>
-        <div class="desc" style="white-space: nowrap;">Times for each age group will be announced in the next week</div>
+        <div class="desc" style="white-space: nowrap;">See tryout times by group below</div>
       </div>
       <div class="quick-cell">
         <div class="icon">
@@ -748,6 +758,17 @@
         <div class="lab">What to Bring</div>
         <div class="val">Five things</div>
         <div class="desc" style="">Indoor shoes, water bottle, athletic clothes, basketball (loaner available), signed waiver. That's it.</div>
+      </div>
+    </div>
+
+    <div class="tryout-times" id="tryout-times">
+      <div class="tt-card">
+        <div class="lab">Saturday, November 7</div>
+        <ul class="tt-list"><li><span class="tt-group">4th-grade boys</span><span class="tt-time">9:30–10:45 a.m.</span></li><li><span class="tt-group">5th &amp; 6th-grade boys</span><span class="tt-time">10:45 a.m.–noon</span></li><li><span class="tt-group">All girls, grades 4–8</span><span class="tt-time">Noon–1:15 p.m.</span></li><li><span class="tt-group">7th &amp; 8th-grade boys</span><span class="tt-time">1:15–2:30 p.m.</span></li></ul>
+      </div>
+      <div class="tt-card">
+        <div class="lab">Sunday, November 8</div>
+        <ul class="tt-list"><li><span class="tt-group">4th-grade boys</span><span class="tt-time">1:00–2:15 p.m.</span></li><li><span class="tt-group">5th &amp; 6th-grade boys</span><span class="tt-time">2:15–3:30 p.m.</span></li><li><span class="tt-group">All girls, grades 4–8</span><span class="tt-time">3:30–4:45 p.m.</span></li><li><span class="tt-group">7th &amp; 8th-grade boys</span><span class="tt-time">4:45–6:00 p.m.</span></li></ul>
       </div>
     </div>
   </div>
