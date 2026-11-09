@@ -872,6 +872,8 @@
       <div id="wc-success" style="display:none; padding: 40px 32px; background: #fff; border: 2px solid #21c46c; border-radius: 12px; text-align: center; align-self: start;">
         <h3 style="font-weight:900; font-size:22px; text-transform:uppercase; color:#2A2A2C; margin:0 0 10px;">You're signed up!</h3>
         <p style="font-weight:500; font-size:15px; color:var(--fg-2); line-height:1.55; margin:0 0 6px;">Thanks<span id="wc-name"></span>. We'll email you to confirm your camper's spot for Winter Feeder Camp, Dec 21–23.</p>
+        <p style="font-weight:700; font-size:15px; color:var(--mustang-charcoal); line-height:1.55; margin:18px 0 12px;">Last step: pay for your camper's session.</p>
+        <a id="wc-pay" class="btn btn-primary" href="https://buy.stripe.com/cNi14n1XBdPFflz7Ym9Zm08" target="_blank" rel="noopener" style="display:inline-block; margin:0 0 18px;">Pay <span id="wc-pay-amt">$149</span> Now</a>
         <p style="font-weight:600; font-size:13px; color:var(--fg-3); margin:0;">Questions? Email <a href="mailto:mundeleinboysbasketball@gmail.com" style="color:var(--mustang-red);">mundeleinboysbasketball@gmail.com</a></p>
       </div>
 
@@ -1372,6 +1374,11 @@
         .then(function(res){
           if (!res || !res.success) throw new Error(res && res.message);
           window.sendToSheets && window.sendToSheets('wintercamp', fd);
+          // Winter camp Stripe payment links: half day (AM or PM) $149, full day $279.
+          var full = /^Both/.test(fd.get('Session') || '');
+          var pay = document.getElementById('wc-pay');
+          pay.href = full ? 'https://buy.stripe.com/9B6aEXgSvdPF7T74Ma9Zm07' : 'https://buy.stripe.com/cNi14n1XBdPFflz7Ym9Zm08';
+          document.getElementById('wc-pay-amt').textContent = full ? '$279' : '$149';
           var first = (fd.get('Parent Name') || '').trim().split(' ')[0];
           document.getElementById('wc-name').textContent = first ? ', ' + first : '';
           form.style.display = 'none';
