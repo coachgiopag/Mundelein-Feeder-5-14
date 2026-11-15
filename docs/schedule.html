@@ -399,9 +399,8 @@
   </div>
 </section>
 
-<!-- SCHEDULE. To update: edit the SESSIONS list in the script below.
-     Team codes: B/G (boys/girls) + grade 4–8 + R/B (Red/Black), e.g. G6R = 6th grade girls Red.
-     Use "B6" for both 6th grade boys teams, "6" for every 6th grade team, "*" for all teams. -->
+<!-- SCHEDULE. Data lives in /assets/schedule.json (team codes explained there).
+     After editing it, run python3 seo.py to rebuild the calendar feeds in /cal/. -->
 <section class="panel" id="schedule" data-screen-label="Schedule">
   <div class="container">
     <div class="eyebrow"><span class="bar"></span>Games &amp; Practices</div>
@@ -423,6 +422,16 @@
             <button type="button" data-v="">All</button><button type="button" data-v="R">Red</button><button type="button" data-v="B">Black</button>
           </div></div>
         <div class="sf-status"><span id="sf-summary">Showing all teams</span> <button type="button" id="sf-clear" hidden>Clear filters</button></div>
+        <div class="sf-cal" id="sf-cal">
+          <div class="sf-cal-title" id="sf-cal-title">Add to your calendar</div>
+          <p class="sf-cal-hint" id="sf-cal-hint" hidden>Pick a grade, boys or girls, and Red or Black to add your team's schedule to your calendar.</p>
+          <div class="sf-cal-btns" id="sf-cal-btns">
+            <a id="cal-apple" class="cal-btn" href="#">Apple Calendar</a>
+            <a id="cal-google" class="cal-btn" href="#" target="_blank" rel="noopener">Google Calendar / Android</a>
+            <a id="cal-file" class="cal-btn ghost" href="#" download>Download file (.ics)</a>
+          </div>
+          <p class="sf-cal-note" id="sf-cal-note">Your calendar updates by itself when times change. Apple: tap Subscribe. Google &amp; Android: tap Add, then make sure the calendar is turned on in the Google Calendar app.</p>
+        </div>
       </div>
 
       <div class="sched-note"><strong>Temporary schedule.</strong> Times and gyms may change. Check back before each session.</div>
@@ -443,6 +452,15 @@
     .sf-opts[data-key="color"] button[data-v="B"][aria-pressed="true"] { background: var(--mustang-charcoal-900); border-color: var(--mustang-charcoal-900); }
     .sf-status { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-weight: 700; font-size: 14px; color: var(--mustang-charcoal-900); padding-top: 4px; }
     #sf-clear { font: inherit; font-weight: 700; font-size: 13px; background: none; border: 0; color: var(--mustang-red); text-decoration: underline; cursor: pointer; padding: 0; }
+    .sf-cal { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--mustang-lite-gray); }
+    .sf-cal-title { font-weight: 800; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-2); margin-bottom: 10px; }
+    .sf-cal-hint, .sf-cal-note { font-weight: 500; font-size: 13px; line-height: 1.5; color: var(--fg-2); margin: 0; }
+    .sf-cal-note { margin-top: 10px; }
+    .sf-cal-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+    .cal-btn { display: inline-flex; align-items: center; font-weight: 800; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 14px; border-radius: 6px; background: var(--mustang-charcoal-900); color: #fff; text-decoration: none; }
+    .cal-btn:hover { background: var(--mustang-red); }
+    .cal-btn.ghost { background: #fff; color: var(--mustang-charcoal-900); border: 1.5px solid var(--mustang-lite-gray); }
+    .cal-btn.ghost:hover { border-color: var(--mustang-charcoal); background: #fff; }
     .sched-note { padding: 14px 18px; border-left: 4px solid var(--mustang-red); background: var(--mustang-red-100); border-radius: 6px; font-weight: 500; font-size: 15px; line-height: 1.5; color: var(--mustang-charcoal-900); margin-bottom: 8px; }
     .sched-month { font-weight: 900; font-size: 18px; text-transform: uppercase; color: var(--mustang-red); margin: 28px 0 10px; }
     .sched-day { border: 1px solid var(--mustang-lite-gray); border-radius: 10px; background: #fff; margin-bottom: 12px; overflow: hidden; }
@@ -467,37 +485,7 @@
   </style>
   <script>
   (function () {
-    // One entry per gym session. slots: [time, who, teams]. A session with no slots shows "Team times coming soon" to everyone.
-    var SESSIONS = [
-      { date: '2026-11-17', time: '6:00–9:30 PM', gym: 'North Gym', slots: [
-        ['6:00–7:15 PM', '6th Grade Girls · Red & Black', 'G6'],
-        ['7:15–8:30 PM', '6th Grade Boys · Red & Black', 'B6'],
-        ['8:30–9:45 PM', '8th Grade Boys & Girls', '8'] ] },
-      { date: '2026-11-19', time: '6:00–9:30 PM', gym: 'Main Gym', slots: [
-        ['6:00–7:15 PM', '4th & 5th Grade Boys · Red & Black', 'B4 B5'],
-        ['7:15–8:30 PM', '6th Grade Boys & Girls · Red & Black', '6'],
-        ['8:30–9:45 PM', '7th Grade Boys · Red & Black, plus 8th Grade Boys & Girls', 'B7 8'] ] },
-      { date: '2026-11-21', time: '1:15–4:15 PM', gym: 'North Gym', slots: [
-        ['1:15–2:15 PM', '7th Grade Boys · Red & Black', 'B7'],
-        ['2:15–3:15 PM', '4th Grade Boys · Red & Black', 'B4'],
-        ['3:15–4:15 PM', '5th Grade Boys · Red & Black', 'B5'] ] },
-      { date: '2026-11-30', time: '7:45–9:00 PM', gym: 'Main & North Gyms' },
-      { date: '2026-12-02', time: '5:45–9:30 PM', gym: 'North Gym' },
-      { date: '2026-12-02', time: '7:30–9:00 PM', gym: 'Main Gym' },
-      { date: '2026-12-03', time: '7:45–9:00 PM', gym: 'Main & North Gyms' },
-      { date: '2026-12-04', time: '5:45–7:00 PM', gym: 'North Gym' },
-      { date: '2026-12-06', time: '3:30–6:00 PM', gym: 'Main & North Gyms' },
-      { date: '2026-12-07', time: '5:45–9:30 PM', gym: 'Main & North Gyms' },
-      { date: '2026-12-09', time: '5:45–8:15 PM', gym: 'North Gym' },
-      { date: '2026-12-10', time: '5:45–7:00 PM', gym: 'North Gym' },
-      { date: '2026-12-14', time: '5:45–9:30 PM', gym: 'Main & North Gyms' },
-      { date: '2026-12-16', time: '7:45–9:00 PM', gym: 'North Gym' },
-      { date: '2026-12-18', time: '6:45–9:15 PM', gym: 'North Gym' },
-      { date: '2026-12-21', time: '6:00–9:00 PM', gym: 'Main & North Gyms' },
-      { date: '2027-01-02', time: '11:30 AM–2:00 PM', gym: 'Main & North Gyms' },
-      { date: '2027-01-03', time: '1:00–3:30 PM', gym: 'Main & North Gyms' },
-      { date: '2027-01-09', time: '12:30–2:00 PM', gym: 'Main Gym' }
-    ];
+    var SESSIONS = [];
 
     var MON = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     var DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -524,6 +512,7 @@
 
     var today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Chicago' });
     var list = document.getElementById('sched-list');
+    var loaded = false;
 
     function render() {
       var html = '', month = '', shown = 0;
@@ -542,7 +531,8 @@
         shown++;
       });
       list.innerHTML = html;
-      document.getElementById('sched-empty').hidden = shown > 0;
+      document.getElementById('sched-empty').hidden = !loaded || shown > 0;
+      calendarButtons();
 
       var parts = [];
       if (f.grade) parts.push(GR[f.grade] + ' Grade');
@@ -553,6 +543,26 @@
       document.querySelectorAll('.sf-opts').forEach(function (g) {
         g.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === f[g.getAttribute('data-key')])); });
       });
+    }
+
+    // Calendar feeds are built by seo.py into /cal/<team>.ics (b6r = 6th grade boys Red) and /cal/all.ics.
+    function calendarButtons() {
+      var full = f.grade && f.gender && f.color, none = !f.grade && !f.gender && !f.color;
+      var ok = full || none;
+      document.getElementById('sf-cal-btns').hidden = !ok;
+      document.getElementById('sf-cal-note').hidden = !ok;
+      document.getElementById('sf-cal-hint').hidden = ok;
+      if (!ok) { document.getElementById('sf-cal-title').textContent = 'Add to your calendar'; return; }
+      var slug = full ? (f.gender + f.grade + f.color).toLowerCase() : 'all';
+      var name = full ? GR[f.grade] + ' Grade ' + (f.gender === 'B' ? 'Boys' : 'Girls') + ' ' + (f.color === 'R' ? 'Red' : 'Black') : 'All Teams';
+      var https = 'https://www.mundyball.com/cal/' + slug + '.ics';
+      var webcal = 'webcal://www.mundyball.com/cal/' + slug + '.ics';
+      var google = 'https://calendar.google.com/calendar/render?cid=' + encodeURIComponent(webcal);
+      document.getElementById('sf-cal-title').textContent = 'Add ' + name + ' to your calendar';
+      document.getElementById('cal-apple').href = webcal;
+      document.getElementById('cal-google').href = google;
+      document.getElementById('cal-file').href = '/cal/' + slug + '.ics';
+      document.getElementById('cal-file').setAttribute('download', 'jr-mustangs-' + slug + '.ics');
     }
 
     function save() {
@@ -580,6 +590,10 @@
     });
     document.getElementById('sf-clear').addEventListener('click', function () { f = { grade: '', gender: '', color: '' }; render(); save(); });
     render();
+    fetch('/assets/schedule.json', { cache: 'no-cache' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { SESSIONS = d.sessions || []; loaded = true; render(); })
+      .catch(function () { list.innerHTML = '<p class="sched-empty">The schedule didn\'t load. Refresh the page, or email mundeleinboysbasketball@gmail.com.</p>'; });
   })();
   </script>
 </section>

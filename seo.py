@@ -277,3 +277,6 @@ if __name__ == "__main__":
         print("%-14s %4d KB -> %4d KB" % (fname, before // 1024, after // 1024))
     sitemap()
     print("sitemap.xml written")
+    import sys; sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "tools"))
+    import schedule_ics
+    print("calendar feeds: %d files, %d events" % schedule_ics.build())
