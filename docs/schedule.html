@@ -399,100 +399,188 @@
   </div>
 </section>
 
-<!-- SCHEDULE: paste the calendar's embed link into CALENDAR_EMBED in the script at the bottom of this section. -->
+<!-- SCHEDULE. To update: edit the SESSIONS list in the script below.
+     Team codes: B/G (boys/girls) + grade 4–8 + R/B (Red/Black), e.g. G6R = 6th grade girls Red.
+     Use "B6" for both 6th grade boys teams, "6" for every 6th grade team, "*" for all teams. -->
 <section class="panel" id="schedule" data-screen-label="Schedule">
   <div class="container">
     <div class="eyebrow"><span class="bar"></span>Games &amp; Practices</div>
     <h2 class="section-title">This <span style="color:var(--mustang-red);">season.</span></h2>
-    <p class="section-lede">Times and locations can change. Check here before you head to the gym.</p>
+    <p class="section-lede">Pick your player's team to see only their practices and games.</p>
 
-    <div id="sched-cal" class="sched-cal" style="display:none;"></div>
+    <div class="sched-wrap">
+      <div class="sched-filters" role="group" aria-label="Filter schedule by team">
+        <div class="sf-row"><span class="sf-label">Grade</span>
+          <div class="sf-opts" data-key="grade">
+            <button type="button" data-v="">All</button><button type="button" data-v="4">4th</button><button type="button" data-v="5">5th</button><button type="button" data-v="6">6th</button><button type="button" data-v="7">7th</button><button type="button" data-v="8">8th</button>
+          </div></div>
+        <div class="sf-row"><span class="sf-label">Boys / Girls</span>
+          <div class="sf-opts" data-key="gender">
+            <button type="button" data-v="">All</button><button type="button" data-v="B">Boys</button><button type="button" data-v="G">Girls</button>
+          </div></div>
+        <div class="sf-row"><span class="sf-label">Team</span>
+          <div class="sf-opts" data-key="color">
+            <button type="button" data-v="">All</button><button type="button" data-v="R">Red</button><button type="button" data-v="B">Black</button>
+          </div></div>
+        <div class="sf-status"><span id="sf-summary">Showing all teams</span> <button type="button" id="sf-clear" hidden>Clear filters</button></div>
+      </div>
 
-    <div id="sched-temp" class="sched-temp">
       <div class="sched-note"><strong>Temporary schedule.</strong> Times and gyms may change. Check back before each session.</div>
-      <table class="sched-table">
-        <thead><tr><th>Date</th><th>Time</th><th>Gym</th></tr></thead>
-        <tbody data-month><tr class="sched-month"><th colspan="3">November 2026</th></tr>
-          <tr data-date="2026-11-17"><td class="sd">Tue, Nov 17</td><td class="st">6:00–9:30 PM</td><td class="sg">North Gym</td></tr>
-          <tr data-date="2026-11-19"><td class="sd">Thu, Nov 19</td><td class="st">6:00–9:30 PM</td><td class="sg">Main Gym</td></tr>
-          <tr data-date="2026-11-21"><td class="sd">Sat, Nov 21</td><td class="st">1:15–4:15 PM</td><td class="sg">North Gym</td></tr>
-          <tr data-date="2026-11-30"><td class="sd">Mon, Nov 30</td><td class="st">7:45–9:00 PM</td><td class="sg">Main &amp; North Gyms</td></tr>
-        </tbody>
-        <tbody data-month><tr class="sched-month"><th colspan="3">December 2026</th></tr>
-          <tr data-date="2026-12-02"><td class="sd">Wed, Dec 2</td><td class="st">5:45–9:30 PM</td><td class="sg">North Gym</td></tr>
-          <tr data-date="2026-12-02"><td class="sd">Wed, Dec 2</td><td class="st">7:30–9:00 PM</td><td class="sg">Main Gym</td></tr>
-          <tr data-date="2026-12-03"><td class="sd">Thu, Dec 3</td><td class="st">7:45–9:00 PM</td><td class="sg">Main &amp; North Gyms</td></tr>
-          <tr data-date="2026-12-04"><td class="sd">Fri, Dec 4</td><td class="st">5:45–7:00 PM</td><td class="sg">North Gym</td></tr>
-          <tr data-date="2026-12-06"><td class="sd">Sun, Dec 6</td><td class="st">3:30–6:00 PM</td><td class="sg">Main &amp; North Gyms</td></tr>
-          <tr data-date="2026-12-07"><td class="sd">Mon, Dec 7</td><td class="st">5:45–9:30 PM</td><td class="sg">Main &amp; North Gyms</td></tr>
-          <tr data-date="2026-12-09"><td class="sd">Wed, Dec 9</td><td class="st">5:45–8:15 PM</td><td class="sg">North Gym</td></tr>
-          <tr data-date="2026-12-10"><td class="sd">Thu, Dec 10</td><td class="st">5:45–7:00 PM</td><td class="sg">North Gym</td></tr>
-          <tr data-date="2026-12-14"><td class="sd">Mon, Dec 14</td><td class="st">5:45–9:30 PM</td><td class="sg">Main &amp; North Gyms</td></tr>
-          <tr data-date="2026-12-16"><td class="sd">Wed, Dec 16</td><td class="st">7:45–9:00 PM</td><td class="sg">North Gym</td></tr>
-          <tr data-date="2026-12-18"><td class="sd">Fri, Dec 18</td><td class="st">6:45–9:15 PM</td><td class="sg">North Gym</td></tr>
-          <tr data-date="2026-12-21"><td class="sd">Mon, Dec 21</td><td class="st">6:00–9:00 PM</td><td class="sg">Main &amp; North Gyms</td></tr>
-        </tbody>
-        <tbody data-month><tr class="sched-month"><th colspan="3">January 2027</th></tr>
-          <tr data-date="2027-01-02"><td class="sd">Sat, Jan 2</td><td class="st">11:30 AM–2:00 PM</td><td class="sg">Main &amp; North Gyms</td></tr>
-          <tr data-date="2027-01-03"><td class="sd">Sun, Jan 3</td><td class="st">1:00–3:30 PM</td><td class="sg">Main &amp; North Gyms</td></tr>
-          <tr data-date="2027-01-09"><td class="sd">Sat, Jan 9</td><td class="st">12:30–2:00 PM</td><td class="sg">Main Gym</td></tr>
-        </tbody>
-      </table>
+      <div id="sched-list"></div>
+      <p id="sched-empty" class="sched-empty" hidden>No upcoming practices or games for this team yet. Check back soon.</p>
       <p class="sched-foot">Questions? Email <a href="mailto:mundeleinboysbasketball@gmail.com">mundeleinboysbasketball@gmail.com</a>.</p>
     </div>
   </div>
   <style>
-    .sched-cal { margin-top: 36px; border: 1px solid var(--mustang-lite-gray); border-radius: 12px; overflow: hidden; background: #fff; }
-    .sched-cal iframe { display: block; width: 100%; height: 720px; border: 0; }
-    @media (max-width: 700px) { .sched-cal iframe { height: 600px; } }
-    .sched-temp { margin-top: 36px; max-width: 860px; }
-    .sched-note { padding: 14px 18px; border-left: 4px solid var(--mustang-red); background: var(--mustang-red-100); border-radius: 6px; font-weight: 500; font-size: 15px; line-height: 1.5; color: var(--mustang-charcoal-900); margin-bottom: 22px; }
-    .sched-table { width: 100%; border-collapse: collapse; font-size: 15px; }
-    .sched-table thead th { text-align: left; font-weight: 800; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-3, #77767c); padding: 0 12px 10px; border-bottom: 2px solid var(--mustang-charcoal-900); }
-    .sched-table .sched-month th { text-align: left; font-weight: 900; font-size: 18px; text-transform: uppercase; color: var(--mustang-red); padding: 26px 12px 8px; }
-    .sched-table td { padding: 13px 12px; border-bottom: 1px solid var(--mustang-lite-gray); color: var(--mustang-charcoal-900); vertical-align: top; }
-    .sched-table td.sd { font-weight: 800; white-space: nowrap; }
-    .sched-table td.st { font-weight: 600; white-space: nowrap; }
-    .sched-table td.sg { font-weight: 500; color: var(--fg-2); }
-    .sched-table tbody tr[data-date]:hover td { background: var(--mustang-gray-50); }
+    .sched-wrap { margin-top: 36px; max-width: 880px; }
+    .sched-filters { background: var(--mustang-gray-50); border: 1px solid var(--mustang-lite-gray); border-radius: 12px; padding: 18px 20px; margin-bottom: 22px; }
+    .sf-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; flex-wrap: wrap; }
+    .sf-label { width: 104px; flex: none; font-weight: 800; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-2); }
+    .sf-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sf-opts button { font: inherit; font-weight: 700; font-size: 13px; padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--mustang-lite-gray); background: #fff; color: var(--mustang-charcoal-900); cursor: pointer; }
+    .sf-opts button:hover { border-color: var(--mustang-charcoal); }
+    .sf-opts button[aria-pressed="true"] { background: var(--mustang-red); border-color: var(--mustang-red); color: #fff; }
+    .sf-opts[data-key="color"] button[data-v="B"][aria-pressed="true"] { background: var(--mustang-charcoal-900); border-color: var(--mustang-charcoal-900); }
+    .sf-status { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-weight: 700; font-size: 14px; color: var(--mustang-charcoal-900); padding-top: 4px; }
+    #sf-clear { font: inherit; font-weight: 700; font-size: 13px; background: none; border: 0; color: var(--mustang-red); text-decoration: underline; cursor: pointer; padding: 0; }
+    .sched-note { padding: 14px 18px; border-left: 4px solid var(--mustang-red); background: var(--mustang-red-100); border-radius: 6px; font-weight: 500; font-size: 15px; line-height: 1.5; color: var(--mustang-charcoal-900); margin-bottom: 8px; }
+    .sched-month { font-weight: 900; font-size: 18px; text-transform: uppercase; color: var(--mustang-red); margin: 28px 0 10px; }
+    .sched-day { border: 1px solid var(--mustang-lite-gray); border-radius: 10px; background: #fff; margin-bottom: 12px; overflow: hidden; }
+    .sd-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 12px 16px; background: var(--mustang-gray-50); border-bottom: 1px solid var(--mustang-lite-gray); }
+    .sd-date { font-weight: 900; font-size: 16px; color: var(--mustang-charcoal-900); }
+    .sd-gym { font-weight: 700; font-size: 13px; color: var(--fg-2); }
+    .sd-slot { display: grid; grid-template-columns: 150px 1fr; gap: 14px; padding: 12px 16px; border-top: 1px solid var(--mustang-gray-50); }
+    .sd-slot:first-of-type { border-top: 0; }
+    .sd-time { font-weight: 700; font-size: 15px; color: var(--mustang-charcoal-900); white-space: nowrap; }
+    .sd-who { font-weight: 500; font-size: 15px; line-height: 1.45; color: var(--mustang-charcoal-900); }
+    .sd-who.tba { color: var(--fg-2); font-style: italic; }
+    .sched-empty { font-weight: 600; font-size: 15px; color: var(--fg-2); padding: 18px 0; margin: 0; }
     .sched-foot { font-weight: 500; font-size: 14px; color: var(--fg-2); margin: 22px 0 0; }
     .sched-foot a { color: var(--mustang-red); }
     @media (max-width: 600px) {
-      .sched-table { font-size: 14px; }
-      .sched-table thead { display: none; }
-      .sched-table td { padding: 11px 6px; }
-      .sched-table td.sg { white-space: normal; }
-      .sched-table .sched-month th { padding: 22px 6px 6px; }
+      .sched-filters { padding: 14px; }
+      .sf-row { gap: 8px; }
+      .sf-label { width: 100%; }
+      .sf-opts button { padding: 7px 12px; }
+      .sd-slot { grid-template-columns: 1fr; gap: 2px; }
     }
-    .sched-soon { margin-top: 36px; padding: 28px 30px; border: 2px solid var(--mustang-red); border-radius: 12px; background: #fff; max-width: 760px; }
-    .sched-soon h3 { font-weight: 900; font-size: 20px; text-transform: uppercase; color: var(--mustang-charcoal-900); margin: 0 0 8px; }
-    .sched-soon p { font-weight: 500; font-size: 15px; line-height: 1.6; color: var(--fg-2); margin: 0; }
-    .sched-soon a { color: var(--mustang-red); }
   </style>
   <script>
-    // Hide sessions whose day has passed (Central Time), and any month left empty.
-    (function () {
-      var today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Chicago' });
-      document.querySelectorAll('#sched-temp tr[data-date]').forEach(function (r) {
-        if (r.getAttribute('data-date') < today) r.style.display = 'none';
+  (function () {
+    // One entry per gym session. slots: [time, who, teams]. A session with no slots shows "Team times coming soon" to everyone.
+    var SESSIONS = [
+      { date: '2026-11-17', time: '6:00–9:30 PM', gym: 'North Gym', slots: [
+        ['6:00–7:15 PM', '6th Grade Girls · Red & Black', 'G6'],
+        ['7:15–8:30 PM', '6th Grade Boys · Red & Black', 'B6'],
+        ['8:30–9:45 PM', '8th Grade Boys & Girls', '8'] ] },
+      { date: '2026-11-19', time: '6:00–9:30 PM', gym: 'Main Gym', slots: [
+        ['6:00–7:15 PM', '4th & 5th Grade Boys · Red & Black', 'B4 B5'],
+        ['7:15–8:30 PM', '6th Grade Boys & Girls · Red & Black', '6'],
+        ['8:30–9:45 PM', '7th Grade Boys · Red & Black, plus 8th Grade Boys & Girls', 'B7 8'] ] },
+      { date: '2026-11-21', time: '1:15–4:15 PM', gym: 'North Gym', slots: [
+        ['1:15–2:15 PM', '7th Grade Boys · Red & Black', 'B7'],
+        ['2:15–3:15 PM', '4th Grade Boys · Red & Black', 'B4'],
+        ['3:15–4:15 PM', '5th Grade Boys · Red & Black', 'B5'] ] },
+      { date: '2026-11-30', time: '7:45–9:00 PM', gym: 'Main & North Gyms' },
+      { date: '2026-12-02', time: '5:45–9:30 PM', gym: 'North Gym' },
+      { date: '2026-12-02', time: '7:30–9:00 PM', gym: 'Main Gym' },
+      { date: '2026-12-03', time: '7:45–9:00 PM', gym: 'Main & North Gyms' },
+      { date: '2026-12-04', time: '5:45–7:00 PM', gym: 'North Gym' },
+      { date: '2026-12-06', time: '3:30–6:00 PM', gym: 'Main & North Gyms' },
+      { date: '2026-12-07', time: '5:45–9:30 PM', gym: 'Main & North Gyms' },
+      { date: '2026-12-09', time: '5:45–8:15 PM', gym: 'North Gym' },
+      { date: '2026-12-10', time: '5:45–7:00 PM', gym: 'North Gym' },
+      { date: '2026-12-14', time: '5:45–9:30 PM', gym: 'Main & North Gyms' },
+      { date: '2026-12-16', time: '7:45–9:00 PM', gym: 'North Gym' },
+      { date: '2026-12-18', time: '6:45–9:15 PM', gym: 'North Gym' },
+      { date: '2026-12-21', time: '6:00–9:00 PM', gym: 'Main & North Gyms' },
+      { date: '2027-01-02', time: '11:30 AM–2:00 PM', gym: 'Main & North Gyms' },
+      { date: '2027-01-03', time: '1:00–3:30 PM', gym: 'Main & North Gyms' },
+      { date: '2027-01-09', time: '12:30–2:00 PM', gym: 'Main Gym' }
+    ];
+
+    var MON = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var GR = { '4': '4th', '5': '5th', '6': '6th', '7': '7th', '8': '8th' };
+
+    // "B6" -> B6R B6B, "6" -> B6R B6B G6R G6B, "*" -> every team
+    function expand(codes) {
+      var out = [];
+      (codes || '*').split(/\s+/).forEach(function (c) {
+        var gs = /^[BG]/.test(c) ? [c[0]] : ['B', 'G']; if (/^[BG]/.test(c)) c = c.slice(1);
+        var gr = /^[4-8]/.test(c) ? [c[0]] : ['4','5','6','7','8']; if (/^[4-8]/.test(c)) c = c.slice(1);
+        var cs = /^[RB]$/.test(c) ? [c] : ['R', 'B'];
+        gs.forEach(function (g) { gr.forEach(function (n) { cs.forEach(function (k) { out.push({ g: g, n: n, c: k }); }); }); });
       });
-      document.querySelectorAll('#sched-temp tbody[data-month]').forEach(function (b) {
-        if (!b.querySelector('tr[data-date]:not([style*="none"])')) b.style.display = 'none';
+      return out;
+    }
+    var f = { grade: '', gender: '', color: '' };
+    function matches(codes) {
+      return expand(codes).some(function (t) {
+        return (!f.grade || t.n === f.grade) && (!f.gender || t.g === f.gender) && (!f.color || t.c === f.color);
       });
-    })();
-  </script>
-  <script>
-    (function () {
-      var CALENDAR_EMBED = ''; // calendar embed URL goes here; empty = "Schedule posting soon"
-      if (!CALENDAR_EMBED) return;
-      var f = document.createElement('iframe');
-      f.src = CALENDAR_EMBED;
-      f.title = 'Jr. Mustangs game and practice schedule';
-      f.loading = 'lazy';
-      document.getElementById('sched-cal').appendChild(f);
-      document.getElementById('sched-cal').style.display = 'block';
-      document.getElementById('sched-temp').style.display = 'none';
-    })();
+    }
+    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+    var today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Chicago' });
+    var list = document.getElementById('sched-list');
+
+    function render() {
+      var html = '', month = '', shown = 0;
+      SESSIONS.forEach(function (s) {
+        if (s.date < today) return;
+        var slots = s.slots && s.slots.length ? s.slots.filter(function (x) { return matches(x[2]); }) : null;
+        if (slots && !slots.length) return;
+        var p = s.date.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]);
+        var m = MON[d.getMonth()] + ' ' + d.getFullYear();
+        if (m !== month) { html += '<h3 class="sched-month">' + m + '</h3>'; month = m; }
+        html += '<div class="sched-day"><div class="sd-head"><span class="sd-date">' + DOW[d.getDay()] + ', ' + MON[d.getMonth()].slice(0, 3) + ' ' + d.getDate() +
+          '</span><span class="sd-gym">' + esc(s.gym) + '</span></div>';
+        if (slots) slots.forEach(function (x) { html += '<div class="sd-slot"><span class="sd-time">' + esc(x[0]) + '</span><span class="sd-who">' + esc(x[1]) + '</span></div>'; });
+        else html += '<div class="sd-slot"><span class="sd-time">' + esc(s.time) + '</span><span class="sd-who tba">Team times coming soon</span></div>';
+        html += '</div>';
+        shown++;
+      });
+      list.innerHTML = html;
+      document.getElementById('sched-empty').hidden = shown > 0;
+
+      var parts = [];
+      if (f.grade) parts.push(GR[f.grade] + ' Grade');
+      if (f.gender) parts.push(f.gender === 'B' ? 'Boys' : 'Girls');
+      if (f.color) parts.push(f.color === 'R' ? 'Red' : 'Black');
+      document.getElementById('sf-summary').textContent = parts.length ? 'Showing: ' + parts.join(' · ') : 'Showing all teams';
+      document.getElementById('sf-clear').hidden = !parts.length;
+      document.querySelectorAll('.sf-opts').forEach(function (g) {
+        g.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === f[g.getAttribute('data-key')])); });
+      });
+    }
+
+    function save() {
+      var q = new URLSearchParams(location.search);
+      ['grade', 'gender', 'color'].forEach(function (k) { if (f[k]) q.set(k, f[k]); else q.delete(k); });
+      var qs = q.toString();
+      try { history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash); } catch (e) {}
+      try { localStorage.setItem('mundyball-sched-filter', JSON.stringify(f)); } catch (e) {}
+    }
+
+    // Start from the link (?grade=6&gender=G&color=R) if present, else the visitor's last choice.
+    var q = new URLSearchParams(location.search), fromUrl = false;
+    ['grade', 'gender', 'color'].forEach(function (k) { if (q.get(k)) { f[k] = q.get(k).toUpperCase(); fromUrl = true; } });
+    if (!fromUrl) { try { var saved = JSON.parse(localStorage.getItem('mundyball-sched-filter') || 'null'); if (saved) f = { grade: saved.grade || '', gender: saved.gender || '', color: saved.color || '' }; } catch (e) {} }
+    if (!/^[4-8]?$/.test(f.grade)) f.grade = '';
+    if (!/^[BG]?$/.test(f.gender)) f.gender = '';
+    if (!/^[RB]?$/.test(f.color)) f.color = '';
+
+    document.querySelectorAll('.sf-opts').forEach(function (g) {
+      g.addEventListener('click', function (e) {
+        var b = e.target.closest('button'); if (!b) return;
+        f[g.getAttribute('data-key')] = b.getAttribute('data-v');
+        render(); save();
+      });
+    });
+    document.getElementById('sf-clear').addEventListener('click', function () { f = { grade: '', gender: '', color: '' }; render(); save(); });
+    render();
+  })();
   </script>
 </section>
 
