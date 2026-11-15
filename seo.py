@@ -77,6 +77,11 @@ PAGES = {
         title="Code of Conduct | Mundelein Jr. Mustangs Basketball",
         desc="The standards Jr. Mustangs players, parents, coaches, and volunteers agree to: training-first development, respect for the game, and clear communication.",
     ),
+    "schedule.html": dict(
+        path="/schedule", crumb="Schedule", type="WebPage",
+        title="Schedule | Mundelein Jr. Mustangs Feeder Basketball",
+        desc="Game and practice days, times, and locations for Mundelein Jr. Mustangs feeder basketball teams, boys and girls grades 4–8.",
+    ),
     "contact.html": dict(
         path="/contact", crumb="Contact", type="ContactPage",
         title="Contact | Mundelein Jr. Mustangs Feeder Basketball",
