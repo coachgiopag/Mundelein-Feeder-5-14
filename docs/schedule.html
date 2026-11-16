@@ -546,6 +546,7 @@
         if (s.date < today) return;
         if (s.slots && s.slots.length) {
           s.slots.forEach(function (x) {
+            if (!x[2]) { rows.push({ date: s.date, time: x[0], who: 'Team times coming soon', gym: x[4] || s.gym, head: s.gym, tba: true }); return; }
             if (matches(x[2])) rows.push({ date: s.date, time: x[0], who: x[1], gym: x[4] || s.gym, head: s.gym, kind: x[3] || 'Practice' });
           });
         } else if (!gameDays[s.date]) {

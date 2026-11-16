@@ -78,6 +78,8 @@ def build():
         day = datetime.date.fromisoformat(s["date"])
         for slot in s.get("slots") or []:
             time, who, codes = slot[0], slot[1], slot[2]
+            if not codes:  # period not assigned to a team yet
+                continue
             kind = slot[3] if len(slot) > 3 else "Practice"
             gym = slot[4] if len(slot) > 4 and slot[4] else s["gym"]
             start, end = parse_range(day, time)
