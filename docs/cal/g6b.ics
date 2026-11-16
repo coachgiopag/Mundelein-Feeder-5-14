@@ -87,14 +87,14 @@ URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
 UID:0c96f6b84a926b498bb6@mundyball.com
-DTSTAMP:20270117T190000Z
-DTSTART:20270117T190000Z
-DTEND:20270117T200000Z
+DTSTAMP:20270117T200000Z
+DTSTART:20270117T200000Z
+DTEND:20270117T210000Z
 SUMMARY:Jr. Mustangs Game: 6th Grade Girls Black vs Niles West
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
-DESCRIPTION:Main Gym · Game starts 1:00 PM\nTimes and gyms may change: ht
+DESCRIPTION:Main Gym · Game starts 2:00 PM\nTimes and gyms may change: ht
  tps://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
