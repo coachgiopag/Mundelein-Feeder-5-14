@@ -1324,14 +1324,14 @@
 <script>
   // Winter Feeder Camp sign-up (Dec 21–23, 2026). LOCKED until the program director approves opening it:
   // then set WINTER_SIGNUPS_OPEN = true. No automatic date.
-  // add ?open=1 to the URL to preview it open. Sends to Web3Forms, then copies to the Sheet ('wintercamp' tab).
+  // No preview bypass: while WINTER_SIGNUPS_OPEN is false nobody can submit. Sends to Web3Forms, then copies to the Sheet ('wintercamp' tab).
   (function(){
     var WINTER_SIGNUPS_OPEN = false;
     var form = document.getElementById('wc-form');
     var btn = document.getElementById('wc-submit-btn');
     var success = document.getElementById('wc-success');
     if (!form || !btn || !success) return;
-    var isOpen = WINTER_SIGNUPS_OPEN || /[?&]open=1/.test(location.search);
+    var isOpen = WINTER_SIGNUPS_OPEN;
     if (!isOpen) {
       form.style.opacity = '0.4';
       form.style.filter = 'grayscale(1)';
@@ -1339,6 +1339,7 @@
       form.setAttribute('aria-disabled', 'true');
       form.querySelectorAll('input, select, textarea, button').forEach(function (el) { el.disabled = true; });
       document.getElementById('wc-closed-note').style.display = 'block';
+      form.addEventListener('submit', function (e) { e.preventDefault(); e.stopImmediatePropagation(); }, true);
       return;
     }
     document.getElementById('wc-open-line').textContent = 'Sign-ups are open.';
