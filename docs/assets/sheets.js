@@ -9,6 +9,7 @@
   var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyvOsuSemzCcTGBpOMrG7dusSdwy2uTQUM-HnnMOLhQW2K8-fLxt8vBWH7j1XdjfXm4NQ/exec';
   var TOKEN = 'mundyball-forms-v1'; // must match TOKEN in tools/form-to-sheets.gs (not a password)
   var SKIP = { access_key: 1, subject: 1, from_name: 1, redirect: 1 };
+  window.SHEETS_URL = SHEETS_URL; // read by the winter camp sign-up to check spots left
 
   window.sendToSheets = function (formKey, fd) {
     if (!SHEETS_URL) return;

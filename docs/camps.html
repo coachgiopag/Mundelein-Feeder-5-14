@@ -1350,6 +1350,38 @@
       if (dot) dot.removeAttribute('style');   // back to the pulsing green dot
     }
     var btnHTML = btn.innerHTML;
+
+    // Capacity: 36 campers per session. "Both" needs an AM and a PM spot. Spots left come from the
+    // Sheet (Apps Script ?capacity=winter); full sessions are disabled in the picker and re-checked on submit.
+    var sessionSel = form.querySelector('select[name="Session"]');
+    var spots = null;
+    function needs(label){ return /^Both/.test(label) ? ['AM','PM'] : /^AM/.test(label) ? ['AM'] : /^PM/.test(label) ? ['PM'] : []; }
+    function isFull(label){ return !!spots && needs(label).some(function(s){ return spots[s] <= 0; }); }
+    function loadSpots(){
+      if (!window.SHEETS_URL) return Promise.resolve(null);
+      return fetch(window.SHEETS_URL + '?capacity=winter', { cache: 'no-store' })
+        .then(function(r){ return r.json(); })
+        .then(function(j){
+          spots = { AM: Number(j.AM), PM: Number(j.PM) };
+          Array.prototype.forEach.call(sessionSel.options, function(o){
+            if (!o.value) return;
+            if (!o.dataset.base) o.dataset.base = o.textContent;
+            var full = isFull(o.dataset.base);
+            o.disabled = full;
+            var n = Math.min.apply(null, needs(o.dataset.base).map(function(s){ return spots[s]; }));
+            o.textContent = o.dataset.base + (full ? ' · FULL' : n <= 10 ? ' · ' + n + ' spot' + (n === 1 ? '' : 's') + ' left' : '');
+          });
+          if (sessionSel.selectedOptions[0] && sessionSel.selectedOptions[0].disabled) sessionSel.value = '';
+          if (spots.AM <= 0 && spots.PM <= 0) {
+            showError('Winter Feeder Camp is full. Email mundeleinboysbasketball@gmail.com to join the waitlist.');
+            btn.disabled = true;
+          }
+          return spots;
+        })
+        .catch(function(){ return null; });   // Sheet unreachable: don't block sign-ups; the Sheet still waitlists overflow
+    }
+    window.addEventListener('load', loadSpots);
+
     function showError(msg){
       var el = document.getElementById('wc-error');
       if (!el) {
@@ -1369,6 +1401,11 @@
       btn.textContent = 'Submitting…';
       var fd = new FormData(form);
       var camper = (fd.get('Camper First Name') + ' ' + fd.get('Camper Last Name')).trim();
+      loadSpots().then(function(){
+      if (isFull(fd.get('Session') || '')) {
+        showError('Sorry, that session just filled up. Please pick another session, or email mundeleinboysbasketball@gmail.com to join the waitlist.');
+        return;
+      }
       fd.set('access_key', '14da06cd-35ce-4d2c-9fc4-0ed01521439d');
       fd.set('subject', 'Winter Feeder Camp Sign-Up — ' + camper + ' — ' + fd.get('Session'));
       fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
@@ -1390,6 +1427,7 @@
         .catch(function(err){
           showError('That did not go through' + (err && err.message ? ' (' + err.message + ')' : '') + '. Please try again, or email mundeleinboysbasketball@gmail.com.');
         });
+      });
     });
   })();
 </script>

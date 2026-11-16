@@ -16,7 +16,7 @@ var TABS = {
   camp:     '2027 Camp Interest Form',
   contact:  'MundyBall Contact Us Page',
   coaching: 'Coaching Applicants',
-  wintercamp: 'Winter Camp 2026'
+  wintercamp: '2026 Winter Feeder Camp Registration'
 };
 
 // Tabs that should not get an automatic Timestamp column.
@@ -76,6 +76,12 @@ var REQUIRED = {
   coaching: ['Applicant Name', 'Applicant Email'],
   wintercamp: ['Camper First Name', 'Email', 'Session']
 };
+// Winter camp capacity per session. "Both sessions" takes one AM spot and one PM spot.
+// A sign-up for a full session is still saved, with Status "Waitlist" (the website blocks full sessions, so
+// this only happens if two families take the last spot at the same moment).
+// Rows marked Waitlist or Cancelled in the Status column do not count against capacity.
+var WINTER_CAPACITY = { AM: 36, PM: 36 };
+
 var MAX_CELL = 2000;
 var MAX_FIELDS = 60;
 
@@ -107,6 +113,13 @@ function doPost(e) {
   var lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
+    if (form === 'wintercamp') {
+      var want = sessionsOf_(first_(p.Session));
+      var left = winterSpotsLeft_();
+      var full = want.some(function (s) { return left[s] <= 0; });
+      if (!('Status' in values)) order.push('Status');
+      values.Status = [full ? 'Waitlist' : 'Registered'];
+    }
     var sheet = sheet_(TABS[form]);
     var hRow = headerRow_(sheet);
     var headers = headers_(sheet, hRow);
@@ -139,7 +152,43 @@ function doPost(e) {
   return reply_('ok');
 }
 
-function doGet() { return reply_('MundyBall form endpoint is running.'); }
+function doGet(e) {
+  // ?capacity=winter -> {"AM": spots left, "PM": spots left} for the website's session picker.
+  if (e && e.parameter && e.parameter.capacity === 'winter') {
+    return ContentService.createTextOutput(JSON.stringify(winterSpotsLeft_()))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  return reply_('MundyBall form endpoint is running.');
+}
+
+// ----- Winter camp capacity -----
+// "AM (...)" -> ['AM'], "PM (...)" -> ['PM'], "Both sessions ..." -> ['AM', 'PM'].
+function sessionsOf_(session) {
+  var s = String(session || '').trim().toLowerCase();
+  if (/^both/.test(s)) return ['AM', 'PM'];
+  if (/^am/.test(s)) return ['AM'];
+  if (/^pm/.test(s)) return ['PM'];
+  return [];
+}
+
+// Spots left per session, counting every row on the winter tab except Waitlist / Cancelled.
+function winterSpotsLeft_() {
+  var used = { AM: 0, PM: 0 };
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(TABS.wintercamp);
+  if (sheet) {
+    var hRow = headerRow_(sheet), headers = headers_(sheet, hRow);
+    var cSession = findColumn_(headers, 'Session'), cStatus = findColumn_(headers, 'Status');
+    var n = dataRowCount_(sheet, hRow, headers.length);
+    if (cSession >= 0 && n > 0) {
+      sheet.getRange(hRow + 1, 1, n, headers.length).getValues().forEach(function (r) {
+        var status = cStatus >= 0 ? String(r[cStatus]).trim().toLowerCase() : '';
+        if (status === 'waitlist' || status === 'cancelled') return;
+        sessionsOf_(r[cSession]).forEach(function (s) { used[s]++; });
+      });
+    }
+  }
+  return { AM: Math.max(0, WINTER_CAPACITY.AM - used.AM), PM: Math.max(0, WINTER_CAPACITY.PM - used.PM) };
+}
 
 // ----- Tryout tab ordering -----
 // Registered players: Boys first, then Girls, each by grade 3rd -> 8th (ties keep their current order).
