@@ -74,11 +74,11 @@ TRANSP:TRANSPARENT
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
-UID:3e4c58124ab2602953f9@mundyball.com
+UID:2ed1e7f3772eba453e67@mundyball.com
 DTSTAMP:20270216T023000Z
 DTSTART:20270216T023000Z
 DTEND:20270216T033000Z
-SUMMARY:Jr. Mustangs Game: 7th Grade Boys Black vs Grayslake North (7B)
+SUMMARY:Jr. Mustangs Game: 7th Grade Boys Black vs Grayslake North
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060

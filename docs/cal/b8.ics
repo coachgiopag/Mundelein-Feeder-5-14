@@ -62,11 +62,11 @@ TRANSP:TRANSPARENT
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
-UID:4c7d1dad0b996aaf3cc4@mundyball.com
+UID:fbe2b1a9383a2844fe04@mundyball.com
 DTSTAMP:20261206T220000Z
 DTSTART:20261206T220000Z
 DTEND:20261206T230000Z
-SUMMARY:Jr. Mustangs Game: 8th Grade Boys vs Grayslake Central (8B)
+SUMMARY:Jr. Mustangs Game: 8th Grade Boys vs Grayslake Central
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
@@ -75,11 +75,11 @@ DESCRIPTION:Main Gym · Game starts 4:00 PM\nTimes and gyms may change: ht
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
-UID:aaf823688d380f3e96ea@mundyball.com
+UID:2e547ad1724b7dc0803b@mundyball.com
 DTSTAMP:20261222T014500Z
 DTSTART:20261222T014500Z
 DTEND:20261222T024500Z
-SUMMARY:Jr. Mustangs Game: 8th Grade Boys vs Vernon Hills (8C)
+SUMMARY:Jr. Mustangs Game: 8th Grade Boys vs Vernon Hills
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
@@ -88,11 +88,11 @@ DESCRIPTION:Main Gym · Game starts 7:45 PM\nTimes and gyms may change: ht
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
-UID:129cc984da070ac30414@mundyball.com
+UID:6f7a7b0572bb097c401c@mundyball.com
 DTSTAMP:20270131T203000Z
 DTSTART:20270131T203000Z
 DTEND:20270131T213000Z
-SUMMARY:Jr. Mustangs Game: 8th Grade Boys vs Grant (8B)
+SUMMARY:Jr. Mustangs Game: 8th Grade Boys vs Grant
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060

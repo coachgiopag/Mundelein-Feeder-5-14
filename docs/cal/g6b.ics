@@ -47,11 +47,11 @@ TRANSP:TRANSPARENT
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
-UID:b7c774ee11d389a89230@mundyball.com
+UID:b62f52f031ce405df0eb@mundyball.com
 DTSTAMP:20261206T230000Z
 DTSTART:20261206T230000Z
 DTEND:20261207T000000Z
-SUMMARY:Jr. Mustangs Game: 6th Grade Girls Black vs Grayslake North (6B)
+SUMMARY:Jr. Mustangs Game: 6th Grade Girls Black vs Grayslake North
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060

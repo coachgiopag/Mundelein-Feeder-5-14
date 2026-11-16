@@ -74,11 +74,11 @@ DESCRIPTION:Main Gym · Game starts 7:30 PM\nTimes and gyms may change: ht
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
-UID:832fb757e1743dd70182@mundyball.com
+UID:58823de57e11c39fb99f@mundyball.com
 DTSTAMP:20270131T193000Z
 DTSTART:20270131T193000Z
 DTEND:20270131T203000Z
-SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black vs Grant (6B)
+SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black vs Grant
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
@@ -87,11 +87,11 @@ DESCRIPTION:Main Gym · Game starts 1:30 PM\nTimes and gyms may change: ht
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
-UID:3507ad0a4f8fe3112e2e@mundyball.com
+UID:b7937fdedf9aaa233b9c@mundyball.com
 DTSTAMP:20270216T013000Z
 DTSTART:20270216T013000Z
 DTEND:20270216T023000Z
-SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black vs Grayslake North (6B)
+SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black vs Grayslake North
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060

@@ -47,11 +47,11 @@ TRANSP:TRANSPARENT
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
-UID:3879416f48ac9e5de686@mundyball.com
+UID:8fbbad0090f0edaa0f67@mundyball.com
 DTSTAMP:20261222T003000Z
 DTSTART:20261222T003000Z
 DTEND:20261222T013000Z
-SUMMARY:Jr. Mustangs Game: 4th Grade Boys Black vs Vernon Hills (4B)
+SUMMARY:Jr. Mustangs Game: 4th Grade Boys Black vs Vernon Hills
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
@@ -60,11 +60,11 @@ DESCRIPTION:Main Gym · Game starts 6:30 PM\nTimes and gyms may change: ht
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
-UID:c9f1737290f36d850469@mundyball.com
+UID:1f42c0bc9f1a26032442@mundyball.com
 DTSTAMP:20270131T183000Z
 DTSTART:20270131T183000Z
 DTEND:20270131T193000Z
-SUMMARY:Jr. Mustangs Game: 4th Grade Boys Black vs Grant (4B)
+SUMMARY:Jr. Mustangs Game: 4th Grade Boys Black vs Grant
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
@@ -73,11 +73,11 @@ DESCRIPTION:Main Gym · Game starts 12:30 PM\nTimes and gyms may change: h
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
-UID:e097da39d0cd56c643af@mundyball.com
+UID:5c4ffc23c780a280f468@mundyball.com
 DTSTAMP:20270215T233000Z
 DTSTART:20270215T233000Z
 DTEND:20270216T003000Z
-SUMMARY:Jr. Mustangs Game: 4th Grade Boys Black vs Grayslake North (4B)
+SUMMARY:Jr. Mustangs Game: 4th Grade Boys Black vs Grayslake North
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
