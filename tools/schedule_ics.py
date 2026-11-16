@@ -1,6 +1,7 @@
 """Build calendar feeds (docs/cal/*.ics) from docs/assets/schedule.json.
 
-One feed per team (b4r.ics = 4th grade boys Red, g6b.ics = 6th grade girls Black, ...) plus all.ics.
+One feed per team (b4r.ics = 4th grade boys Red, g6b.ics = 6th grade girls Black, b8.ics = 8th grade boys,
+...) plus all.ics. 8th grade has one boys team and one girls team, no Red/Black.
 Families subscribe from mundyball.com/schedule, so their calendars pick up changes on their own.
 Run by seo.py; can also be run directly: python3 tools/schedule_ics.py
 """
@@ -23,7 +24,7 @@ def expand(codes):
         gr = [c[0]] if c[:1] in GRADES else GRADES
         c = c[1:] if c[:1] in GRADES else c
         cs = [c] if c in ("R", "B") else ["R", "B"]
-        out |= {g + n + k for g in gs for n in gr for k in cs}
+        out |= {g + n + ('' if n == '8' else k) for g in gs for n in gr for k in cs}  # 8th grade: one team, no Red/Black
     return out
 
 
@@ -65,7 +66,8 @@ def utc(d):
 
 
 def team_name(code):
-    return "%s Grade %s %s" % (ORD[code[1]], "Boys" if code[0] == "B" else "Girls", "Red" if code[2] == "R" else "Black")
+    name = "%s Grade %s" % (ORD[code[1]], "Boys" if code[0] == "B" else "Girls")
+    return name if len(code) == 2 else name + (" Red" if code[2] == "R" else " Black")
 
 
 def build():
@@ -95,7 +97,10 @@ def build():
 
     outdir = os.path.join(DOCS, "cal")
     os.makedirs(outdir, exist_ok=True)
-    teams = sorted(g + n + k for g in "BG" for n in GRADES for k in "RB")
+    for old in os.listdir(outdir):  # drop feeds for teams that no longer exist
+        if old.endswith(".ics"):
+            os.remove(os.path.join(outdir, old))
+    teams = sorted({g + n + ("" if n == "8" else k) for g in "BG" for n in GRADES for k in "RB"})
     feeds = {t.lower(): ("Jr. Mustangs · " + team_name(t), {t}) for t in teams}
     feeds["all"] = ("Jr. Mustangs · All Teams", set(teams))
     for slug, (name, want) in feeds.items():

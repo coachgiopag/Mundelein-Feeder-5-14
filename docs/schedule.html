@@ -418,13 +418,14 @@
             <button type="button" data-v="">All</button><button type="button" data-v="B">Boys</button><button type="button" data-v="G">Girls</button>
           </div></div>
         <div class="sf-row"><span class="sf-label">Team</span>
+          <span class="sf-one" id="sf-one" hidden>8th grade has one boys team and one girls team</span>
           <div class="sf-opts" data-key="color">
             <button type="button" data-v="">All</button><button type="button" data-v="R">Red</button><button type="button" data-v="B">Black</button>
           </div></div>
         <div class="sf-status"><span id="sf-summary">Showing all teams</span> <button type="button" id="sf-clear" hidden>Clear filters</button></div>
         <div class="sf-cal" id="sf-cal">
           <div class="sf-cal-title" id="sf-cal-title">Add to your calendar</div>
-          <p class="sf-cal-hint" id="sf-cal-hint" hidden>Pick a grade, boys or girls, and Red or Black to add your team's schedule to your calendar.</p>
+          <p class="sf-cal-hint" id="sf-cal-hint" hidden>Pick a grade, boys or girls, and Red or Black (8th grade: just boys or girls) to add your team's schedule to your calendar.</p>
           <div class="sf-cal-btns" id="sf-cal-btns">
             <a id="cal-apple" class="cal-btn" href="#">Apple Calendar</a>
             <a id="cal-google" class="cal-btn" href="#" target="_blank" rel="noopener">Google Calendar / Android</a>
@@ -450,6 +451,8 @@
     .sf-opts button:hover { border-color: var(--mustang-charcoal); }
     .sf-opts button[aria-pressed="true"] { background: var(--mustang-red); border-color: var(--mustang-red); color: #fff; }
     .sf-opts[data-key="color"] button[data-v="B"][aria-pressed="true"] { background: var(--mustang-charcoal-900); border-color: var(--mustang-charcoal-900); }
+    .sf-opts[hidden], .sf-one[hidden] { display: none; }
+    .sf-one { font-weight: 600; font-size: 13px; color: var(--fg-2); padding: 8px 0; }
     .sf-status { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-weight: 700; font-size: 14px; color: var(--mustang-charcoal-900); padding-top: 4px; }
     #sf-clear { font: inherit; font-weight: 700; font-size: 13px; background: none; border: 0; color: var(--mustang-red); text-decoration: underline; cursor: pointer; padding: 0; }
     .sf-cal { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--mustang-lite-gray); }
@@ -498,14 +501,14 @@
         var gs = /^[BG]/.test(c) ? [c[0]] : ['B', 'G']; if (/^[BG]/.test(c)) c = c.slice(1);
         var gr = /^[4-8]/.test(c) ? [c[0]] : ['4','5','6','7','8']; if (/^[4-8]/.test(c)) c = c.slice(1);
         var cs = /^[RB]$/.test(c) ? [c] : ['R', 'B'];
-        gs.forEach(function (g) { gr.forEach(function (n) { cs.forEach(function (k) { out.push({ g: g, n: n, c: k }); }); }); });
+        gs.forEach(function (g) { gr.forEach(function (n) { (n === '8' ? [''] : cs).forEach(function (k) { out.push({ g: g, n: n, c: k }); }); }); });  // 8th grade: one team, no Red/Black
       });
       return out;
     }
     var f = { grade: '', gender: '', color: '' };
     function matches(codes) {
       return expand(codes).some(function (t) {
-        return (!f.grade || t.n === f.grade) && (!f.gender || t.g === f.gender) && (!f.color || t.c === f.color);
+        return (!f.grade || t.n === f.grade) && (!f.gender || t.g === f.gender) && (!f.color || !t.c || t.c === f.color);
       });
     }
     function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
@@ -515,6 +518,9 @@
     var loaded = false;
 
     function render() {
+      if (f.grade === '8') f.color = '';
+      document.getElementById('sf-one').hidden = f.grade !== '8';
+      document.querySelector('.sf-opts[data-key="color"]').hidden = f.grade === '8';
       var html = '', month = '', shown = 0;
       SESSIONS.forEach(function (s) {
         if (s.date < today) return;
@@ -547,14 +553,14 @@
 
     // Calendar feeds are built by seo.py into /cal/<team>.ics (b6r = 6th grade boys Red) and /cal/all.ics.
     function calendarButtons() {
-      var full = f.grade && f.gender && f.color, none = !f.grade && !f.gender && !f.color;
+      var full = f.grade && f.gender && (f.color || f.grade === '8'), none = !f.grade && !f.gender && !f.color;
       var ok = full || none;
       document.getElementById('sf-cal-btns').hidden = !ok;
       document.getElementById('sf-cal-note').hidden = !ok;
       document.getElementById('sf-cal-hint').hidden = ok;
       if (!ok) { document.getElementById('sf-cal-title').textContent = 'Add to your calendar'; return; }
-      var slug = full ? (f.gender + f.grade + f.color).toLowerCase() : 'all';
-      var name = full ? GR[f.grade] + ' Grade ' + (f.gender === 'B' ? 'Boys' : 'Girls') + ' ' + (f.color === 'R' ? 'Red' : 'Black') : 'All Teams';
+      var slug = full ? (f.gender + f.grade + (f.grade === '8' ? '' : f.color)).toLowerCase() : 'all';
+      var name = full ? GR[f.grade] + ' Grade ' + (f.gender === 'B' ? 'Boys' : 'Girls') + (f.grade === '8' ? '' : ' ' + (f.color === 'R' ? 'Red' : 'Black')) : 'All Teams';
       var https = 'https://www.mundyball.com/cal/' + slug + '.ics';
       var webcal = 'webcal://www.mundyball.com/cal/' + slug + '.ics';
       var google = 'https://calendar.google.com/calendar/render?cid=' + encodeURIComponent(webcal);

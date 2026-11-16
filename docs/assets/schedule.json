@@ -1,5 +1,5 @@
 {
-  "_help": "Team schedule for mundyball.com/schedule. After editing, run: python3 seo.py (rebuilds the calendar feeds in docs/cal/). slots: [time, who, teams, kind]. Team codes: B/G (boys/girls) + grade 4-8 + R/B (Red/Black), e.g. G6R. 'B6' = both 6th grade boys teams, '6' = every 6th grade team, '*' = all teams. kind defaults to Practice (use Game for games). A session with no slots shows 'Team times coming soon'.",
+  "_help": "Team schedule for mundyball.com/schedule. After editing, run: python3 seo.py (rebuilds the calendar feeds in docs/cal/). slots: [time, who, teams, kind]. Team codes: B/G (boys/girls) + grade 4-8 + R/B (Red/Black), e.g. G6R. 8th grade has no Red/Black: B8 = 8th grade boys, G8 = 8th grade girls. 'B6' = both 6th grade boys teams, '6' = every 6th grade team, '*' = all teams. kind defaults to Practice (use Game for games). A session with no slots shows 'Team times coming soon'.",
   "location": "Mundelein High School, 1350 W Hawley St, Mundelein, IL 60060",
   "sessions": [
     { "date": "2026-11-17", "time": "6:00–9:30 PM", "gym": "North Gym", "slots": [
