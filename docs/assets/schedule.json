@@ -52,7 +52,7 @@
     { "date": "2026-12-21", "time": "6:00–9:00 PM", "gym": "Main & North Gyms" },
     { "date": "2027-01-02", "time": "11:30 AM–2:00 PM", "gym": "Main & North Gyms" },
     { "date": "2027-01-03", "time": "1:00–3:30 PM", "gym": "Main & North Gyms" },
-    { "date": "2027-01-09", "time": "12:30–2:00 PM", "gym": "Main Gym" }
+    { "date": "2027-01-09", "time": "11:30 AM–1:00 PM", "gym": "North Gym" }
   ],
   "games": [
     {"date": "2026-12-06", "time": "4:00 PM", "team": "G6R", "who": "6th Grade Girls Red", "opponent": "Grayslake Central (6A)", "gym": "Main Gym"},
