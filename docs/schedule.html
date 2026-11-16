@@ -603,13 +603,20 @@
         var box = rows[i].box, day = rows[i].date, end = rows[i].end, items = [];
         while (i < rows.length && rows[i].box === box) items.push(rows[i++]);
         var gyms = items.map(function (r) { return r.gym; }).filter(function (g, k, a) { return g && a.indexOf(g) === k; });
-        var heads = items.map(function (r) { return r.head || r.gym; }).filter(function (g, k, a) { return g && a.indexOf(g) === k; });
-        var headGym = heads.length === 1 && items.every(function (r) { return r.gym; }) ? heads[0] : '';
+        // Top-right: every MHS gym used in this box (Main first). Away tournaments have no gym and are skipped.
+        var headSet = {};
+        items.forEach(function (r) {
+          [r.head, r.gym].forEach(function (g) {
+            if (!g) return;
+            (/^Main & North Gyms?$/i.test(g) ? ['Main Gym', 'North Gym'] : [g]).forEach(function (x) { headSet[x] = 1; });
+          });
+        });
+        var headList = Object.keys(headSet).sort(function (a, b) { return gymRank(a) - gymRank(b); });
         var p = day.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]);
         var m = MON[d.getMonth()] + ' ' + d.getFullYear();
         if (m !== month) { html += '<h3 class="sched-month">' + m + '</h3>'; month = m; }
         html += '<div class="sched-day"><div class="sd-head"><span class="sd-date">' + (end ? spanLabel(day, end) : DOW[d.getDay()] + ', ' + MON[d.getMonth()].slice(0, 3) + ' ' + d.getDate()) +
-          '</span><span class="sd-gym">' + gymTags(headGym) + '</span></div>';
+          '</span><span class="sd-gym">' + headList.map(gymTags).join('') + '</span></div>';
         items.forEach(function (r) {
           html += '<div class="sd-slot"><span class="sd-time">' + esc(r.time) + '</span><span class="sd-who' + (r.tba ? ' tba' : '') + '">' +
             (r.kind === 'Game' ? '<span class="sd-tag">' + esc(r.tag || 'Game') + '</span>' + (r.status ? '<span class="sd-tag tentative">' + esc(r.status) + '</span>' : '') : (r.tba || r.kind === 'Practice') ? '<span class="sd-tag practice">Practice</span>' : r.kind === 'Other' ? '<span class="sd-tag other">' + esc(r.tag) + '</span>' : '') +
