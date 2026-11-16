@@ -34,7 +34,9 @@
       ["7:00–8:15 PM", "", "", "Practice", "North Gym"],
       ["8:15–9:30 PM", "", "", "Practice", "Main Gym"],
       ["8:15–9:30 PM", "", "", "Practice", "North Gym"] ] },
-    { "date": "2026-12-09", "time": "5:45–8:15 PM", "gym": "North Gym" },
+    { "date": "2026-12-09", "time": "5:45–8:15 PM", "gym": "North Gym", "slots": [
+      ["5:45–7:00 PM", "", "", "Practice", "North Gym"],
+      ["7:00–8:15 PM", "", "", "Practice", "North Gym"] ] },
     { "date": "2026-12-10", "time": "5:45–7:00 PM", "gym": "North Gym" },
     { "date": "2026-12-14", "time": "5:45–9:30 PM", "gym": "Main & North Gyms", "slots": [
       ["5:45–7:00 PM", "", "", "Practice", "Main Gym"],
