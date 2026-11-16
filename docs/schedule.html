@@ -482,7 +482,8 @@
     .sd-tag.tentative { background: #F5C518; color: #2A2A2C; }
     .sd-tag.practice { background: #6B6A6E; }
     .sd-tag.other { background: var(--mustang-charcoal-900); }
-    .sd-link { display: inline-block; margin-top: 4px; font-weight: 700; font-size: 13px; color: var(--mustang-red); }
+    .sd-teams { display: block; margin-top: 6px; padding-left: 10px; border-left: 3px solid var(--mustang-red); }
+    .sd-teams span { display: block; font-weight: 600; font-size: 14px; line-height: 1.5; color: var(--mustang-charcoal-900); }
     .sd-where { display: block; font-weight: 600; font-size: 13px; color: var(--fg-2); margin-top: 2px; }
     .sd-who.tba { color: var(--fg-2); font-style: italic; }
     .sched-empty { font-weight: 600; font-size: 15px; color: var(--fg-2); padding: 18px 0; margin: 0; }
@@ -566,9 +567,15 @@
         if ((t.end || t.start) < today || !matches(t.team)) return;
         var lines = [];
         if (t.end && t.end !== t.start) lines.push(spanLabel(t.start, t.end));
-        lines.push([t.games, t.who].filter(Boolean).join(' · '));
+        if (t.games) lines.push(t.games);
         lines.push(t.location);
-        rows.push({ date: t.start, time: t.times || 'Times TBD', who: t.name, gym: '', kind: 'Game', tag: 'Tournament', lines: lines, url: t.url || '' });
+        // One line per team playing (only the selected team's when filtered).
+        var teams = expand(t.team).filter(function (x) {
+          return (!f.grade || x.n === f.grade) && (!f.gender || x.g === f.gender) && (!f.color || !x.c || x.c === f.color);
+        }).map(function (x) {
+          return GR[x.n] + ' Grade ' + (x.g === 'B' ? 'Boys' : 'Girls') + (x.c ? ' ' + (x.c === 'R' ? 'Red' : 'Black') : '');
+        });
+        rows.push({ date: t.start, time: 'Times TBD', who: t.name, gym: '', kind: 'Game', tag: 'Tournament', lines: lines, teams: teams });
       });
       EVENTS.forEach(function (e) {
         if (e.date < today || !matches(e.team)) return;
@@ -597,7 +604,7 @@
             (r.kind === 'Game' ? '<span class="sd-tag">' + esc(r.tag || 'Game') + '</span>' + (r.status ? '<span class="sd-tag tentative">' + esc(r.status) + '</span>' : '') : (r.tba || r.kind === 'Practice') ? '<span class="sd-tag practice">Practice</span>' : r.kind === 'Other' ? '<span class="sd-tag other">' + esc(r.tag) + '</span>' : '') + esc(r.who) +
             (!headGym && r.gym ? '<span class="sd-where">' + esc(r.gym) + '</span>' : '') +
             (r.lines || []).map(function (l) { return '<span class="sd-where">' + esc(l) + '</span>'; }).join('') +
-            (r.url ? '<a class="sd-link" href="' + esc(r.url) + '" target="_blank" rel="noopener">Tournament info</a>' : '') +
+            (r.teams ? '<span class="sd-teams">' + r.teams.map(function (x) { return '<span>' + esc(x) + '</span>'; }).join('') + '</span>' : '') +
             '</span></div>';
         });
         html += '</div>';

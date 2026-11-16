@@ -99,8 +99,9 @@ def build():
         d0 = datetime.date.fromisoformat(tn["start"])
         d1 = datetime.date.fromisoformat(tn.get("end") or tn["start"]) + datetime.timedelta(days=1)
         uid = hashlib.sha1(("tourney|%s|%s" % (tn["start"], tn["name"])).encode()).hexdigest()[:20] + "@mundyball.com"
-        desc = " · ".join(x for x in (tn.get("games"), tn.get("times"), tn.get("who")) if x)
-        desc += "\n" + (tn["url"] + "\n" if tn.get("url") else "") + "Times may change: https://www.mundyball.com/schedule"
+        desc = " · ".join(x for x in (tn.get("games"), tn.get("times") or "Times TBD") if x) + "\n"
+        desc += "\n".join(team_name(c) for c in sorted(expand(tn["team"]), key=lambda c: (c[0], c[1], c[2:] != "R")))
+        desc += "\nTimes may change: https://www.mundyball.com/schedule"
         events.append((expand(tn["team"]), [
             "BEGIN:VEVENT", "UID:" + uid, "DTSTAMP:" + d0.strftime("%Y%m%dT120000Z"),
             "DTSTART;VALUE=DATE:" + d0.strftime("%Y%m%d"), "DTEND;VALUE=DATE:" + d1.strftime("%Y%m%d"),
@@ -108,7 +109,7 @@ def build():
             "LOCATION:" + esc(tn["location"]),
             "DESCRIPTION:" + esc(desc),
             "TRANSP:TRANSPARENT",
-            "URL:" + (tn.get("url") or "https://www.mundyball.com/schedule"), "END:VEVENT"]))
+            "URL:https://www.mundyball.com/schedule", "END:VEVENT"]))
 
     for g in data.get("games") or []:  # start time only; shown as 1 hour
         day = datetime.date.fromisoformat(g["date"])
