@@ -1,5 +1,5 @@
 {
-  "_help": "Team schedule for mundyball.com/schedule. After editing, run: python3 seo.py (rebuilds the calendar feeds in docs/cal/). slots: [time, who, teams, kind]. Team codes: B/G (boys/girls) + grade 4-8 + R/B (Red/Black), e.g. G6R. 8th grade has no Red/Black: B8 = 8th grade boys, G8 = 8th grade girls. 'B6' = both 6th grade boys teams, '6' = every 6th grade team, '*' = all teams. kind defaults to Practice (use Game for games). A session with no slots shows 'Team times coming soon'. games: one line per game (date, start time, team code, team name, opponent, gym). Games show 1 hour long in calendars. events: anything that isn't a game or practice (team photos, parent meeting, ...): {date, time, team, title, gym, tag}; tag is the short label shown (default Event). Add \"status\": \"Tentative\" to a game to show a yellow Tentative tag (calendars mark it tentative too).",
+  "_help": "Team schedule for mundyball.com/schedule. After editing, run: python3 seo.py (rebuilds the calendar feeds in docs/cal/). slots: [time, who, teams, kind]. Team codes: B/G (boys/girls) + grade 4-8 + R/B (Red/Black), e.g. G6R. 8th grade has no Red/Black: B8 = 8th grade boys, G8 = 8th grade girls. 'B6' = both 6th grade boys teams, '6' = every 6th grade team, '*' = all teams. kind defaults to Practice (use Game for games). A session with no slots shows 'Team times coming soon'. games: one line per game (date, start time, team code, team name, opponent, gym). Games show 1 hour long in calendars. events: anything that isn't a game or practice (team photos, parent meeting, ...): {date, time, team, title, gym, tag}; tag is the short label shown (default Event). Add \"status\": \"Tentative\" to a game to show a yellow Tentative tag (calendars mark it tentative too). tournaments: away tournaments {name, start, end, team, who, games, times, location, url}; they show under Games and are all-day events in calendars.",
   "location": "Mundelein High School, 1350 W Hawley St, Mundelein, IL 60060",
   "sessions": [
     { "date": "2026-11-17", "time": "6:00–9:30 PM", "gym": "North Gym", "slots": [
@@ -71,5 +71,11 @@
     {"date": "2027-02-15", "time": "8:30 PM", "team": "B7R", "who": "7th Grade Boys Red", "opponent": "Grayslake North (7A)", "gym": "Main Gym"},
     {"date": "2027-02-15", "time": "8:30 PM", "team": "B7B", "who": "7th Grade Boys Black", "opponent": "Grayslake North (7B)", "gym": "Main Gym"}
   ],
-  "events": []
+  "events": [],
+  "tournaments": [
+    {"name": "Spartan Sports Feeder Basketball Tournament", "start": "2026-12-13", "end": "2026-12-13", "team": "G6 G8", "who": "6th Grade Girls Red & Black, 8th Grade Girls", "games": "2 games", "times": "Times TBD", "location": "Ackerman Sports & Fitness Center, 800 St Charles Rd, Glen Ellyn, IL", "url": "https://www.spartansports.club/program/the-grinch-feeder-teams/35785"},
+    {"name": "Matto Tourney", "start": "2027-01-24", "end": "2027-01-24", "team": "B5B", "who": "5th Grade Boys Black", "games": "3 games", "times": "8 AM–8 PM · tip-offs TBD", "location": "Libertyville High School, 708 W Park Ave, Libertyville, IL"},
+    {"name": "Grant Jr. Bulldogs Winter Classic", "start": "2027-02-20", "end": "2027-02-21", "team": "B4 B5 B6 B7 B8", "who": "4th–7th Grade Boys Red & Black, 8th Grade Boys", "games": "3 games", "times": "Times TBD", "location": "Fox Lake, IL"},
+    {"name": "Wauconda Classic", "start": "2027-02-26", "end": "2027-02-28", "team": "B5 B6 B7 B8", "who": "5th–7th Grade Boys Red & Black, 8th Grade Boys", "games": "4 games", "times": "Times TBD", "location": "Wauconda High School, Wauconda, IL"}
+  ]
 }
