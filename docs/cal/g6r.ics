@@ -32,15 +32,17 @@ DESCRIPTION:Main Gym · 6th Grade Boys & Girls · Red & Black\nTimes and g
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
-UID:7d1325db33776911192b@mundyball.com
-DTSTAMP:20261204T234500Z
-DTSTART:20261204T234500Z
-DTEND:20261205T010000Z
-SUMMARY:Jr. Mustangs Practice: 6th Grade Girls · Red & Black
-LOCATION:North Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\
- , IL 60060
-DESCRIPTION:North Gym · 6th Grade Girls · Red & Black\nTimes and gyms ma
- y change: https://www.mundyball.com/schedule
+UID:2c1395cd541e562be04e@mundyball.com
+DTSTAMP:20261203T013000Z
+DTSTART:20261203T013000Z
+DTEND:20261203T024500Z
+SUMMARY:Jr. Mustangs Practice: 7th Grade Boys · Red & Black\, plus 6th Gr
+ ade Girls · Red & Black
+LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
+  IL 60060
+DESCRIPTION:Main Gym · 7th Grade Boys · Red & Black\, plus 6th Grade Gir
+ ls · Red & Black\nTimes and gyms may change: https://www.mundyball.com/s
+ chedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
