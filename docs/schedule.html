@@ -479,6 +479,7 @@
     .sd-time { font-weight: 700; font-size: 15px; color: var(--mustang-charcoal-900); white-space: nowrap; }
     .sd-who { font-weight: 500; font-size: 15px; line-height: 1.45; color: var(--mustang-charcoal-900); }
     .sd-tag { display: inline-block; font-weight: 800; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; background: var(--mustang-red); border-radius: 4px; padding: 3px 7px; margin-right: 8px; vertical-align: 2px; }
+    .sd-who.tba .sd-tag { font-style: normal; }
     .sd-tag.tentative { background: #F5C518; color: #2A2A2C; }
     .sd-tag.practice { background: #6B6A6E; }
     .sd-tag.other { background: var(--mustang-charcoal-900); }
@@ -603,7 +604,7 @@
           '</span><span class="sd-gym">' + esc(headGym) + '</span></div>';
         items.forEach(function (r) {
           html += '<div class="sd-slot"><span class="sd-time">' + esc(r.time) + '</span><span class="sd-who' + (r.tba ? ' tba' : '') + '">' +
-            (r.kind === 'Game' ? '<span class="sd-tag">' + esc(r.tag || 'Game') + '</span>' + (r.status ? '<span class="sd-tag tentative">' + esc(r.status) + '</span>' : '') : (r.tba || r.kind === 'Practice') ? '<span class="sd-tag practice">Practice</span>' : r.kind === 'Other' ? '<span class="sd-tag other">' + esc(r.tag) + '</span>' : '') + esc(r.who) +
+            (r.kind === 'Game' ? '<span class="sd-tag">' + esc(r.tag || 'Game') + '</span>' + (r.status ? '<span class="sd-tag tentative">' + esc(r.status) + '</span>' : '') : (r.tba || r.kind === 'Practice') ? '<span class="sd-tag practice">Practice</span>' + (r.tba ? '<span class="sd-tag tentative">Tentative</span>' : '') : r.kind === 'Other' ? '<span class="sd-tag other">' + esc(r.tag) + '</span>' : '') + esc(r.who) +
             (r.gym && r.gym !== headGym ? '<span class="sd-where">' + esc(r.gym) + '</span>' : '') +
             (r.lines || []).map(function (l) { return '<span class="sd-where">' + esc(l) + '</span>'; }).join('') +
             (r.teams ? '<span class="sd-teams">' + r.teams.map(function (x) { return '<span>' + esc(x) + '</span>'; }).join('') + '</span>' : '') +
