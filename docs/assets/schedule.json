@@ -1,5 +1,5 @@
 {
-  "_help": "Team schedule for mundyball.com/schedule. After editing, run: python3 seo.py (rebuilds the calendar feeds in docs/cal/). slots: [time, who, teams, kind]. Team codes: B/G (boys/girls) + grade 4-8 + R/B (Red/Black), e.g. G6R. 8th grade has no Red/Black: B8 = 8th grade boys, G8 = 8th grade girls. 'B6' = both 6th grade boys teams, '6' = every 6th grade team, '*' = all teams. kind defaults to Practice (use Game for games). A session with no slots shows 'Team times coming soon'. games: one line per game (date, start time, team code, team name, opponent, gym). Games show 1 hour long in calendars.",
+  "_help": "Team schedule for mundyball.com/schedule. After editing, run: python3 seo.py (rebuilds the calendar feeds in docs/cal/). slots: [time, who, teams, kind]. Team codes: B/G (boys/girls) + grade 4-8 + R/B (Red/Black), e.g. G6R. 8th grade has no Red/Black: B8 = 8th grade boys, G8 = 8th grade girls. 'B6' = both 6th grade boys teams, '6' = every 6th grade team, '*' = all teams. kind defaults to Practice (use Game for games). A session with no slots shows 'Team times coming soon'. games: one line per game (date, start time, team code, team name, opponent, gym). Games show 1 hour long in calendars. events: anything that isn't a game or practice (team photos, parent meeting, ...): {date, time, team, title, gym, tag}; tag is the short label shown (default Event).",
   "location": "Mundelein High School, 1350 W Hawley St, Mundelein, IL 60060",
   "sessions": [
     { "date": "2026-11-17", "time": "6:00–9:30 PM", "gym": "North Gym", "slots": [
@@ -70,5 +70,6 @@
     {"date": "2027-02-15", "time": "7:30 PM", "team": "B6B", "who": "6th Grade Boys Black", "opponent": "Grayslake North (6B)", "gym": "Main Gym"},
     {"date": "2027-02-15", "time": "8:30 PM", "team": "B7R", "who": "7th Grade Boys Red", "opponent": "Grayslake North (7A)", "gym": "Main Gym"},
     {"date": "2027-02-15", "time": "8:30 PM", "team": "B7B", "who": "7th Grade Boys Black", "opponent": "Grayslake North (7B)", "gym": "Main Gym"}
-  ]
+  ],
+  "events": []
 }

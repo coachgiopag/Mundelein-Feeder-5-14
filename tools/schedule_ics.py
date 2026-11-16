@@ -108,6 +108,21 @@ def build():
             "DESCRIPTION:" + esc("%s · Game starts %s\nTimes and gyms may change: https://www.mundyball.com/schedule" % (g["gym"], g["time"])),
             "URL:https://www.mundyball.com/schedule", "END:VEVENT"]))
 
+    for e in data.get("events") or []:  # "6:00 PM" (shown as 1 hour) or "6:00–7:00 PM"
+        day = datetime.date.fromisoformat(e["date"])
+        tm = e["time"] if re.search(r"[–-]", e["time"]) else e["time"] + "–" + e["time"]
+        start, end = parse_range(day, tm)
+        if end <= start:
+            end = start + datetime.timedelta(hours=1)
+        uid = hashlib.sha1(("event|%s|%s|%s" % (e["date"], e.get("team", "*"), e["title"])).encode()).hexdigest()[:20] + "@mundyball.com"
+        where = ("%s, %s" % (e["gym"], loc)) if e.get("gym") else loc
+        events.append((expand(e.get("team", "*")), [
+            "BEGIN:VEVENT", "UID:" + uid, "DTSTAMP:" + utc(start), "DTSTART:" + utc(start), "DTEND:" + utc(end),
+            "SUMMARY:" + esc("Jr. Mustangs: " + e["title"]),
+            "LOCATION:" + esc(where),
+            "DESCRIPTION:" + esc("Times and places may change: https://www.mundyball.com/schedule"),
+            "URL:https://www.mundyball.com/schedule", "END:VEVENT"]))
+
     outdir = os.path.join(DOCS, "cal")
     os.makedirs(outdir, exist_ok=True)
     for old in os.listdir(outdir):  # drop feeds for teams that no longer exist

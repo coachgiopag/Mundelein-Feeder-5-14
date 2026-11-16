@@ -422,6 +422,10 @@
           <div class="sf-opts" data-key="color">
             <button type="button" data-v="">All</button><button type="button" data-v="R">Red</button><button type="button" data-v="B">Black</button>
           </div></div>
+        <div class="sf-row"><span class="sf-label">Show</span>
+          <div class="sf-opts" data-key="kind">
+            <button type="button" data-v="">All</button><button type="button" data-v="GAME">Games</button><button type="button" data-v="PRACTICE">Practices</button><button type="button" data-v="OTHER">Other</button>
+          </div></div>
         <div class="sf-status"><span id="sf-summary">Showing all teams</span> <button type="button" id="sf-clear" hidden>Clear filters</button></div>
         <div class="sf-cal" id="sf-cal">
           <div class="sf-cal-title" id="sf-cal-title">Add to your calendar</div>
@@ -437,7 +441,7 @@
 
       <div class="sched-note"><strong>Temporary schedule.</strong> Times and gyms may change. Check back before each session.</div>
       <div id="sched-list"></div>
-      <p id="sched-empty" class="sched-empty" hidden>No upcoming practices or games for this team yet. Check back soon.</p>
+      <p id="sched-empty" class="sched-empty" hidden>Nothing upcoming for this selection yet. Check back soon.</p>
       <p class="sched-foot">Questions? Email <a href="mailto:mundeleinboysbasketball@gmail.com">mundeleinboysbasketball@gmail.com</a>.</p>
     </div>
   </div>
@@ -475,6 +479,7 @@
     .sd-time { font-weight: 700; font-size: 15px; color: var(--mustang-charcoal-900); white-space: nowrap; }
     .sd-who { font-weight: 500; font-size: 15px; line-height: 1.45; color: var(--mustang-charcoal-900); }
     .sd-tag { display: inline-block; font-weight: 800; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; background: var(--mustang-red); border-radius: 4px; padding: 3px 7px; margin-right: 8px; vertical-align: 2px; }
+    .sd-tag.other { background: var(--mustang-charcoal-900); }
     .sd-where { display: block; font-weight: 600; font-size: 13px; color: var(--fg-2); margin-top: 2px; }
     .sd-who.tba { color: var(--fg-2); font-style: italic; }
     .sched-empty { font-weight: 600; font-size: 15px; color: var(--fg-2); padding: 18px 0; margin: 0; }
@@ -490,7 +495,7 @@
   </style>
   <script>
   (function () {
-    var SESSIONS = [], GAMES = [];
+    var SESSIONS = [], GAMES = [], EVENTS = [];
 
     var MON = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     var DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -507,7 +512,7 @@
       });
       return out;
     }
-    var f = { grade: '', gender: '', color: '' };
+    var f = { grade: '', gender: '', color: '', kind: '' };
     function matches(codes) {
       return expand(codes).some(function (t) {
         return (!f.grade || t.n === f.grade) && (!f.gender || t.g === f.gender) && (!f.color || !t.c || t.c === f.color);
@@ -546,6 +551,15 @@
         var h = +m[1] % 12; if ((m[3] || (ap && ap[1]) || '').toUpperCase() === 'PM') h += 12;
         return h * 60 + +m[2];
       }
+      EVENTS.forEach(function (e) {
+        if (e.date < today || !matches(e.team)) return;
+        rows.push({ date: e.date, time: e.time, who: e.title, gym: e.gym || '', kind: 'Other', tag: e.tag || 'Event' });
+      });
+      // Show filter: unassigned gym times count as practices; any kind other than Game/Practice is Other.
+      rows = rows.filter(function (r) {
+        var k = r.kind === 'Game' ? 'GAME' : (r.tba || r.kind === 'Practice') ? 'PRACTICE' : 'OTHER';
+        return !f.kind || f.kind === k;
+      });
       rows.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : mins(a.time) - mins(b.time); });
 
       var html = '', month = '', shown = 0, i = 0;
@@ -560,7 +574,7 @@
           '</span><span class="sd-gym">' + (gyms.length === 1 ? esc(gyms[0]) : '') + '</span></div>';
         items.forEach(function (r) {
           html += '<div class="sd-slot"><span class="sd-time">' + esc(r.time) + '</span><span class="sd-who' + (r.tba ? ' tba' : '') + '">' +
-            (r.kind === 'Game' ? '<span class="sd-tag">Game</span>' : '') + esc(r.who) +
+            (r.kind === 'Game' ? '<span class="sd-tag">Game</span>' : r.kind === 'Other' ? '<span class="sd-tag other">' + esc(r.tag) + '</span>' : '') + esc(r.who) +
             (gyms.length > 1 ? '<span class="sd-where">' + esc(r.gym) + '</span>' : '') + '</span></div>';
         });
         html += '</div>';
@@ -574,6 +588,7 @@
       if (f.grade) parts.push(GR[f.grade] + ' Grade');
       if (f.gender) parts.push(f.gender === 'B' ? 'Boys' : 'Girls');
       if (f.color) parts.push(f.color === 'R' ? 'Red' : 'Black');
+      if (f.kind) parts.push({ GAME: 'Games', PRACTICE: 'Practices', OTHER: 'Other' }[f.kind]);
       document.getElementById('sf-summary').textContent = parts.length ? 'Showing: ' + parts.join(' · ') : 'Showing all teams';
       document.getElementById('sf-clear').hidden = !parts.length;
       document.querySelectorAll('.sf-opts').forEach(function (g) {
@@ -603,7 +618,7 @@
 
     function save() {
       var q = new URLSearchParams(location.search);
-      ['grade', 'gender', 'color'].forEach(function (k) { if (f[k]) q.set(k, f[k]); else q.delete(k); });
+      ['grade', 'gender', 'color', 'kind'].forEach(function (k) { if (f[k]) q.set(k, f[k]); else q.delete(k); });
       var qs = q.toString();
       try { history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash); } catch (e) {}
       try { localStorage.setItem('mundyball-sched-filter', JSON.stringify(f)); } catch (e) {}
@@ -611,11 +626,12 @@
 
     // Start from the link (?grade=6&gender=G&color=R) if present, else the visitor's last choice.
     var q = new URLSearchParams(location.search), fromUrl = false;
-    ['grade', 'gender', 'color'].forEach(function (k) { if (q.get(k)) { f[k] = q.get(k).toUpperCase(); fromUrl = true; } });
-    if (!fromUrl) { try { var saved = JSON.parse(localStorage.getItem('mundyball-sched-filter') || 'null'); if (saved) f = { grade: saved.grade || '', gender: saved.gender || '', color: saved.color || '' }; } catch (e) {} }
+    ['grade', 'gender', 'color', 'kind'].forEach(function (k) { if (q.get(k)) { f[k] = q.get(k).toUpperCase(); fromUrl = true; } });
+    if (!fromUrl) { try { var saved = JSON.parse(localStorage.getItem('mundyball-sched-filter') || 'null'); if (saved) f = { grade: saved.grade || '', gender: saved.gender || '', color: saved.color || '', kind: saved.kind || '' }; } catch (e) {} }
     if (!/^[4-8]?$/.test(f.grade)) f.grade = '';
     if (!/^[BG]?$/.test(f.gender)) f.gender = '';
     if (!/^[RB]?$/.test(f.color)) f.color = '';
+    if (!/^(GAME|PRACTICE|OTHER)?$/.test(f.kind)) f.kind = '';
 
     document.querySelectorAll('.sf-opts').forEach(function (g) {
       g.addEventListener('click', function (e) {
@@ -624,11 +640,11 @@
         render(); save();
       });
     });
-    document.getElementById('sf-clear').addEventListener('click', function () { f = { grade: '', gender: '', color: '' }; render(); save(); });
+    document.getElementById('sf-clear').addEventListener('click', function () { f = { grade: '', gender: '', color: '', kind: '' }; render(); save(); });
     render();
     fetch('/assets/schedule.json', { cache: 'no-cache' })
       .then(function (r) { return r.json(); })
-      .then(function (d) { SESSIONS = d.sessions || []; GAMES = d.games || []; loaded = true; render(); })
+      .then(function (d) { SESSIONS = d.sessions || []; GAMES = d.games || []; EVENTS = d.events || []; loaded = true; render(); })
       .catch(function () { list.innerHTML = '<p class="sched-empty">The schedule didn\'t load. Refresh the page, or email mundeleinboysbasketball@gmail.com.</p>'; });
   })();
   </script>
