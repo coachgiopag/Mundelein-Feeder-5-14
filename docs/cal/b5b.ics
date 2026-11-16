@@ -80,6 +80,18 @@ DESCRIPTION:Main Gym · 4th & 5th Grade Boys · Red & Black\nTimes and gym
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
+UID:8d31a36585fa8b97bc95@mundyball.com
+DTSTAMP:20261215T234500Z
+DTSTART:20261215T234500Z
+DTEND:20261216T010000Z
+SUMMARY:Jr. Mustangs Practice: 4th & 5th Grade Boys · Red & Black
+LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
+  IL 60060
+DESCRIPTION:Main Gym · 4th & 5th Grade Boys · Red & Black\nTimes and gym
+ s may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
 UID:78c51a9fa723cc06ef23@mundyball.com
 DTSTAMP:20270124T120000Z
 DTSTART;VALUE=DATE:20270124
