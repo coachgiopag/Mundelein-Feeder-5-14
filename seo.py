@@ -26,7 +26,7 @@ SITE = "https://www.mundyball.com"
 NAME = "Mundelein Jr. Mustangs Feeder Basketball"
 OG_IMAGE = SITE + "/assets/og-image.png"
 LOGO = SITE + "/assets/logo-m-primary.png"
-EMAIL = "mundeleinboysbasketball@gmail.com"
+EMAIL = "jrmustangsfeeder@gmail.com"
 PHONE = "+1-224-425-9490"
 SAME_AS = [
     "https://instagram.com/MundyBall",
@@ -85,7 +85,7 @@ PAGES = {
     "contact.html": dict(
         path="/contact", crumb="Contact", type="ContactPage",
         title="Contact | Mundelein Jr. Mustangs Feeder Basketball",
-        desc="Questions about tryouts, camps, or coaching? Email mundeleinboysbasketball@gmail.com or call (224) 425-9490. Coach Paganis replies within 24 hours.",
+        desc="Questions about tryouts, camps, or coaching? Email jrmustangsfeeder@gmail.com or call (224) 425-9490. Coach Paganis replies within 24 hours.",
     ),
 }
 
