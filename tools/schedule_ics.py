@@ -70,8 +70,26 @@ def team_name(code):
     return name if len(code) == 2 else name + (" Red" if code[2] == "R" else " Black")
 
 
+def stamp_updated():
+    """Keep "updated" (shown as "Times last updated") current: when anything in the schedule changes,
+    set it to today's date in Central Time. Only those two lines of schedule.json are rewritten."""
+    path = os.path.join(DOCS, "assets", "schedule.json")
+    src = open(path, encoding="utf-8").read()
+    data = json.loads(src)
+    body = {k: v for k, v in data.items() if k not in ("_help", "updated", "_hash")}
+    h = hashlib.sha1(json.dumps(body, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:12]
+    if data.get("_hash") != h:
+        today = datetime.datetime.now(CT).date().isoformat()
+        src = re.sub(r'\n  "updated": "[^"]*",\n  "_hash": "[^"]*",', "", src)
+        src = src.replace('\n  "location":', '\n  "updated": "%s",\n  "_hash": "%s",\n  "location":' % (today, h), 1)
+        data = json.loads(src)
+        assert data["updated"] == today
+        open(path, "w", encoding="utf-8").write(src)
+    return data
+
+
 def build():
-    data = json.load(open(os.path.join(DOCS, "assets", "schedule.json"), encoding="utf-8"))
+    data = stamp_updated()
     loc = data["location"]
     events = []  # (teams, vevent lines)
     for s in data["sessions"]:

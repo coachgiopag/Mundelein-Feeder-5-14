@@ -439,7 +439,7 @@
         </div>
       </div>
 
-      <div class="sched-note"><strong>Temporary schedule.</strong> Times and gyms may change. Check back before each session.</div>
+      <div class="sched-note"><strong>Times last updated:</strong> <span id="sched-updated">—</span><br>Times and gyms may change. Check back before each session.</div>
       <div id="sched-list"></div>
       <p id="sched-empty" class="sched-empty" hidden>Nothing upcoming for this selection yet. Check back soon.</p>
       <p class="sched-foot">Questions? Email <a href="mailto:mundeleinboysbasketball@gmail.com">mundeleinboysbasketball@gmail.com</a>.</p>
@@ -694,7 +694,9 @@
     render();
     fetch('/assets/schedule.json', { cache: 'no-cache' })
       .then(function (r) { return r.json(); })
-      .then(function (d) { SESSIONS = d.sessions || []; GAMES = d.games || []; EVENTS = d.events || []; TOURNEYS = d.tournaments || []; loaded = true; render(); })
+      .then(function (d) { SESSIONS = d.sessions || []; GAMES = d.games || []; EVENTS = d.events || []; TOURNEYS = d.tournaments || [];
+        if (d.updated) { var u = d.updated.split('-'), ud = new Date(+u[0], +u[1] - 1, +u[2]);
+          document.getElementById('sched-updated').textContent = ud.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }); } loaded = true; render(); })
       .catch(function () { list.innerHTML = '<p class="sched-empty">The schedule didn\'t load. Refresh the page, or email mundeleinboysbasketball@gmail.com.</p>'; });
   })();
   </script>
