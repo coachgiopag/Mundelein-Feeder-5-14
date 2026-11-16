@@ -61,14 +61,14 @@ URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
 UID:46b2a055fc627e3ad332@mundyball.com
-DTSTAMP:20270131T183000Z
-DTSTART:20270131T183000Z
-DTEND:20270131T193000Z
+DTSTAMP:20270131T203000Z
+DTSTART:20270131T203000Z
+DTEND:20270131T213000Z
 SUMMARY:Jr. Mustangs Game: 4th Grade Boys Red vs Grant
 STATUS:CONFIRMED
-LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
-  IL 60060
-DESCRIPTION:Main Gym · Game starts 12:30 PM\nTimes and gyms may change: h
+LOCATION:North Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\
+ , IL 60060
+DESCRIPTION:North Gym · Game starts 2:30 PM\nTimes and gyms may change: h
  ttps://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
