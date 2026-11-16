@@ -841,6 +841,10 @@
               </select>
             </div>
           </div>
+          <div id="wc-spots" aria-live="polite" style="display:none; margin-top:10px; padding:12px 16px; border:2px solid var(--mustang-red); border-radius:10px; background:#fff; font-weight:600;">
+            <div style="font-size:0.85em; text-transform:uppercase; letter-spacing:0.04em; opacity:0.7; margin-bottom:4px;">Spots remaining (36 per session)</div>
+            <div><span id="wc-spots-am"></span> &nbsp;·&nbsp; <span id="wc-spots-pm"></span></div>
+          </div>
           <span class="hint" style="display:block; margin-top:8px;"><strong>Full day campers:</strong> we strongly recommend packing a lunch to eat between the AM &amp; PM sessions. A coach supervises lunch from 11:45 to 12:15.<br>Because peanut and tree nut allergies can be life-threatening, in order to limit cross-contamination, we kindly ask that you not pack peanut butter or other nut-based foods.</span>
         </div>
 
@@ -1369,8 +1373,17 @@
             var full = isFull(o.dataset.base);
             o.disabled = full;
             var n = Math.min.apply(null, needs(o.dataset.base).map(function(s){ return spots[s]; }));
-            o.textContent = o.dataset.base + (full ? ' · FULL' : n <= 10 ? ' · ' + n + ' spot' + (n === 1 ? '' : 's') + ' left' : '');
+            o.textContent = o.dataset.base + (full ? ' · FULL' : ' · ' + n + ' spot' + (n === 1 ? '' : 's') + ' left');
           });
+          var box = document.getElementById('wc-spots');
+          if (box) {
+            var cap = 36;
+            ['AM','PM'].forEach(function(k){
+              var el = document.getElementById('wc-spots-' + k.toLowerCase());
+              el.textContent = k + ' session: ' + (spots[k] <= 0 ? 'FULL' : spots[k] + ' of ' + cap + ' left');
+            });
+            box.style.display = 'block';
+          }
           if (sessionSel.selectedOptions[0] && sessionSel.selectedOptions[0].disabled) sessionSel.value = '';
           if (spots.AM <= 0 && spots.PM <= 0) {
             showError('Winter Feeder Camp is full. Email mundeleinboysbasketball@gmail.com to join the waitlist.');
@@ -1381,6 +1394,7 @@
         .catch(function(){ return null; });   // Sheet unreachable: don't block sign-ups; the Sheet still waitlists overflow
     }
     window.addEventListener('load', loadSpots);
+    setInterval(function(){ if (!document.hidden) loadSpots(); }, 60000);   // keep the count running while the page is open
 
     function showError(msg){
       var el = document.getElementById('wc-error');
