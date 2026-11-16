@@ -85,14 +85,14 @@
     {"date": "2027-01-31", "time": "2:30 PM", "team": "B4R", "who": "4th Grade Boys Red", "opponent": "Grant", "gym": "North Gym"},
     {"date": "2027-01-31", "time": "2:30 PM", "team": "B8", "who": "8th Grade Boys", "opponent": "Grant", "gym": "Main Gym"},
     {"date": "2027-01-31", "time": "3:30 PM", "team": "G8", "who": "8th Grade Girls", "opponent": "Wauconda", "gym": "Main Gym"},
-    {"date": "2027-02-15", "time": "5:30 PM", "team": "B4B", "who": "4th Grade Boys Black", "opponent": "Grayslake North", "gym": "Main Gym"},
-    {"date": "2027-02-15", "time": "5:30 PM", "team": "B5B", "who": "5th Grade Boys Black", "opponent": "Grayslake Central", "gym": "Main Gym"},
-    {"date": "2027-02-15", "time": "6:30 PM", "team": "B4R", "who": "4th Grade Boys Red", "opponent": "Grayslake North", "gym": "Main Gym"},
+    {"date": "2027-02-15", "time": "5:30 PM", "team": "B4R", "who": "4th Grade Boys Red", "opponent": "Grayslake North", "gym": "Main Gym"},
+    {"date": "2027-02-15", "time": "5:30 PM", "team": "B5B", "who": "5th Grade Boys Black", "opponent": "Grayslake Central", "gym": "North Gym"},
+    {"date": "2027-02-15", "time": "6:30 PM", "team": "B4B", "who": "4th Grade Boys Black", "opponent": "Grayslake North", "gym": "North Gym"},
     {"date": "2027-02-15", "time": "6:30 PM", "team": "B5R", "who": "5th Grade Boys Red", "opponent": "Grayslake Central", "gym": "Main Gym"},
     {"date": "2027-02-15", "time": "7:30 PM", "team": "B6R", "who": "6th Grade Boys Red", "opponent": "Grayslake Central", "gym": "Main Gym"},
-    {"date": "2027-02-15", "time": "7:30 PM", "team": "B6B", "who": "6th Grade Boys Black", "opponent": "Grayslake North", "gym": "Main Gym"},
+    {"date": "2027-02-15", "time": "7:30 PM", "team": "B6B", "who": "6th Grade Boys Black", "opponent": "Grayslake North", "gym": "North Gym"},
     {"date": "2027-02-15", "time": "8:30 PM", "team": "B7R", "who": "7th Grade Boys Red", "opponent": "Grayslake North", "gym": "Main Gym"},
-    {"date": "2027-02-15", "time": "8:30 PM", "team": "B7B", "who": "7th Grade Boys Black", "opponent": "Grayslake North", "gym": "Main Gym"}
+    {"date": "2027-02-15", "time": "8:30 PM", "team": "B7B", "who": "7th Grade Boys Black", "opponent": "Grayslake North", "gym": "North Gym"}
   ],
   "tournaments": [
     {"name": "Spartan Sports Feeder Basketball Tournament", "start": "2026-12-13", "end": "2026-12-13", "team": "G6 G8", "games": "2 games per team", "times": "Times TBD", "location": "Ackerman Sports & Fitness Center, 800 St Charles Rd, Glen Ellyn, IL"},
