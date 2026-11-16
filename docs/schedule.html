@@ -566,7 +566,6 @@
       TOURNEYS.forEach(function (t) {
         if ((t.end || t.start) < today || !matches(t.team)) return;
         var lines = [];
-        if (t.end && t.end !== t.start) lines.push(spanLabel(t.start, t.end));
         if (t.games) lines.push(t.games);
         lines.push(t.location);
         // One line per team playing (only the selected team's when filtered).
@@ -575,7 +574,7 @@
         }).map(function (x) {
           return GR[x.n] + ' Grade ' + (x.g === 'B' ? 'Boys' : 'Girls') + (x.c ? ' ' + (x.c === 'R' ? 'Red' : 'Black') : '');
         });
-        rows.push({ date: t.start, time: 'Times TBD', who: t.name, gym: '', kind: 'Game', tag: 'Tournament', lines: lines, teams: teams });
+        rows.push({ date: t.start, end: t.end && t.end !== t.start ? t.end : '', time: 'Times TBD', who: t.name, gym: '', kind: 'Game', tag: 'Tournament', lines: lines, teams: teams });
       });
       EVENTS.forEach(function (e) {
         if (e.date < today || !matches(e.team)) return;
@@ -586,18 +585,19 @@
         var k = r.kind === 'Game' ? 'GAME' : (r.tba || r.kind === 'Practice') ? 'PRACTICE' : 'OTHER';
         return !f.kind || f.kind === k;
       });
-      rows.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : mins(a.time) - mins(b.time); });
+      rows.forEach(function (r) { r.box = r.date + '|' + (r.end || ''); });
+      rows.sort(function (a, b) { return a.box < b.box ? -1 : a.box > b.box ? 1 : mins(a.time) - mins(b.time); });
 
       var html = '', month = '', shown = 0, i = 0;
       while (i < rows.length) {
-        var day = rows[i].date, items = [];
-        while (i < rows.length && rows[i].date === day) items.push(rows[i++]);
+        var box = rows[i].box, day = rows[i].date, end = rows[i].end, items = [];
+        while (i < rows.length && rows[i].box === box) items.push(rows[i++]);
         var gyms = items.map(function (r) { return r.gym; }).filter(function (g, k, a) { return g && a.indexOf(g) === k; });
         var headGym = gyms.length === 1 && items.every(function (r) { return r.gym; }) ? gyms[0] : '';
         var p = day.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]);
         var m = MON[d.getMonth()] + ' ' + d.getFullYear();
         if (m !== month) { html += '<h3 class="sched-month">' + m + '</h3>'; month = m; }
-        html += '<div class="sched-day"><div class="sd-head"><span class="sd-date">' + DOW[d.getDay()] + ', ' + MON[d.getMonth()].slice(0, 3) + ' ' + d.getDate() +
+        html += '<div class="sched-day"><div class="sd-head"><span class="sd-date">' + (end ? spanLabel(day, end) : DOW[d.getDay()] + ', ' + MON[d.getMonth()].slice(0, 3) + ' ' + d.getDate()) +
           '</span><span class="sd-gym">' + esc(headGym) + '</span></div>';
         items.forEach(function (r) {
           html += '<div class="sd-slot"><span class="sd-time">' + esc(r.time) + '</span><span class="sd-who' + (r.tba ? ' tba' : '') + '">' +
