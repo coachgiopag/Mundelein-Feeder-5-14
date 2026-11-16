@@ -546,7 +546,7 @@
         if (s.date < today) return;
         if (s.slots && s.slots.length) {
           s.slots.forEach(function (x) {
-            if (matches(x[2])) rows.push({ date: s.date, time: x[0], who: x[1], gym: s.gym, kind: x[3] || 'Practice' });
+            if (matches(x[2])) rows.push({ date: s.date, time: x[0], who: x[1], gym: x[4] || s.gym, head: s.gym, kind: x[3] || 'Practice' });
           });
         } else if (!gameDays[s.date]) {
           rows.push({ date: s.date, time: s.time, who: 'Team times coming soon', gym: s.gym, tba: true });
@@ -593,7 +593,8 @@
         var box = rows[i].box, day = rows[i].date, end = rows[i].end, items = [];
         while (i < rows.length && rows[i].box === box) items.push(rows[i++]);
         var gyms = items.map(function (r) { return r.gym; }).filter(function (g, k, a) { return g && a.indexOf(g) === k; });
-        var headGym = gyms.length === 1 && items.every(function (r) { return r.gym; }) ? gyms[0] : '';
+        var heads = items.map(function (r) { return r.head || r.gym; }).filter(function (g, k, a) { return g && a.indexOf(g) === k; });
+        var headGym = heads.length === 1 && items.every(function (r) { return r.gym; }) ? heads[0] : '';
         var p = day.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]);
         var m = MON[d.getMonth()] + ' ' + d.getFullYear();
         if (m !== month) { html += '<h3 class="sched-month">' + m + '</h3>'; month = m; }
@@ -602,7 +603,7 @@
         items.forEach(function (r) {
           html += '<div class="sd-slot"><span class="sd-time">' + esc(r.time) + '</span><span class="sd-who' + (r.tba ? ' tba' : '') + '">' +
             (r.kind === 'Game' ? '<span class="sd-tag">' + esc(r.tag || 'Game') + '</span>' + (r.status ? '<span class="sd-tag tentative">' + esc(r.status) + '</span>' : '') : (r.tba || r.kind === 'Practice') ? '<span class="sd-tag practice">Practice</span>' : r.kind === 'Other' ? '<span class="sd-tag other">' + esc(r.tag) + '</span>' : '') + esc(r.who) +
-            (!headGym && r.gym ? '<span class="sd-where">' + esc(r.gym) + '</span>' : '') +
+            (r.gym && r.gym !== headGym ? '<span class="sd-where">' + esc(r.gym) + '</span>' : '') +
             (r.lines || []).map(function (l) { return '<span class="sd-where">' + esc(l) + '</span>'; }).join('') +
             (r.teams ? '<span class="sd-teams">' + r.teams.map(function (x) { return '<span>' + esc(x) + '</span>'; }).join('') + '</span>' : '') +
             '</span></div>';

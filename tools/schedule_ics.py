@@ -79,6 +79,7 @@ def build():
         for slot in s.get("slots") or []:
             time, who, codes = slot[0], slot[1], slot[2]
             kind = slot[3] if len(slot) > 3 else "Practice"
+            gym = slot[4] if len(slot) > 4 and slot[4] else s["gym"]
             start, end = parse_range(day, time)
             uid = hashlib.sha1(("%s|%s|%s|%s" % (s["date"], time, who, s["gym"])).encode()).hexdigest()[:20] + "@mundyball.com"
             lines = [
@@ -88,8 +89,8 @@ def build():
                 "DTSTART:" + utc(start),
                 "DTEND:" + utc(end),
                 "SUMMARY:" + esc("Jr. Mustangs %s: %s" % (kind, who)),
-                "LOCATION:" + esc("%s, %s" % (s["gym"], loc)),
-                "DESCRIPTION:" + esc("%s · %s\nTimes and gyms may change: https://www.mundyball.com/schedule" % (s["gym"], who)),
+                "LOCATION:" + esc("%s, %s" % (gym, loc)),
+                "DESCRIPTION:" + esc("%s · %s\nTimes and gyms may change: https://www.mundyball.com/schedule" % (gym, who)),
                 "URL:https://www.mundyball.com/schedule",
                 "END:VEVENT",
             ]
