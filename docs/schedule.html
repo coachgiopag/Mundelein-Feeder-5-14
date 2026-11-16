@@ -612,7 +612,7 @@
         items.forEach(function (r) {
           html += '<div class="sd-slot"><span class="sd-time">' + esc(r.time) + '</span><span class="sd-who' + (r.tba ? ' tba' : '') + '">' +
             (r.kind === 'Game' ? '<span class="sd-tag">' + esc(r.tag || 'Game') + '</span>' + (r.status ? '<span class="sd-tag tentative">' + esc(r.status) + '</span>' : '') : (r.tba || r.kind === 'Practice') ? '<span class="sd-tag practice">Practice</span>' + (r.tba ? '<span class="sd-tag tentative">Tentative</span>' : '') : r.kind === 'Other' ? '<span class="sd-tag other">' + esc(r.tag) + '</span>' : '') +
-            (r.gym && r.gym !== headGym ? gymTags(r.gym) : '') + esc(r.who) +
+            (r.gym && (r.gym !== headGym || r.kind === 'Game') ? gymTags(r.gym) : '') + esc(r.who) +
             (r.lines || []).map(function (l) { return '<span class="sd-where">' + esc(l) + '</span>'; }).join('') +
             (r.teams ? '<span class="sd-teams">' + r.teams.map(function (x) { return '<span>' + esc(x) + '</span>'; }).join('') + '</span>' : '') +
             '</span></div>';
