@@ -38,11 +38,12 @@ DTSTAMP:20261213T120000Z
 DTSTART;VALUE=DATE:20261213
 DTEND;VALUE=DATE:20261214
 SUMMARY:Jr. Mustangs Tournament: Spartan Sports Feeder Basketball Tourname
- nt (2 games)
+ nt (2 games per team)
 LOCATION:Ackerman Sports & Fitness Center\, 800 St Charles Rd\, Glen Ellyn
  \, IL
-DESCRIPTION:2 games · Times TBD\n6th Grade Girls Red\n6th Grade Girls Bla
- ck\n8th Grade Girls\nTimes may change: https://www.mundyball.com/schedule
+DESCRIPTION:2 games per team · Times TBD\n6th Grade Girls Red\n6th Grade 
+ Girls Black\n8th Grade Girls\nTimes may change: https://www.mundyball.com
+ /schedule
 TRANSP:TRANSPARENT
 URL:https://www.mundyball.com/schedule
 END:VEVENT

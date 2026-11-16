@@ -37,12 +37,12 @@ DTSTAMP:20270220T120000Z
 DTSTART;VALUE=DATE:20270220
 DTEND;VALUE=DATE:20270222
 SUMMARY:Jr. Mustangs Tournament: Grant Jr. Bulldogs Winter Classic (3 game
- s)
+ s per team)
 LOCATION:Fox Lake\, IL
-DESCRIPTION:3 games · Times TBD\n4th Grade Boys Red\n4th Grade Boys Black
- \n5th Grade Boys Red\n5th Grade Boys Black\n6th Grade Boys Red\n6th Grade
-  Boys Black\n7th Grade Boys Red\n7th Grade Boys Black\n8th Grade Boys\nTi
- mes may change: https://www.mundyball.com/schedule
+DESCRIPTION:3 games per team · Times TBD\n4th Grade Boys Red\n4th Grade B
+ oys Black\n5th Grade Boys Red\n5th Grade Boys Black\n6th Grade Boys Red\n
+ 6th Grade Boys Black\n7th Grade Boys Red\n7th Grade Boys Black\n8th Grade
+  Boys\nTimes may change: https://www.mundyball.com/schedule
 TRANSP:TRANSPARENT
 URL:https://www.mundyball.com/schedule
 END:VEVENT

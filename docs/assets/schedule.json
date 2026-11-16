@@ -73,9 +73,9 @@
   ],
   "events": [],
   "tournaments": [
-    {"name": "Spartan Sports Feeder Basketball Tournament", "start": "2026-12-13", "end": "2026-12-13", "team": "G6 G8", "games": "2 games", "times": "Times TBD", "location": "Ackerman Sports & Fitness Center, 800 St Charles Rd, Glen Ellyn, IL"},
-    {"name": "Matto Tourney", "start": "2027-01-24", "end": "2027-01-24", "team": "B5B", "games": "3 games", "times": "Times TBD", "location": "Libertyville High School, 708 W Park Ave, Libertyville, IL"},
-    {"name": "Grant Jr. Bulldogs Winter Classic", "start": "2027-02-20", "end": "2027-02-21", "team": "B4 B5 B6 B7 B8", "games": "3 games", "times": "Times TBD", "location": "Fox Lake, IL"},
-    {"name": "Wauconda Classic", "start": "2027-02-26", "end": "2027-02-28", "team": "B5 B6 B7 B8", "games": "4 games", "times": "Times TBD", "location": "Wauconda High School, Wauconda, IL"}
+    {"name": "Spartan Sports Feeder Basketball Tournament", "start": "2026-12-13", "end": "2026-12-13", "team": "G6 G8", "games": "2 games per team", "times": "Times TBD", "location": "Ackerman Sports & Fitness Center, 800 St Charles Rd, Glen Ellyn, IL"},
+    {"name": "Matto Tourney", "start": "2027-01-24", "end": "2027-01-24", "team": "B5B", "games": "3 games per team", "times": "Times TBD", "location": "Libertyville High School, 708 W Park Ave, Libertyville, IL"},
+    {"name": "Grant Jr. Bulldogs Winter Classic", "start": "2027-02-20", "end": "2027-02-21", "team": "B4 B5 B6 B7 B8", "games": "3 games per team", "times": "Times TBD", "location": "Fox Lake, IL"},
+    {"name": "Wauconda Classic", "start": "2027-02-26", "end": "2027-02-28", "team": "B5 B6 B7 B8", "games": "4 games per team", "times": "Times TBD", "location": "Wauconda High School, Wauconda, IL"}
   ]
 }

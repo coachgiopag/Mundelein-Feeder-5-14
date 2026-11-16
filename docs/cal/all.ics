@@ -122,11 +122,12 @@ DTSTAMP:20261213T120000Z
 DTSTART;VALUE=DATE:20261213
 DTEND;VALUE=DATE:20261214
 SUMMARY:Jr. Mustangs Tournament: Spartan Sports Feeder Basketball Tourname
- nt (2 games)
+ nt (2 games per team)
 LOCATION:Ackerman Sports & Fitness Center\, 800 St Charles Rd\, Glen Ellyn
  \, IL
-DESCRIPTION:2 games · Times TBD\n6th Grade Girls Red\n6th Grade Girls Bla
- ck\n8th Grade Girls\nTimes may change: https://www.mundyball.com/schedule
+DESCRIPTION:2 games per team · Times TBD\n6th Grade Girls Red\n6th Grade 
+ Girls Black\n8th Grade Girls\nTimes may change: https://www.mundyball.com
+ /schedule
 TRANSP:TRANSPARENT
 URL:https://www.mundyball.com/schedule
 END:VEVENT
@@ -135,10 +136,10 @@ UID:78c51a9fa723cc06ef23@mundyball.com
 DTSTAMP:20270124T120000Z
 DTSTART;VALUE=DATE:20270124
 DTEND;VALUE=DATE:20270125
-SUMMARY:Jr. Mustangs Tournament: Matto Tourney (3 games)
+SUMMARY:Jr. Mustangs Tournament: Matto Tourney (3 games per team)
 LOCATION:Libertyville High School\, 708 W Park Ave\, Libertyville\, IL
-DESCRIPTION:3 games · Times TBD\n5th Grade Boys Black\nTimes may change: 
- https://www.mundyball.com/schedule
+DESCRIPTION:3 games per team · Times TBD\n5th Grade Boys Black\nTimes may
+  change: https://www.mundyball.com/schedule
 TRANSP:TRANSPARENT
 URL:https://www.mundyball.com/schedule
 END:VEVENT
@@ -148,12 +149,12 @@ DTSTAMP:20270220T120000Z
 DTSTART;VALUE=DATE:20270220
 DTEND;VALUE=DATE:20270222
 SUMMARY:Jr. Mustangs Tournament: Grant Jr. Bulldogs Winter Classic (3 game
- s)
+ s per team)
 LOCATION:Fox Lake\, IL
-DESCRIPTION:3 games · Times TBD\n4th Grade Boys Red\n4th Grade Boys Black
- \n5th Grade Boys Red\n5th Grade Boys Black\n6th Grade Boys Red\n6th Grade
-  Boys Black\n7th Grade Boys Red\n7th Grade Boys Black\n8th Grade Boys\nTi
- mes may change: https://www.mundyball.com/schedule
+DESCRIPTION:3 games per team · Times TBD\n4th Grade Boys Red\n4th Grade B
+ oys Black\n5th Grade Boys Red\n5th Grade Boys Black\n6th Grade Boys Red\n
+ 6th Grade Boys Black\n7th Grade Boys Red\n7th Grade Boys Black\n8th Grade
+  Boys\nTimes may change: https://www.mundyball.com/schedule
 TRANSP:TRANSPARENT
 URL:https://www.mundyball.com/schedule
 END:VEVENT
@@ -162,12 +163,12 @@ UID:4dd7f0ebae63c5969260@mundyball.com
 DTSTAMP:20270226T120000Z
 DTSTART;VALUE=DATE:20270226
 DTEND;VALUE=DATE:20270301
-SUMMARY:Jr. Mustangs Tournament: Wauconda Classic (4 games)
+SUMMARY:Jr. Mustangs Tournament: Wauconda Classic (4 games per team)
 LOCATION:Wauconda High School\, Wauconda\, IL
-DESCRIPTION:4 games · Times TBD\n5th Grade Boys Red\n5th Grade Boys Black
- \n6th Grade Boys Red\n6th Grade Boys Black\n7th Grade Boys Red\n7th Grade
-  Boys Black\n8th Grade Boys\nTimes may change: https://www.mundyball.com/
- schedule
+DESCRIPTION:4 games per team · Times TBD\n5th Grade Boys Red\n5th Grade B
+ oys Black\n6th Grade Boys Red\n6th Grade Boys Black\n7th Grade Boys Red\n
+ 7th Grade Boys Black\n8th Grade Boys\nTimes may change: https://www.mundy
+ ball.com/schedule
 TRANSP:TRANSPARENT
 URL:https://www.mundyball.com/schedule
 END:VEVENT
