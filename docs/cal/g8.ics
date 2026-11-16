@@ -32,4 +32,76 @@ DESCRIPTION:Main Gym · 7th Grade Boys · Red & Black\, plus 8th Grade Boy
  s & Girls\nTimes and gyms may change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
+BEGIN:VEVENT
+UID:76704d69b490314652cc@mundyball.com
+DTSTAMP:20261206T230000Z
+DTSTART:20261206T230000Z
+DTEND:20261207T000000Z
+SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Grayslake North (8C)
+LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
+  IL 60060
+DESCRIPTION:Main Gym · Game starts 5:00 PM\nTimes and gyms may change: ht
+ tps://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:6ae05e82df2bae5503f0@mundyball.com
+DTSTAMP:20270102T190000Z
+DTSTART:20270102T190000Z
+DTEND:20270102T200000Z
+SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Stevenson
+LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
+  IL 60060
+DESCRIPTION:Main Gym · Game starts 1:00 PM\nTimes and gyms may change: ht
+ tps://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:206c3c955358dcf36f0b@mundyball.com
+DTSTAMP:20270103T193000Z
+DTSTART:20270103T193000Z
+DTEND:20270103T203000Z
+SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Round Lake
+LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
+  IL 60060
+DESCRIPTION:Main Gym · Game starts 1:30 PM\nTimes and gyms may change: ht
+ tps://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:119fdf8d28add460063d@mundyball.com
+DTSTAMP:20270109T180000Z
+DTSTART:20270109T180000Z
+DTEND:20270109T190000Z
+SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Antioch
+LOCATION:North Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\
+ , IL 60060
+DESCRIPTION:North Gym · Game starts 12:00 PM\nTimes and gyms may change: 
+ https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:4f351368b39536b50864@mundyball.com
+DTSTAMP:20270124T183000Z
+DTSTART:20270124T183000Z
+DTEND:20270124T193000Z
+SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Niles North
+LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
+  IL 60060
+DESCRIPTION:Main Gym · Game starts 12:30 PM\nTimes and gyms may change: h
+ ttps://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:d86950fbb022a16f3126@mundyball.com
+DTSTAMP:20270131T213000Z
+DTSTART:20270131T213000Z
+DTEND:20270131T223000Z
+SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Wauconda
+LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
+  IL 60060
+DESCRIPTION:Main Gym · Game starts 3:30 PM\nTimes and gyms may change: ht
+ tps://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
 END:VCALENDAR

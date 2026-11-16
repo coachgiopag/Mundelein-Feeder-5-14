@@ -474,6 +474,8 @@
     .sd-slot:first-of-type { border-top: 0; }
     .sd-time { font-weight: 700; font-size: 15px; color: var(--mustang-charcoal-900); white-space: nowrap; }
     .sd-who { font-weight: 500; font-size: 15px; line-height: 1.45; color: var(--mustang-charcoal-900); }
+    .sd-tag { display: inline-block; font-weight: 800; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; background: var(--mustang-red); border-radius: 4px; padding: 3px 7px; margin-right: 8px; vertical-align: 2px; }
+    .sd-where { display: block; font-weight: 600; font-size: 13px; color: var(--fg-2); margin-top: 2px; }
     .sd-who.tba { color: var(--fg-2); font-style: italic; }
     .sched-empty { font-weight: 600; font-size: 15px; color: var(--fg-2); padding: 18px 0; margin: 0; }
     .sched-foot { font-weight: 500; font-size: 14px; color: var(--fg-2); margin: 22px 0 0; }
@@ -488,7 +490,7 @@
   </style>
   <script>
   (function () {
-    var SESSIONS = [];
+    var SESSIONS = [], GAMES = [];
 
     var MON = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     var DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -521,21 +523,49 @@
       if (f.grade === '8') f.color = '';
       document.getElementById('sf-one').hidden = f.grade !== '8';
       document.querySelector('.sf-opts[data-key="color"]').hidden = f.grade === '8';
-      var html = '', month = '', shown = 0;
+      // Build one list of rows (practices, games, unassigned gym times), then group by day.
+      var rows = [], gameDays = {};
+      GAMES.forEach(function (g) { gameDays[g.date] = 1; });
       SESSIONS.forEach(function (s) {
         if (s.date < today) return;
-        var slots = s.slots && s.slots.length ? s.slots.filter(function (x) { return matches(x[2]); }) : null;
-        if (slots && !slots.length) return;
-        var p = s.date.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]);
+        if (s.slots && s.slots.length) {
+          s.slots.forEach(function (x) {
+            if (matches(x[2])) rows.push({ date: s.date, time: x[0], who: x[1], gym: s.gym, kind: x[3] || 'Practice' });
+          });
+        } else if (!gameDays[s.date]) {
+          rows.push({ date: s.date, time: s.time, who: 'Team times coming soon', gym: s.gym, tba: true });
+        }
+      });
+      GAMES.forEach(function (g) {
+        if (g.date < today || !matches(g.team)) return;
+        rows.push({ date: g.date, time: g.time, who: g.who + ' vs ' + g.opponent, gym: g.gym, kind: 'Game' });
+      });
+      function mins(t) {
+        var m = /(\d{1,2}):(\d{2})\s*(AM|PM)?/i.exec(t), ap = /(AM|PM)/i.exec(t);
+        if (!m) return 0;
+        var h = +m[1] % 12; if ((m[3] || (ap && ap[1]) || '').toUpperCase() === 'PM') h += 12;
+        return h * 60 + +m[2];
+      }
+      rows.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : mins(a.time) - mins(b.time); });
+
+      var html = '', month = '', shown = 0, i = 0;
+      while (i < rows.length) {
+        var day = rows[i].date, items = [];
+        while (i < rows.length && rows[i].date === day) items.push(rows[i++]);
+        var gyms = items.map(function (r) { return r.gym; }).filter(function (g, k, a) { return a.indexOf(g) === k; });
+        var p = day.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]);
         var m = MON[d.getMonth()] + ' ' + d.getFullYear();
         if (m !== month) { html += '<h3 class="sched-month">' + m + '</h3>'; month = m; }
         html += '<div class="sched-day"><div class="sd-head"><span class="sd-date">' + DOW[d.getDay()] + ', ' + MON[d.getMonth()].slice(0, 3) + ' ' + d.getDate() +
-          '</span><span class="sd-gym">' + esc(s.gym) + '</span></div>';
-        if (slots) slots.forEach(function (x) { html += '<div class="sd-slot"><span class="sd-time">' + esc(x[0]) + '</span><span class="sd-who">' + esc(x[1]) + '</span></div>'; });
-        else html += '<div class="sd-slot"><span class="sd-time">' + esc(s.time) + '</span><span class="sd-who tba">Team times coming soon</span></div>';
+          '</span><span class="sd-gym">' + (gyms.length === 1 ? esc(gyms[0]) : '') + '</span></div>';
+        items.forEach(function (r) {
+          html += '<div class="sd-slot"><span class="sd-time">' + esc(r.time) + '</span><span class="sd-who' + (r.tba ? ' tba' : '') + '">' +
+            (r.kind === 'Game' ? '<span class="sd-tag">Game</span>' : '') + esc(r.who) +
+            (gyms.length > 1 ? '<span class="sd-where">' + esc(r.gym) + '</span>' : '') + '</span></div>';
+        });
         html += '</div>';
         shown++;
-      });
+      }
       list.innerHTML = html;
       document.getElementById('sched-empty').hidden = !loaded || shown > 0;
       calendarButtons();
@@ -598,7 +628,7 @@
     render();
     fetch('/assets/schedule.json', { cache: 'no-cache' })
       .then(function (r) { return r.json(); })
-      .then(function (d) { SESSIONS = d.sessions || []; loaded = true; render(); })
+      .then(function (d) { SESSIONS = d.sessions || []; GAMES = d.games || []; loaded = true; render(); })
       .catch(function () { list.innerHTML = '<p class="sched-empty">The schedule didn\'t load. Refresh the page, or email mundeleinboysbasketball@gmail.com.</p>'; });
   })();
   </script>

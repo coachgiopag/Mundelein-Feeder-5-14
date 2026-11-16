@@ -95,6 +95,19 @@ def build():
             ]
             events.append((expand(codes), lines))
 
+    for g in data.get("games") or []:  # start time only; shown as 1 hour
+        day = datetime.date.fromisoformat(g["date"])
+        start, _ = parse_range(day, g["time"] + "–" + g["time"])
+        end = start + datetime.timedelta(hours=1)
+        title = "%s vs %s" % (g["who"], g["opponent"])
+        uid = hashlib.sha1(("game|%s|%s|%s" % (g["date"], g["team"], g["opponent"])).encode()).hexdigest()[:20] + "@mundyball.com"
+        events.append((expand(g["team"]), [
+            "BEGIN:VEVENT", "UID:" + uid, "DTSTAMP:" + utc(start), "DTSTART:" + utc(start), "DTEND:" + utc(end),
+            "SUMMARY:" + esc("Jr. Mustangs Game: " + title),
+            "LOCATION:" + esc("%s, %s" % (g["gym"], loc)),
+            "DESCRIPTION:" + esc("%s · Game starts %s\nTimes and gyms may change: https://www.mundyball.com/schedule" % (g["gym"], g["time"])),
+            "URL:https://www.mundyball.com/schedule", "END:VEVENT"]))
+
     outdir = os.path.join(DOCS, "cal")
     os.makedirs(outdir, exist_ok=True)
     for old in os.listdir(outdir):  # drop feeds for teams that no longer exist

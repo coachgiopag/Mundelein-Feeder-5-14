@@ -31,4 +31,16 @@ DESCRIPTION:Main Gym · 6th Grade Boys & Girls · Red & Black\nTimes and g
  yms may change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
+BEGIN:VEVENT
+UID:6d2fd24ae9e1497133ea@mundyball.com
+DTSTAMP:20270216T013000Z
+DTSTART:20270216T013000Z
+DTEND:20270216T023000Z
+SUMMARY:Jr. Mustangs Game: 6th Grade Boys Red vs Grayslake Central (6A)
+LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
+  IL 60060
+DESCRIPTION:Main Gym · Game starts 7:30 PM\nTimes and gyms may change: ht
+ tps://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
 END:VCALENDAR

@@ -1,5 +1,5 @@
 {
-  "_help": "Team schedule for mundyball.com/schedule. After editing, run: python3 seo.py (rebuilds the calendar feeds in docs/cal/). slots: [time, who, teams, kind]. Team codes: B/G (boys/girls) + grade 4-8 + R/B (Red/Black), e.g. G6R. 8th grade has no Red/Black: B8 = 8th grade boys, G8 = 8th grade girls. 'B6' = both 6th grade boys teams, '6' = every 6th grade team, '*' = all teams. kind defaults to Practice (use Game for games). A session with no slots shows 'Team times coming soon'.",
+  "_help": "Team schedule for mundyball.com/schedule. After editing, run: python3 seo.py (rebuilds the calendar feeds in docs/cal/). slots: [time, who, teams, kind]. Team codes: B/G (boys/girls) + grade 4-8 + R/B (Red/Black), e.g. G6R. 8th grade has no Red/Black: B8 = 8th grade boys, G8 = 8th grade girls. 'B6' = both 6th grade boys teams, '6' = every 6th grade team, '*' = all teams. kind defaults to Practice (use Game for games). A session with no slots shows 'Team times coming soon'. games: one line per game (date, start time, team code, team name, opponent, gym). Games show 1 hour long in calendars.",
   "location": "Mundelein High School, 1350 W Hawley St, Mundelein, IL 60060",
   "sessions": [
     { "date": "2026-11-17", "time": "6:00–9:30 PM", "gym": "North Gym", "slots": [
@@ -30,5 +30,45 @@
     { "date": "2027-01-02", "time": "11:30 AM–2:00 PM", "gym": "Main & North Gyms" },
     { "date": "2027-01-03", "time": "1:00–3:30 PM", "gym": "Main & North Gyms" },
     { "date": "2027-01-09", "time": "12:30–2:00 PM", "gym": "Main Gym" }
+  ],
+  "games": [
+    {"date": "2026-12-06", "time": "4:00 PM", "team": "G6R", "who": "6th Grade Girls Red", "opponent": "Grayslake Central (6A)", "gym": "Main Gym"},
+    {"date": "2026-12-06", "time": "4:00 PM", "team": "B8", "who": "8th Grade Boys", "opponent": "Grayslake Central (8B)", "gym": "Main Gym"},
+    {"date": "2026-12-06", "time": "5:00 PM", "team": "G6B", "who": "6th Grade Girls Black", "opponent": "Grayslake North (6B)", "gym": "Main Gym"},
+    {"date": "2026-12-06", "time": "5:00 PM", "team": "G8", "who": "8th Grade Girls", "opponent": "Grayslake North (8C)", "gym": "Main Gym"},
+    {"date": "2026-12-21", "time": "6:30 PM", "team": "B4B", "who": "4th Grade Boys Black", "opponent": "Vernon Hills (4B)", "gym": "Main Gym"},
+    {"date": "2026-12-21", "time": "6:30 PM", "team": "B5B", "who": "5th Grade Boys Black", "opponent": "Vernon Hills (5B)", "gym": "Main Gym"},
+    {"date": "2026-12-21", "time": "7:45 PM", "team": "B7R", "who": "7th Grade Boys Red", "opponent": "Vernon Hills (7A)", "gym": "Main Gym"},
+    {"date": "2026-12-21", "time": "7:45 PM", "team": "B8", "who": "8th Grade Boys", "opponent": "Vernon Hills (8C)", "gym": "Main Gym"},
+    {"date": "2027-01-02", "time": "12:00 PM", "team": "G6R", "who": "6th Grade Girls Red", "opponent": "Lake Zurich", "gym": "Main Gym"},
+    {"date": "2027-01-02", "time": "1:00 PM", "team": "G6B", "who": "6th Grade Girls Black", "opponent": "Lake Zurich", "gym": "Main Gym"},
+    {"date": "2027-01-02", "time": "1:00 PM", "team": "G8", "who": "8th Grade Girls", "opponent": "Stevenson", "gym": "Main Gym"},
+    {"date": "2027-01-03", "time": "1:30 PM", "team": "G8", "who": "8th Grade Girls", "opponent": "Round Lake", "gym": "Main Gym"},
+    {"date": "2027-01-03", "time": "2:30 PM", "team": "G6R", "who": "6th Grade Girls Red", "opponent": "Carmel", "gym": "Main Gym"},
+    {"date": "2027-01-03", "time": "2:30 PM", "team": "G6B", "who": "6th Grade Girls Black", "opponent": "Carmel", "gym": "Main Gym"},
+    {"date": "2027-01-09", "time": "12:00 PM", "team": "G8", "who": "8th Grade Girls", "opponent": "Antioch", "gym": "North Gym"},
+    {"date": "2027-01-17", "time": "1:00 PM", "team": "G6R", "who": "6th Grade Girls Red", "opponent": "Niles West", "gym": "Main Gym"},
+    {"date": "2027-01-17", "time": "1:00 PM", "team": "G6B", "who": "6th Grade Girls Black", "opponent": "Niles West", "gym": "Main Gym"},
+    {"date": "2027-01-24", "time": "12:30 PM", "team": "G8", "who": "8th Grade Girls", "opponent": "Niles North", "gym": "Main Gym"},
+    {"date": "2027-01-24", "time": "1:30 PM", "team": "G6B", "who": "6th Grade Girls Black", "opponent": "Round Lake", "gym": "Main Gym"},
+    {"date": "2027-01-27", "time": "6:15 PM", "team": "B4R", "who": "4th Grade Boys Red", "opponent": "McHenry", "gym": "Main Gym"},
+    {"date": "2027-01-27", "time": "6:15 PM", "team": "B5R", "who": "5th Grade Boys Red", "opponent": "McHenry", "gym": "Main Gym"},
+    {"date": "2027-01-27", "time": "7:30 PM", "team": "B6B", "who": "6th Grade Boys Black", "opponent": "McHenry", "gym": "Main Gym"},
+    {"date": "2027-01-27", "time": "7:30 PM", "team": "B7R", "who": "7th Grade Boys Red", "opponent": "McHenry", "gym": "Main Gym"},
+    {"date": "2027-01-31", "time": "12:30 PM", "team": "B4R", "who": "4th Grade Boys Red", "opponent": "Grant (4A)", "gym": "Main Gym"},
+    {"date": "2027-01-31", "time": "12:30 PM", "team": "B4B", "who": "4th Grade Boys Black", "opponent": "Grant (4B)", "gym": "Main Gym"},
+    {"date": "2027-01-31", "time": "1:30 PM", "team": "B5B", "who": "5th Grade Boys Black", "opponent": "Grant (5B)", "gym": "Main Gym"},
+    {"date": "2027-01-31", "time": "1:30 PM", "team": "B6B", "who": "6th Grade Boys Black", "opponent": "Grant (6B)", "gym": "Main Gym"},
+    {"date": "2027-01-31", "time": "2:30 PM", "team": "B7R", "who": "7th Grade Boys Red", "opponent": "Grant (8A)", "gym": "Main Gym"},
+    {"date": "2027-01-31", "time": "2:30 PM", "team": "B8", "who": "8th Grade Boys", "opponent": "Grant (8B)", "gym": "Main Gym"},
+    {"date": "2027-01-31", "time": "3:30 PM", "team": "G8", "who": "8th Grade Girls", "opponent": "Wauconda", "gym": "Main Gym"},
+    {"date": "2027-02-15", "time": "5:30 PM", "team": "B4B", "who": "4th Grade Boys Black", "opponent": "Grayslake North (4B)", "gym": "Main Gym"},
+    {"date": "2027-02-15", "time": "5:30 PM", "team": "B5B", "who": "5th Grade Boys Black", "opponent": "Grayslake Central (5B)", "gym": "Main Gym"},
+    {"date": "2027-02-15", "time": "6:30 PM", "team": "B4R", "who": "4th Grade Boys Red", "opponent": "Grayslake North (4A)", "gym": "Main Gym"},
+    {"date": "2027-02-15", "time": "6:30 PM", "team": "B5R", "who": "5th Grade Boys Red", "opponent": "Grayslake Central (5A)", "gym": "Main Gym"},
+    {"date": "2027-02-15", "time": "7:30 PM", "team": "B6R", "who": "6th Grade Boys Red", "opponent": "Grayslake Central (6A)", "gym": "Main Gym"},
+    {"date": "2027-02-15", "time": "7:30 PM", "team": "B6B", "who": "6th Grade Boys Black", "opponent": "Grayslake North (6B)", "gym": "Main Gym"},
+    {"date": "2027-02-15", "time": "8:30 PM", "team": "B7R", "who": "7th Grade Boys Red", "opponent": "Grayslake North (7A)", "gym": "Main Gym"},
+    {"date": "2027-02-15", "time": "8:30 PM", "team": "B7B", "who": "7th Grade Boys Black", "opponent": "Grayslake North (7B)", "gym": "Main Gym"}
   ]
 }
