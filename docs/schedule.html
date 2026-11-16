@@ -481,6 +481,7 @@
     .sd-who { font-weight: 500; font-size: 15px; line-height: 1.45; color: var(--mustang-charcoal-900); }
     .sd-tag { display: inline-block; font-weight: 800; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; background: var(--mustang-red); border-radius: 4px; padding: 3px 7px; margin-right: 8px; vertical-align: 2px; }
     .sd-who.tba .sd-tag { font-style: normal; }
+    .sd-tag.gym { background: transparent; color: #4A494D; box-shadow: inset 0 0 0 1.5px #6B6A6E; }
     .sd-tag.tentative { background: #F5C518; color: #2A2A2C; }
     .sd-tag.practice { background: #6B6A6E; }
     .sd-tag.other { background: var(--mustang-charcoal-900); }
@@ -534,7 +535,7 @@
     function gymTags(g) {  // 'Main & North Gyms' -> two tags
       if (!g) return '';
       var parts = /^Main & North Gyms?$/i.test(g) ? ['Main Gym', 'North Gym'] : [g];
-      return parts.map(function (x) { return '<span class="sd-tag practice">' + esc(x) + '</span>'; }).join('');
+      return parts.map(function (x) { return '<span class="sd-tag gym">' + esc(x) + '</span>'; }).join('');
     }
     function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
 
