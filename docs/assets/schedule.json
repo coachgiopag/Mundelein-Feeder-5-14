@@ -1,7 +1,7 @@
 {
   "_help": "Team schedule for mundyball.com/schedule. After editing, run: python3 seo.py (rebuilds the calendar feeds in docs/cal/). slots: [time, who, teams, kind, gym]; gym is optional and overrides the session gym for that slot. Team codes: B/G (boys/girls) + grade 4-8 + R/B (Red/Black), e.g. G6R. 8th grade has no Red/Black: B8 = 8th grade boys, G8 = 8th grade girls. 'B6' = both 6th grade boys teams, '6' = every 6th grade team, '*' = all teams. kind defaults to Practice (use Game for games). A session with no slots shows 'Team times coming soon'. games: one line per game (date, start time, team code, team name, opponent, gym). Games show 1 hour long in calendars. events: anything that isn't a game or practice (team photos, parent meeting, ...): {date, time, team, title, gym, tag}; tag is the short label shown (default Event). Add \"status\": \"Tentative\" to a game to show a yellow Tentative tag (calendars mark it tentative too). tournaments: away tournaments {name, start, end, team, games, times, location}; each team is listed on its own line; they show under Games and are all-day events in calendars. A slot with empty teams (\"\") is a practice period not assigned yet: it shows \"Team times coming soon\" to everyone and stays out of calendars. When both gyms are booked, list each period once per gym (Main Gym, North Gym); open periods show a yellow Tentative tag. Away game: set \"gym\": \"Away\" and add \"location\" (address); it shows \"at <opponent>\" with an Away tag.",
   "updated": "2026-11-16",
-  "_hash": "f9ce9694db21",
+  "_hash": "d4610a0a541b",
   "location": "Mundelein High School, 1350 W Hawley St, Mundelein, IL 60060",
   "sessions": [
     { "date": "2026-11-17", "time": "6:00–9:30 PM", "gym": "North Gym", "slots": [
@@ -39,9 +39,9 @@
       ["5:45–7:00 PM", "4th Grade Boys · Red & Black", "B4", "Practice", "North Gym"],
       ["7:00–8:15 PM", "5th Grade Boys · Red & Black", "B5", "Practice", "North Gym"] ] },
     { "date": "2026-12-10", "time": "5:45–9:30 PM", "gym": "North Gym", "slots": [
-      ["5:45–7:00 PM", "7th Grade Boys · Red & Black", "B7", "Practice", "North Gym"],
-      ["7:00–8:15 PM", "", "", "Practice", "North Gym"],
-      ["8:15–9:30 PM", "", "", "Practice", "North Gym"] ] },
+      ["5:45–7:00 PM", "6th Grade Boys · Red & Black", "B6", "Practice", "North Gym"],
+      ["7:00–8:15 PM", "7th Grade Boys · Red & Black", "B7", "Practice", "North Gym"],
+      ["8:15–9:30 PM", "8th Grade Boys & Girls", "8", "Practice", "North Gym"] ] },
     { "date": "2026-12-14", "time": "5:45–9:30 PM", "gym": "Main & North Gyms", "slots": [
       ["5:45–7:00 PM", "", "", "Practice", "Main Gym"],
       ["5:45–7:00 PM", "", "", "Practice", "North Gym"],
