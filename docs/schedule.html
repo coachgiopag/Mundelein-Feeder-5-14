@@ -595,7 +595,8 @@
         return !f.kind || f.kind === k;
       });
       rows.forEach(function (r) { r.box = r.date + '|' + (r.end || ''); });
-      rows.sort(function (a, b) { return a.box < b.box ? -1 : a.box > b.box ? 1 : mins(a.time) - mins(b.time); });
+      function gymRank(g) { return /^Main/i.test(g || '') ? 0 : /^North/i.test(g || '') ? 1 : 2; }  // same time: Main Gym above North Gym
+      rows.sort(function (a, b) { return a.box < b.box ? -1 : a.box > b.box ? 1 : (mins(a.time) - mins(b.time)) || (gymRank(a.gym) - gymRank(b.gym)); });
 
       var html = '', month = '', shown = 0, i = 0;
       while (i < rows.length) {
