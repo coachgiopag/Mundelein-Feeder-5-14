@@ -82,8 +82,9 @@ SUMMARY:Jr. Mustangs Game: 7th Grade Boys Red vs McHenry (Tentative)
 STATUS:TENTATIVE
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
-DESCRIPTION:Main Gym · Game starts 7:30 PM\nTimes and gyms may change: ht
- tps://www.mundyball.com/schedule
+DESCRIPTION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelei
+ n\, IL 60060 · Game starts 7:30 PM\nTimes and gyms may change: https://w
+ ww.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
@@ -95,8 +96,9 @@ SUMMARY:Jr. Mustangs Game: 7th Grade Boys Red vs Grant
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
-DESCRIPTION:Main Gym · Game starts 12:30 PM\nTimes and gyms may change: h
- ttps://www.mundyball.com/schedule
+DESCRIPTION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelei
+ n\, IL 60060 · Game starts 12:30 PM\nTimes and gyms may change: https://
+ www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
@@ -108,8 +110,45 @@ SUMMARY:Jr. Mustangs Game: 7th Grade Boys Red vs Grayslake North
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
-DESCRIPTION:Main Gym · Game starts 8:30 PM\nTimes and gyms may change: ht
- tps://www.mundyball.com/schedule
+DESCRIPTION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelei
+ n\, IL 60060 · Game starts 8:30 PM\nTimes and gyms may change: https://w
+ ww.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:74823be2cd2008974c85@mundyball.com
+DTSTAMP:20261212T020000Z
+DTSTART:20261212T020000Z
+DTEND:20261212T030000Z
+SUMMARY:Jr. Mustangs Game: 7th Grade Boys Red at Vernon Hills
+STATUS:CONFIRMED
+LOCATION:Vernon Hills — gym TBD
+DESCRIPTION:Away · Vernon Hills — gym TBD · Game starts 8:00 PM\nTimes
+  and gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:2519d6f54de21355ec3c@mundyball.com
+DTSTAMP:20270108T001500Z
+DTSTART:20270108T001500Z
+DTEND:20270108T011500Z
+SUMMARY:Jr. Mustangs Game: 7th Grade Boys Red at Grayslake North
+STATUS:CONFIRMED
+LOCATION:Frederick Middle School — Large Gym
+DESCRIPTION:Away · Frederick Middle School — Large Gym · Game starts 6
+ :15 PM\nTimes and gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:49547bf849cef05d95ce@mundyball.com
+DTSTAMP:20270205T020000Z
+DTSTART:20270205T020000Z
+DTEND:20270205T030000Z
+SUMMARY:Jr. Mustangs Game: 7th Grade Boys Red at Libertyville
+STATUS:CONFIRMED
+LOCATION:Waukegan Fieldhouse
+DESCRIPTION:Away · Waukegan Fieldhouse · Game starts 8:00 PM\nTimes and 
+ gyms may change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 END:VCALENDAR

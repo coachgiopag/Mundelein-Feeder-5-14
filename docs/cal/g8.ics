@@ -56,8 +56,9 @@ SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Grayslake North
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
-DESCRIPTION:Main Gym · Game starts 5:00 PM\nTimes and gyms may change: ht
- tps://www.mundyball.com/schedule
+DESCRIPTION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelei
+ n\, IL 60060 · Game starts 5:00 PM\nTimes and gyms may change: https://w
+ ww.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
@@ -69,8 +70,9 @@ SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Stevenson
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
-DESCRIPTION:Main Gym · Game starts 1:00 PM\nTimes and gyms may change: ht
- tps://www.mundyball.com/schedule
+DESCRIPTION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelei
+ n\, IL 60060 · Game starts 1:00 PM\nTimes and gyms may change: https://w
+ ww.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
@@ -82,8 +84,9 @@ SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Round Lake
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
-DESCRIPTION:Main Gym · Game starts 1:30 PM\nTimes and gyms may change: ht
- tps://www.mundyball.com/schedule
+DESCRIPTION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelei
+ n\, IL 60060 · Game starts 1:30 PM\nTimes and gyms may change: https://w
+ ww.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
@@ -95,8 +98,9 @@ SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Antioch
 STATUS:CONFIRMED
 LOCATION:North Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\
  , IL 60060
-DESCRIPTION:North Gym · Game starts 12:00 PM\nTimes and gyms may change: 
- https://www.mundyball.com/schedule
+DESCRIPTION:North Gym\, Mundelein High School\, 1350 W Hawley St\, Mundele
+ in\, IL 60060 · Game starts 12:00 PM\nTimes and gyms may change: https:/
+ /www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
@@ -108,8 +112,9 @@ SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Niles North
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
-DESCRIPTION:Main Gym · Game starts 12:30 PM\nTimes and gyms may change: h
- ttps://www.mundyball.com/schedule
+DESCRIPTION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelei
+ n\, IL 60060 · Game starts 12:30 PM\nTimes and gyms may change: https://
+ www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
@@ -121,8 +126,69 @@ SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Wauconda
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
-DESCRIPTION:Main Gym · Game starts 3:30 PM\nTimes and gyms may change: ht
- tps://www.mundyball.com/schedule
+DESCRIPTION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelei
+ n\, IL 60060 · Game starts 3:30 PM\nTimes and gyms may change: https://w
+ ww.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:4c623a4acdcbfe8ced5a@mundyball.com
+DTSTAMP:20270123T194500Z
+DTSTART:20270123T194500Z
+DTEND:20270123T204500Z
+SUMMARY:Jr. Mustangs Game: 8th Grade Girls at Lake Forest
+STATUS:CONFIRMED
+LOCATION:Lake Forest West Campus
+DESCRIPTION:Away · Lake Forest West Campus · Game starts 1:45 PM\nTimes 
+ and gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:c9e1388ad6058a5d0e51@mundyball.com
+DTSTAMP:20270129T001500Z
+DTSTART:20270129T001500Z
+DTEND:20270129T011500Z
+SUMMARY:Jr. Mustangs Game: 8th Grade Girls at Grayslake North
+STATUS:CONFIRMED
+LOCATION:Frederick Middle School
+DESCRIPTION:Away · Frederick Middle School · Game starts 6:15 PM\nTimes 
+ and gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:bc2a7d3465eb6cafbd9e@mundyball.com
+DTSTAMP:20270130T003000Z
+DTSTART:20270130T003000Z
+DTEND:20270130T013000Z
+SUMMARY:Jr. Mustangs Game: 8th Grade Girls at Antioch
+STATUS:CONFIRMED
+LOCATION:Antioch — gym TBD
+DESCRIPTION:Away · Antioch — gym TBD · Game starts 6:30 PM\nTimes and 
+ gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:4e6b35e7111e92e1fb8b@mundyball.com
+DTSTAMP:20270206T011500Z
+DTSTART:20270206T011500Z
+DTEND:20270206T021500Z
+SUMMARY:Jr. Mustangs Game: 8th Grade Girls at Round Lake
+STATUS:CONFIRMED
+LOCATION:Round Lake — gym TBD
+DESCRIPTION:Away · Round Lake — gym TBD · Game starts 7:15 PM\nTimes a
+ nd gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:c22f80b5d957357bda7a@mundyball.com
+DTSTAMP:20270207T200000Z
+DTSTART:20270207T200000Z
+DTEND:20270207T210000Z
+SUMMARY:Jr. Mustangs Game: 8th Grade Girls at Wauconda
+STATUS:CONFIRMED
+LOCATION:Wauconda — gym TBD
+DESCRIPTION:Away · Wauconda — gym TBD · Game starts 2:00 PM\nTimes and
+  gyms may change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 END:VCALENDAR

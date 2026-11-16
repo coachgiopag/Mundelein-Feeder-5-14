@@ -69,8 +69,9 @@ SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black vs McHenry (Tentative)
 STATUS:TENTATIVE
 LOCATION:North Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\
  , IL 60060
-DESCRIPTION:North Gym · Game starts 7:30 PM\nTimes and gyms may change: h
- ttps://www.mundyball.com/schedule
+DESCRIPTION:North Gym\, Mundelein High School\, 1350 W Hawley St\, Mundele
+ in\, IL 60060 · Game starts 7:30 PM\nTimes and gyms may change: https://
+ www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
@@ -82,8 +83,9 @@ SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black vs Grant
 STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
-DESCRIPTION:Main Gym · Game starts 1:30 PM\nTimes and gyms may change: ht
- tps://www.mundyball.com/schedule
+DESCRIPTION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelei
+ n\, IL 60060 · Game starts 1:30 PM\nTimes and gyms may change: https://w
+ ww.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
@@ -95,8 +97,34 @@ SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black vs Grayslake North
 STATUS:CONFIRMED
 LOCATION:North Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\
  , IL 60060
-DESCRIPTION:North Gym · Game starts 7:30 PM\nTimes and gyms may change: h
- ttps://www.mundyball.com/schedule
+DESCRIPTION:North Gym\, Mundelein High School\, 1350 W Hawley St\, Mundele
+ in\, IL 60060 · Game starts 7:30 PM\nTimes and gyms may change: https://
+ www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:3e689d8a392800baf0d3@mundyball.com
+DTSTAMP:20270108T013000Z
+DTSTART:20270108T013000Z
+DTEND:20270108T023000Z
+SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black at Grayslake North
+STATUS:CONFIRMED
+LOCATION:Grayslake Middle School — Main Gym
+DESCRIPTION:Away · Grayslake Middle School — Main Gym · Game starts 7:
+ 30 PM\nTimes and gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:f0eecbc4433de78b91b9@mundyball.com
+DTSTAMP:20270123T000000Z
+DTSTART:20270123T000000Z
+DTEND:20270123T010000Z
+SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black at Libertyville (Tentative
+ )
+STATUS:TENTATIVE
+LOCATION:Canlan Libertyville · Red Court
+DESCRIPTION:Away · Canlan Libertyville · Red Court · Game starts 6:00 P
+ M\nTimes and gyms may change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 END:VCALENDAR

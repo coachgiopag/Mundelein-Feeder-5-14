@@ -118,14 +118,16 @@ def build():
         day = datetime.date.fromisoformat(g["date"])
         start, _ = parse_range(day, g["time"] + "–" + g["time"])
         end = start + datetime.timedelta(hours=1)
-        title = "%s vs %s" % (g["who"], g["opponent"])
+        away = not g.get("gym") or g["gym"].lower() == "away"
+        title = "%s %s %s" % (g["who"], "at" if away else "vs", g["opponent"])
+        where = (g.get("location") or g["opponent"]) if away else "%s, %s" % (g["gym"], loc)
         uid = hashlib.sha1(("game|%s|%s|%s" % (g["date"], g["team"], g["opponent"])).encode()).hexdigest()[:20] + "@mundyball.com"
         events.append((expand(g["team"]), [
             "BEGIN:VEVENT", "UID:" + uid, "DTSTAMP:" + utc(start), "DTSTART:" + utc(start), "DTEND:" + utc(end),
             "SUMMARY:" + esc("Jr. Mustangs Game: " + title + (" (%s)" % g["status"] if g.get("status") else "")),
             "STATUS:" + ("TENTATIVE" if g.get("status", "").lower() == "tentative" else "CONFIRMED"),
-            "LOCATION:" + esc("%s, %s" % (g["gym"], loc)),
-            "DESCRIPTION:" + esc("%s · Game starts %s\nTimes and gyms may change: https://www.mundyball.com/schedule" % (g["gym"], g["time"])),
+            "LOCATION:" + esc(where),
+            "DESCRIPTION:" + esc("%s%s · Game starts %s\nTimes and gyms may change: https://www.mundyball.com/schedule" % ("Away · " if away else "", where, g["time"])),
             "URL:https://www.mundyball.com/schedule", "END:VEVENT"]))
 
     for e in data.get("events") or []:  # "6:00 PM" (shown as 1 hour) or "6:00–7:00 PM"
