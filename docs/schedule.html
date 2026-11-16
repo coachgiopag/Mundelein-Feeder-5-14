@@ -479,6 +479,7 @@
     .sd-time { font-weight: 700; font-size: 15px; color: var(--mustang-charcoal-900); white-space: nowrap; }
     .sd-who { font-weight: 500; font-size: 15px; line-height: 1.45; color: var(--mustang-charcoal-900); }
     .sd-tag { display: inline-block; font-weight: 800; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; background: var(--mustang-red); border-radius: 4px; padding: 3px 7px; margin-right: 8px; vertical-align: 2px; }
+    .sd-tag.tentative { background: #F5C518; color: #2A2A2C; }
     .sd-tag.practice { background: #6B6A6E; }
     .sd-tag.other { background: var(--mustang-charcoal-900); }
     .sd-where { display: block; font-weight: 600; font-size: 13px; color: var(--fg-2); margin-top: 2px; }
@@ -544,7 +545,7 @@
       });
       GAMES.forEach(function (g) {
         if (g.date < today || !matches(g.team)) return;
-        rows.push({ date: g.date, time: g.time, who: g.who + ' vs ' + g.opponent, gym: g.gym, kind: 'Game' });
+        rows.push({ date: g.date, time: g.time, who: g.who + ' vs ' + g.opponent, gym: g.gym, kind: 'Game', status: g.status || '' });
       });
       function mins(t) {
         var m = /(\d{1,2}):(\d{2})\s*(AM|PM)?/i.exec(t), ap = /(AM|PM)/i.exec(t);
@@ -575,7 +576,7 @@
           '</span><span class="sd-gym">' + (gyms.length === 1 ? esc(gyms[0]) : '') + '</span></div>';
         items.forEach(function (r) {
           html += '<div class="sd-slot"><span class="sd-time">' + esc(r.time) + '</span><span class="sd-who' + (r.tba ? ' tba' : '') + '">' +
-            (r.kind === 'Game' ? '<span class="sd-tag">Game</span>' : (r.tba || r.kind === 'Practice') ? '<span class="sd-tag practice">Practice</span>' : r.kind === 'Other' ? '<span class="sd-tag other">' + esc(r.tag) + '</span>' : '') + esc(r.who) +
+            (r.kind === 'Game' ? '<span class="sd-tag">Game</span>' + (r.status ? '<span class="sd-tag tentative">' + esc(r.status) + '</span>' : '') : (r.tba || r.kind === 'Practice') ? '<span class="sd-tag practice">Practice</span>' : r.kind === 'Other' ? '<span class="sd-tag other">' + esc(r.tag) + '</span>' : '') + esc(r.who) +
             (gyms.length > 1 ? '<span class="sd-where">' + esc(r.gym) + '</span>' : '') + '</span></div>';
         });
         html += '</div>';

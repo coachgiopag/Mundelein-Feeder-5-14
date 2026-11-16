@@ -103,7 +103,8 @@ def build():
         uid = hashlib.sha1(("game|%s|%s|%s" % (g["date"], g["team"], g["opponent"])).encode()).hexdigest()[:20] + "@mundyball.com"
         events.append((expand(g["team"]), [
             "BEGIN:VEVENT", "UID:" + uid, "DTSTAMP:" + utc(start), "DTSTART:" + utc(start), "DTEND:" + utc(end),
-            "SUMMARY:" + esc("Jr. Mustangs Game: " + title),
+            "SUMMARY:" + esc("Jr. Mustangs Game: " + title + (" (%s)" % g["status"] if g.get("status") else "")),
+            "STATUS:" + ("TENTATIVE" if g.get("status", "").lower() == "tentative" else "CONFIRMED"),
             "LOCATION:" + esc("%s, %s" % (g["gym"], loc)),
             "DESCRIPTION:" + esc("%s · Game starts %s\nTimes and gyms may change: https://www.mundyball.com/schedule" % (g["gym"], g["time"])),
             "URL:https://www.mundyball.com/schedule", "END:VEVENT"]))

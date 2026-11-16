@@ -122,6 +122,7 @@ DTSTAMP:20261206T220000Z
 DTSTART:20261206T220000Z
 DTEND:20261206T230000Z
 SUMMARY:Jr. Mustangs Game: 6th Grade Girls Red vs Grayslake Central (6A)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 4:00 PM\nTimes and gyms may change: ht
@@ -134,6 +135,7 @@ DTSTAMP:20261206T220000Z
 DTSTART:20261206T220000Z
 DTEND:20261206T230000Z
 SUMMARY:Jr. Mustangs Game: 8th Grade Boys vs Grayslake Central (8B)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 4:00 PM\nTimes and gyms may change: ht
@@ -146,6 +148,7 @@ DTSTAMP:20261206T230000Z
 DTSTART:20261206T230000Z
 DTEND:20261207T000000Z
 SUMMARY:Jr. Mustangs Game: 6th Grade Girls Black vs Grayslake North (6B)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 5:00 PM\nTimes and gyms may change: ht
@@ -158,6 +161,7 @@ DTSTAMP:20261206T230000Z
 DTSTART:20261206T230000Z
 DTEND:20261207T000000Z
 SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Grayslake North (8C)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 5:00 PM\nTimes and gyms may change: ht
@@ -170,6 +174,7 @@ DTSTAMP:20261222T003000Z
 DTSTART:20261222T003000Z
 DTEND:20261222T013000Z
 SUMMARY:Jr. Mustangs Game: 4th Grade Boys Black vs Vernon Hills (4B)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 6:30 PM\nTimes and gyms may change: ht
@@ -182,6 +187,7 @@ DTSTAMP:20261222T003000Z
 DTSTART:20261222T003000Z
 DTEND:20261222T013000Z
 SUMMARY:Jr. Mustangs Game: 5th Grade Boys Black vs Vernon Hills (5B)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 6:30 PM\nTimes and gyms may change: ht
@@ -194,6 +200,7 @@ DTSTAMP:20261222T014500Z
 DTSTART:20261222T014500Z
 DTEND:20261222T024500Z
 SUMMARY:Jr. Mustangs Game: 7th Grade Boys Red vs Vernon Hills (7A)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 7:45 PM\nTimes and gyms may change: ht
@@ -206,6 +213,7 @@ DTSTAMP:20261222T014500Z
 DTSTART:20261222T014500Z
 DTEND:20261222T024500Z
 SUMMARY:Jr. Mustangs Game: 8th Grade Boys vs Vernon Hills (8C)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 7:45 PM\nTimes and gyms may change: ht
@@ -218,6 +226,7 @@ DTSTAMP:20270102T180000Z
 DTSTART:20270102T180000Z
 DTEND:20270102T190000Z
 SUMMARY:Jr. Mustangs Game: 6th Grade Girls Red vs Lake Zurich
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 12:00 PM\nTimes and gyms may change: h
@@ -230,6 +239,7 @@ DTSTAMP:20270102T190000Z
 DTSTART:20270102T190000Z
 DTEND:20270102T200000Z
 SUMMARY:Jr. Mustangs Game: 6th Grade Girls Black vs Lake Zurich
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 1:00 PM\nTimes and gyms may change: ht
@@ -242,6 +252,7 @@ DTSTAMP:20270102T190000Z
 DTSTART:20270102T190000Z
 DTEND:20270102T200000Z
 SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Stevenson
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 1:00 PM\nTimes and gyms may change: ht
@@ -254,6 +265,7 @@ DTSTAMP:20270103T193000Z
 DTSTART:20270103T193000Z
 DTEND:20270103T203000Z
 SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Round Lake
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 1:30 PM\nTimes and gyms may change: ht
@@ -265,7 +277,8 @@ UID:00c751004d72c05e2ab0@mundyball.com
 DTSTAMP:20270103T203000Z
 DTSTART:20270103T203000Z
 DTEND:20270103T213000Z
-SUMMARY:Jr. Mustangs Game: 6th Grade Girls Red vs Carmel
+SUMMARY:Jr. Mustangs Game: 6th Grade Girls Red vs Carmel (Tentative)
+STATUS:TENTATIVE
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 2:30 PM\nTimes and gyms may change: ht
@@ -277,7 +290,8 @@ UID:e225e584c7c988cb2231@mundyball.com
 DTSTAMP:20270103T203000Z
 DTSTART:20270103T203000Z
 DTEND:20270103T213000Z
-SUMMARY:Jr. Mustangs Game: 6th Grade Girls Black vs Carmel
+SUMMARY:Jr. Mustangs Game: 6th Grade Girls Black vs Carmel (Tentative)
+STATUS:TENTATIVE
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 2:30 PM\nTimes and gyms may change: ht
@@ -290,6 +304,7 @@ DTSTAMP:20270109T180000Z
 DTSTART:20270109T180000Z
 DTEND:20270109T190000Z
 SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Antioch
+STATUS:CONFIRMED
 LOCATION:North Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\
  , IL 60060
 DESCRIPTION:North Gym · Game starts 12:00 PM\nTimes and gyms may change: 
@@ -302,6 +317,7 @@ DTSTAMP:20270117T190000Z
 DTSTART:20270117T190000Z
 DTEND:20270117T200000Z
 SUMMARY:Jr. Mustangs Game: 6th Grade Girls Red vs Niles West
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 1:00 PM\nTimes and gyms may change: ht
@@ -314,6 +330,7 @@ DTSTAMP:20270117T190000Z
 DTSTART:20270117T190000Z
 DTEND:20270117T200000Z
 SUMMARY:Jr. Mustangs Game: 6th Grade Girls Black vs Niles West
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 1:00 PM\nTimes and gyms may change: ht
@@ -326,6 +343,7 @@ DTSTAMP:20270124T183000Z
 DTSTART:20270124T183000Z
 DTEND:20270124T193000Z
 SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Niles North
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 12:30 PM\nTimes and gyms may change: h
@@ -338,6 +356,7 @@ DTSTAMP:20270124T193000Z
 DTSTART:20270124T193000Z
 DTEND:20270124T203000Z
 SUMMARY:Jr. Mustangs Game: 6th Grade Girls Black vs Round Lake
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 1:30 PM\nTimes and gyms may change: ht
@@ -349,7 +368,8 @@ UID:e43752fb890adefb6325@mundyball.com
 DTSTAMP:20270128T001500Z
 DTSTART:20270128T001500Z
 DTEND:20270128T011500Z
-SUMMARY:Jr. Mustangs Game: 4th Grade Boys Red vs McHenry
+SUMMARY:Jr. Mustangs Game: 4th Grade Boys Red vs McHenry (Tentative)
+STATUS:TENTATIVE
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 6:15 PM\nTimes and gyms may change: ht
@@ -361,7 +381,8 @@ UID:58d8b8d93d8a9878614b@mundyball.com
 DTSTAMP:20270128T001500Z
 DTSTART:20270128T001500Z
 DTEND:20270128T011500Z
-SUMMARY:Jr. Mustangs Game: 5th Grade Boys Red vs McHenry
+SUMMARY:Jr. Mustangs Game: 5th Grade Boys Red vs McHenry (Tentative)
+STATUS:TENTATIVE
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 6:15 PM\nTimes and gyms may change: ht
@@ -373,7 +394,8 @@ UID:182319b4936fb7ee118a@mundyball.com
 DTSTAMP:20270128T013000Z
 DTSTART:20270128T013000Z
 DTEND:20270128T023000Z
-SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black vs McHenry
+SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black vs McHenry (Tentative)
+STATUS:TENTATIVE
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 7:30 PM\nTimes and gyms may change: ht
@@ -385,7 +407,8 @@ UID:dbf861757a905c0ba6a7@mundyball.com
 DTSTAMP:20270128T013000Z
 DTSTART:20270128T013000Z
 DTEND:20270128T023000Z
-SUMMARY:Jr. Mustangs Game: 7th Grade Boys Red vs McHenry
+SUMMARY:Jr. Mustangs Game: 7th Grade Boys Red vs McHenry (Tentative)
+STATUS:TENTATIVE
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 7:30 PM\nTimes and gyms may change: ht
@@ -398,6 +421,7 @@ DTSTAMP:20270131T183000Z
 DTSTART:20270131T183000Z
 DTEND:20270131T193000Z
 SUMMARY:Jr. Mustangs Game: 4th Grade Boys Red vs Grant (4A)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 12:30 PM\nTimes and gyms may change: h
@@ -410,6 +434,7 @@ DTSTAMP:20270131T183000Z
 DTSTART:20270131T183000Z
 DTEND:20270131T193000Z
 SUMMARY:Jr. Mustangs Game: 4th Grade Boys Black vs Grant (4B)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 12:30 PM\nTimes and gyms may change: h
@@ -422,6 +447,7 @@ DTSTAMP:20270131T193000Z
 DTSTART:20270131T193000Z
 DTEND:20270131T203000Z
 SUMMARY:Jr. Mustangs Game: 5th Grade Boys Black vs Grant (5B)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 1:30 PM\nTimes and gyms may change: ht
@@ -434,6 +460,7 @@ DTSTAMP:20270131T193000Z
 DTSTART:20270131T193000Z
 DTEND:20270131T203000Z
 SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black vs Grant (6B)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 1:30 PM\nTimes and gyms may change: ht
@@ -446,6 +473,7 @@ DTSTAMP:20270131T203000Z
 DTSTART:20270131T203000Z
 DTEND:20270131T213000Z
 SUMMARY:Jr. Mustangs Game: 7th Grade Boys Red vs Grant (8A)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 2:30 PM\nTimes and gyms may change: ht
@@ -458,6 +486,7 @@ DTSTAMP:20270131T203000Z
 DTSTART:20270131T203000Z
 DTEND:20270131T213000Z
 SUMMARY:Jr. Mustangs Game: 8th Grade Boys vs Grant (8B)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 2:30 PM\nTimes and gyms may change: ht
@@ -470,6 +499,7 @@ DTSTAMP:20270131T213000Z
 DTSTART:20270131T213000Z
 DTEND:20270131T223000Z
 SUMMARY:Jr. Mustangs Game: 8th Grade Girls vs Wauconda
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 3:30 PM\nTimes and gyms may change: ht
@@ -482,6 +512,7 @@ DTSTAMP:20270215T233000Z
 DTSTART:20270215T233000Z
 DTEND:20270216T003000Z
 SUMMARY:Jr. Mustangs Game: 4th Grade Boys Black vs Grayslake North (4B)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 5:30 PM\nTimes and gyms may change: ht
@@ -494,6 +525,7 @@ DTSTAMP:20270215T233000Z
 DTSTART:20270215T233000Z
 DTEND:20270216T003000Z
 SUMMARY:Jr. Mustangs Game: 5th Grade Boys Black vs Grayslake Central (5B)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 5:30 PM\nTimes and gyms may change: ht
@@ -506,6 +538,7 @@ DTSTAMP:20270216T003000Z
 DTSTART:20270216T003000Z
 DTEND:20270216T013000Z
 SUMMARY:Jr. Mustangs Game: 4th Grade Boys Red vs Grayslake North (4A)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 6:30 PM\nTimes and gyms may change: ht
@@ -518,6 +551,7 @@ DTSTAMP:20270216T003000Z
 DTSTART:20270216T003000Z
 DTEND:20270216T013000Z
 SUMMARY:Jr. Mustangs Game: 5th Grade Boys Red vs Grayslake Central (5A)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 6:30 PM\nTimes and gyms may change: ht
@@ -530,6 +564,7 @@ DTSTAMP:20270216T013000Z
 DTSTART:20270216T013000Z
 DTEND:20270216T023000Z
 SUMMARY:Jr. Mustangs Game: 6th Grade Boys Red vs Grayslake Central (6A)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 7:30 PM\nTimes and gyms may change: ht
@@ -542,6 +577,7 @@ DTSTAMP:20270216T013000Z
 DTSTART:20270216T013000Z
 DTEND:20270216T023000Z
 SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black vs Grayslake North (6B)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 7:30 PM\nTimes and gyms may change: ht
@@ -554,6 +590,7 @@ DTSTAMP:20270216T023000Z
 DTSTART:20270216T023000Z
 DTEND:20270216T033000Z
 SUMMARY:Jr. Mustangs Game: 7th Grade Boys Red vs Grayslake North (7A)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 8:30 PM\nTimes and gyms may change: ht
@@ -566,6 +603,7 @@ DTSTAMP:20270216T023000Z
 DTSTART:20270216T023000Z
 DTEND:20270216T033000Z
 SUMMARY:Jr. Mustangs Game: 7th Grade Boys Black vs Grayslake North (7B)
+STATUS:CONFIRMED
 LOCATION:Main Gym\, Mundelein High School\, 1350 W Hawley St\, Mundelein\,
   IL 60060
 DESCRIPTION:Main Gym · Game starts 8:30 PM\nTimes and gyms may change: ht
