@@ -226,4 +226,16 @@ DESCRIPTION:Away · Location TBD · Game starts 6:15 PM\nTimes and gyms ma
  y change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
+BEGIN:VEVENT
+UID:efafe4ef7f4f2ff64d8a@mundyball.com
+DTSTAMP:20270213T003000Z
+DTSTART:20270213T003000Z
+DTEND:20270213T013000Z
+SUMMARY:Jr. Mustangs Game: 6th Grade Girls Black at Lake Zurich
+STATUS:CONFIRMED
+LOCATION:Lake Zurich — gym TBD
+DESCRIPTION:Away · Lake Zurich — gym TBD · Game starts 6:30 PM\nTimes 
+ and gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
 END:VCALENDAR
