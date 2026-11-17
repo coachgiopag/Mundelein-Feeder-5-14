@@ -201,15 +201,18 @@ DESCRIPTION:Away · Canlan Libertyville · Red Court · Game starts 6:00 P
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
-UID:f1c4473a8d6b89682fd7@mundyball.com
+UID:a6a2e8f66227ebe6357e@mundyball.com
 DTSTAMP:20270210T001500Z
 DTSTART:20270210T001500Z
 DTEND:20270210T011500Z
-SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black at TBD opponent
+SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black at Stevenson
 STATUS:CONFIRMED
-LOCATION:Location TBD
-DESCRIPTION:Away · Location TBD · Game starts 6:15 PM\nTimes and gyms ma
- y change: https://www.mundyball.com/schedule
+LOCATION:Stevenson High School Fieldhouse\, Court 2 (Lot D\, PWC entrance 
+ door 19)\, 1 Stevenson Drive\, Lincolnshire\, IL 60069
+DESCRIPTION:Away · Stevenson High School Fieldhouse\, Court 2 (Lot D\, PW
+ C entrance door 19)\, 1 Stevenson Drive\, Lincolnshire\, IL 60069 · Game
+  starts 6:15 PM\nTimes and gyms may change: https://www.mundyball.com/sch
+ edule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
 BEGIN:VEVENT
