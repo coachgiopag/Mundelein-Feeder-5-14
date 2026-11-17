@@ -1420,7 +1420,7 @@
         showError('Sorry, that session just filled up. Please pick another session, or email jrmustangsfeeder@gmail.com to join the waitlist.');
         return;
       }
-      fd.set('access_key', '14da06cd-35ce-4d2c-9fc4-0ed01521439d');
+      fd.set('access_key', '4af06528-9260-4ca6-95ee-f1b41b4d203d');  // Web3Forms: Winter Camp form (summer camp keeps 14da06cd…)
       fd.set('subject', 'Winter Feeder Camp Sign-Up — ' + camper + ' — ' + fd.get('Session'));
       fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
         .then(function(r){ return r.json(); })
