@@ -216,4 +216,16 @@ DESCRIPTION:Away · Waukegan Fieldhouse · Game starts 8:00 PM\nTimes and
  gyms may change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
+BEGIN:VEVENT
+UID:a283e3d1b17af46ab3ba@mundyball.com
+DTSTAMP:20261213T193000Z
+DTSTART:20261213T193000Z
+DTEND:20261213T203000Z
+SUMMARY:Jr. Mustangs Game: 7th Grade Boys Red at Grant
+STATUS:CONFIRMED
+LOCATION:Grant\, Fox Lake — gym TBD
+DESCRIPTION:Away · Grant\, Fox Lake — gym TBD · Game starts 1:30 PM\nT
+ imes and gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
 END:VCALENDAR

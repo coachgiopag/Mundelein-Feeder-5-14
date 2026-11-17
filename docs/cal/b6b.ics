@@ -212,4 +212,16 @@ DESCRIPTION:Away · Location TBD · Game starts 6:15 PM\nTimes and gyms ma
  y change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
+BEGIN:VEVENT
+UID:e33184a7208f27f53550@mundyball.com
+DTSTAMP:20261213T182000Z
+DTSTART:20261213T182000Z
+DTEND:20261213T192000Z
+SUMMARY:Jr. Mustangs Game: 6th Grade Boys Black at Grant
+STATUS:CONFIRMED
+LOCATION:Grant\, Fox Lake — gym TBD
+DESCRIPTION:Away · Grant\, Fox Lake — gym TBD · Game starts 12:20 PM\n
+ Times and gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
 END:VCALENDAR

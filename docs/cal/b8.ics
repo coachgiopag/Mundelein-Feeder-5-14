@@ -227,4 +227,16 @@ DESCRIPTION:Away · Location TBD · Game starts 7:45 PM\nTimes and gyms ma
  y change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
+BEGIN:VEVENT
+UID:3b1c61b6814664692f42@mundyball.com
+DTSTAMP:20261213T203500Z
+DTSTART:20261213T203500Z
+DTEND:20261213T213500Z
+SUMMARY:Jr. Mustangs Game: 8th Grade Boys at Grant
+STATUS:CONFIRMED
+LOCATION:Grant\, Fox Lake — gym TBD
+DESCRIPTION:Away · Grant\, Fox Lake — gym TBD · Game starts 2:35 PM\nT
+ imes and gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
 END:VCALENDAR

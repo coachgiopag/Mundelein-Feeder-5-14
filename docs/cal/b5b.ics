@@ -211,4 +211,16 @@ DESCRIPTION:Away · Canlan Libertyville · Red Court · Game starts 5:00 P
  M\nTimes and gyms may change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
+BEGIN:VEVENT
+UID:5032bf90e22195ff77d0@mundyball.com
+DTSTAMP:20261213T171000Z
+DTSTART:20261213T171000Z
+DTEND:20261213T181000Z
+SUMMARY:Jr. Mustangs Game: 5th Grade Boys Black at Grant
+STATUS:CONFIRMED
+LOCATION:Grant\, Fox Lake — gym TBD
+DESCRIPTION:Away · Grant\, Fox Lake — gym TBD · Game starts 11:10 AM\n
+ Times and gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
 END:VCALENDAR

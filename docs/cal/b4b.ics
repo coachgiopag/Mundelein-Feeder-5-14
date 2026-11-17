@@ -172,4 +172,16 @@ DESCRIPTION:Away · Grayslake Middle School — Small Gym · Game starts 7
  :30 PM\nTimes and gyms may change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
+BEGIN:VEVENT
+UID:8f0fbc00aac9591dc42b@mundyball.com
+DTSTAMP:20261213T160500Z
+DTSTART:20261213T160500Z
+DTEND:20261213T170500Z
+SUMMARY:Jr. Mustangs Game: 4th Grade Boys Black at Grant
+STATUS:CONFIRMED
+LOCATION:Grant\, Fox Lake — gym TBD
+DESCRIPTION:Away · Grant\, Fox Lake — gym TBD · Game starts 10:05 AM\n
+ Times and gyms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
 END:VCALENDAR
