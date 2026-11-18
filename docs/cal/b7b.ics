@@ -190,19 +190,4 @@ DESCRIPTION:Away · Waukegan Fieldhouse · Game starts 8:00 PM\nTimes and
  gyms may change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
-BEGIN:VEVENT
-UID:5b838574f7a72d7dc934@mundyball.com
-DTSTAMP:20270210T001500Z
-DTSTART:20270210T001500Z
-DTEND:20270210T011500Z
-SUMMARY:Jr. Mustangs Game: 7th Grade Boys Black at Stevenson
-STATUS:CONFIRMED
-LOCATION:Stevenson High School Fieldhouse\, Court 3 (Lot D\, PWC entrance 
- door 19)\, 1 Stevenson Drive\, Lincolnshire\, IL 60069
-DESCRIPTION:Away · Stevenson High School Fieldhouse\, Court 3 (Lot D\, PW
- C entrance door 19)\, 1 Stevenson Drive\, Lincolnshire\, IL 60069 · Game
-  starts 6:15 PM\nTimes and gyms may change: https://www.mundyball.com/sch
- edule
-URL:https://www.mundyball.com/schedule
-END:VEVENT
 END:VCALENDAR
