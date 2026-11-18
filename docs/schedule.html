@@ -603,7 +603,7 @@
         var teams = expand(t.team).filter(teamOk).map(function (x) {
           return GR[x.n] + ' Grade ' + (x.g === 'B' ? 'Boys' : 'Girls') + (x.c ? ' ' + (x.c === 'R' ? 'Red' : 'Black') : '');
         });
-        rows.push({ date: t.start, end: t.end && t.end !== t.start ? t.end : '', time: 'Times TBD', who: t.name, gym: '', kind: 'Game', tag: 'Tournament', lines: lines, teams: teams, past: (t.end || t.start) < today });
+        rows.push({ date: t.start, end: t.end && t.end !== t.start ? t.end : '', time: 'Times TBD', who: t.name, gym: '', kind: 'Game', tag: 'Tournament', lines: lines, teams: teams, perTeam: parseInt(t.games, 10) || 0, past: (t.end || t.start) < today });
       });
       EVENTS.forEach(function (e) {
         if (!matches(e.team)) return;
@@ -619,7 +619,8 @@
       // Season totals for the current filters, past and upcoming: assigned practices (open gym slots not counted), games, tournaments, other events.
       var n = { p: 0, g: 0, t: 0, o: 0 };
       rows.forEach(function (r) {
-        if (r.tag === 'Tournament') n.t++; else if (r.kind === 'Game') n.g++;
+        // A tournament adds its games-per-team for each team shown (e.g. 4 games x 7 teams = 28 games).
+        if (r.tag === 'Tournament') { n.t++; n.g += r.perTeam * (r.teams ? r.teams.length : 1); } else if (r.kind === 'Game') n.g++;
         else if (r.kind === 'Practice') n.p++; else if (r.kind === 'Other') n.o++;
       });
       var pl = function (c, one, many) { return '<strong>' + c + '</strong> ' + (c === 1 ? one : many); };
