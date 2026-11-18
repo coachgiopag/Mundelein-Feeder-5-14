@@ -447,6 +447,10 @@
       <div id="sched-list"></div>
       <p id="sched-empty" class="sched-empty" hidden>Nothing upcoming for this selection yet. Check back soon.</p>
       <p class="sched-foot">Questions? Email <a href="mailto:jrmustangsfeeder@gmail.com">jrmustangsfeeder@gmail.com</a>.</p>
+      <div class="sched-past" id="sched-past" hidden>
+        <button type="button" id="past-toggle" class="past-toggle" aria-expanded="false" aria-controls="past-list">Past events <span id="past-count"></span></button>
+        <div id="past-list" class="past-list" hidden></div>
+      </div>
     </div>
   </div>
   <style>
@@ -498,6 +502,14 @@
     .sched-empty { font-weight: 600; font-size: 15px; color: var(--fg-2); padding: 18px 0; margin: 0; }
     .sched-foot { font-weight: 500; font-size: 14px; color: var(--fg-2); margin: 22px 0 0; }
     .sched-foot a { color: var(--mustang-red); }
+    .sched-past { margin-top: 28px; border-top: 2px solid var(--mustang-lite-gray); padding-top: 18px; }
+    .sched-past[hidden], .past-list[hidden] { display: none; }
+    .past-toggle { font: inherit; font-weight: 800; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; padding: 12px 18px; border-radius: 8px; border: 1.5px solid var(--mustang-charcoal); background: #fff; color: var(--mustang-charcoal-900); cursor: pointer; }
+    .past-toggle::after { content: ' ▾'; }
+    .past-toggle[aria-expanded="true"] { background: var(--mustang-charcoal-900); color: #fff; }
+    .past-toggle[aria-expanded="true"]::after { content: ' ▴'; }
+    .past-list { margin-top: 8px; }
+    .past-list .sched-day { opacity: 0.8; }
     @media (max-width: 600px) {
       .sched-filters { padding: 14px; }
       .sf-row { gap: 8px; }
@@ -560,20 +572,20 @@
       var rows = [], gameDays = {};
       GAMES.forEach(function (g) { gameDays[g.date] = 1; });
       SESSIONS.forEach(function (s) {
-        if (s.date < today) return;
+        var past = s.date < today;
         if (s.slots && s.slots.length) {
           s.slots.forEach(function (x) {
-            if (!x[2]) { rows.push({ date: s.date, time: x[0], who: 'Team times coming soon', gym: x[4] || s.gym, head: s.gym, tba: true }); return; }
-            if (matches(x[2])) rows.push({ date: s.date, time: x[0], who: x[1], gym: x[4] || s.gym, head: s.gym, kind: x[3] || 'Practice' });
+            if (!x[2]) { if (!past) rows.push({ date: s.date, time: x[0], who: 'Team times coming soon', gym: x[4] || s.gym, head: s.gym, tba: true }); return; }
+            if (matches(x[2])) rows.push({ date: s.date, time: x[0], who: x[1], gym: x[4] || s.gym, head: s.gym, kind: x[3] || 'Practice', past: past });
           });
-        } else if (!gameDays[s.date]) {
+        } else if (!gameDays[s.date] && !past) {
           rows.push({ date: s.date, time: s.time, who: 'Team times coming soon', gym: s.gym, tba: true });
         }
       });
       GAMES.forEach(function (g) {
-        if (g.date < today || !matches(g.team)) return;
+        if (!matches(g.team)) return;
         var away = !g.gym || /^away$/i.test(g.gym);
-        rows.push({ date: g.date, time: g.time, who: g.who + (away ? ' at ' : ' vs ') + g.opponent, gym: away ? '' : g.gym, kind: 'Game', status: g.status || '', lines: away && g.location ? [g.location] : null });
+        rows.push({ date: g.date, time: g.time, who: g.who + (away ? ' at ' : ' vs ') + g.opponent, gym: away ? '' : g.gym, kind: 'Game', status: g.status || '', lines: away && g.location ? [g.location] : null, past: g.date < today });
       });
       function mins(t) {
         var m = /(\d{1,2}):(\d{2})\s*(AM|PM)?/i.exec(t), ap = /(AM|PM)/i.exec(t);
@@ -583,7 +595,7 @@
       }
       // Away tournaments: one entry on the first day; hidden once the last day has passed.
       TOURNEYS.forEach(function (t) {
-        if ((t.end || t.start) < today || !matches(t.team)) return;
+        if (!matches(t.team)) return;
         var lines = [];
         if (t.games) lines.push(t.games);
         lines.push(t.location);
@@ -591,11 +603,11 @@
         var teams = expand(t.team).filter(teamOk).map(function (x) {
           return GR[x.n] + ' Grade ' + (x.g === 'B' ? 'Boys' : 'Girls') + (x.c ? ' ' + (x.c === 'R' ? 'Red' : 'Black') : '');
         });
-        rows.push({ date: t.start, end: t.end && t.end !== t.start ? t.end : '', time: 'Times TBD', who: t.name, gym: '', kind: 'Game', tag: 'Tournament', lines: lines, teams: teams });
+        rows.push({ date: t.start, end: t.end && t.end !== t.start ? t.end : '', time: 'Times TBD', who: t.name, gym: '', kind: 'Game', tag: 'Tournament', lines: lines, teams: teams, past: (t.end || t.start) < today });
       });
       EVENTS.forEach(function (e) {
-        if (e.date < today || !matches(e.team)) return;
-        rows.push({ date: e.date, time: e.time, who: e.title, gym: e.gym || '', kind: 'Other', tag: e.tag || 'Event' });
+        if (!matches(e.team)) return;
+        rows.push({ date: e.date, time: e.time, who: e.title, gym: e.gym || '', kind: 'Other', tag: e.tag || 'Event', past: e.date < today });
       });
       // Show filter: Games, Practices (open gym times included), Tournaments. Other events show only under All.
       rows = rows.filter(function (r) {
@@ -604,19 +616,20 @@
         var w = (r.kind === 'Game' && !r.gym) ? 'AWAY' : 'HOME';
         return has('kind', k) && has('where', w);
       });
-      // Counts for what is shown: assigned practices (open gym slots not counted), games, tournaments, other events.
+      // Season totals for the current filters, past and upcoming: assigned practices (open gym slots not counted), games, tournaments, other events.
       var n = { p: 0, g: 0, t: 0, o: 0 };
       rows.forEach(function (r) {
         if (r.tag === 'Tournament') n.t++; else if (r.kind === 'Game') n.g++;
         else if (r.kind === 'Practice') n.p++; else if (r.kind === 'Other') n.o++;
       });
       var pl = function (c, one, many) { return '<strong>' + c + '</strong> ' + (c === 1 ? one : many); };
-      document.getElementById('sched-counts').innerHTML = loaded ? 'Upcoming: ' + [pl(n.p, 'practice', 'practices'), pl(n.g, 'game', 'games'), pl(n.t, 'tournament', 'tournaments')]
+      document.getElementById('sched-counts').innerHTML = loaded ? 'Team event totals: ' + [pl(n.p, 'practice', 'practices'), pl(n.g, 'game', 'games'), pl(n.t, 'tournament', 'tournaments')]
         .concat(n.o ? [pl(n.o, 'other event', 'other events')] : []).join(' · ') : '';
       rows.forEach(function (r) { r.box = r.date + '|' + (r.end || ''); });
       function gymRank(g) { return /^Main/i.test(g || '') ? 0 : /^North/i.test(g || '') ? 1 : 2; }  // same time: Main Gym above North Gym
       rows.sort(function (a, b) { return a.box < b.box ? -1 : a.box > b.box ? 1 : (mins(a.time) - mins(b.time)) || (gymRank(a.gym) - gymRank(b.gym)); });
 
+      function build(rows) {
       var html = '', month = '', shown = 0, i = 0;
       while (i < rows.length) {
         var box = rows[i].box, day = rows[i].date, end = rows[i].end, items = [];
@@ -648,8 +661,16 @@
         html += '</div>';
         shown++;
       }
-      list.innerHTML = html;
-      document.getElementById('sched-empty').hidden = !loaded || shown > 0;
+      return { html: html, shown: shown };
+      }
+      var up = build(rows.filter(function (r) { return !r.past; }));
+      var pastRows = rows.filter(function (r) { return r.past; });
+      var old = build(pastRows);
+      list.innerHTML = up.html;
+      document.getElementById('sched-empty').hidden = !loaded || up.shown > 0;
+      document.getElementById('past-list').innerHTML = old.html;
+      document.getElementById('past-count').textContent = '(' + pastRows.length + ')';
+      document.getElementById('sched-past').hidden = !loaded || !pastRows.length;
       calendarButtons();
 
       var LBL = { gender: { B: 'Boys', G: 'Girls' }, color: { R: 'Red', B: 'Black' },
@@ -718,6 +739,11 @@
         if (f[k].length === opts.length) f[k] = [];          // every option picked = All
         render(); save();
       });
+    });
+    document.getElementById('past-toggle').addEventListener('click', function () {
+      var open = this.getAttribute('aria-expanded') !== 'true';
+      this.setAttribute('aria-expanded', String(open));
+      document.getElementById('past-list').hidden = !open;
     });
     document.getElementById('sf-clear').addEventListener('click', function () { f = blank(); render(); save(); });
     render();
