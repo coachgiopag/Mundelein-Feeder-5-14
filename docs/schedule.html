@@ -433,7 +433,7 @@
         <div class="sf-status"><span id="sf-summary">Showing all teams</span> <button type="button" id="sf-clear" hidden>Clear filters</button></div>
         <div class="sf-cal" id="sf-cal">
           <div class="sf-cal-title" id="sf-cal-title">Add to your calendar</div>
-          <p class="sf-cal-hint" id="sf-cal-hint" hidden>Pick a grade, boys or girls, and Red or Black (8th grade: just boys or girls) to add your team's schedule to your calendar.</p>
+          <p class="sf-cal-hint" id="sf-cal-hint" hidden>Pick one grade, boys or girls, and Red or Black (8th grade: just boys or girls) to add your team's schedule to your calendar.</p>
           <div class="sf-cal-btns" id="sf-cal-btns">
             <a id="cal-apple" class="cal-btn" href="#">Apple Calendar</a>
             <a id="cal-google" class="cal-btn" href="#" target="_blank" rel="noopener">Google Calendar / Android</a>
@@ -443,7 +443,7 @@
         </div>
       </div>
 
-      <div class="sched-note"><strong>Times last updated:</strong> <span id="sched-updated">—</span><br>Times and gyms may change. Check back before each session.</div>
+      <div class="sched-note"><strong>Times last updated:</strong> <span id="sched-updated">—</span><br><span id="sched-counts" class="sched-counts"></span>Times and gyms may change. Check back before each session.</div>
       <div id="sched-list"></div>
       <p id="sched-empty" class="sched-empty" hidden>Nothing upcoming for this selection yet. Check back soon.</p>
       <p class="sched-foot">Questions? Email <a href="mailto:jrmustangsfeeder@gmail.com">jrmustangsfeeder@gmail.com</a>.</p>
@@ -472,6 +472,8 @@
     .cal-btn:hover { background: var(--mustang-red); }
     .cal-btn.ghost { background: #fff; color: var(--mustang-charcoal-900); border: 1.5px solid var(--mustang-lite-gray); }
     .cal-btn.ghost:hover { border-color: var(--mustang-charcoal); background: #fff; }
+    .sched-counts { display: block; font-weight: 600; margin: 2px 0 4px; }
+    .sched-counts:empty { display: none; }
     .sched-note { padding: 14px 18px; border-left: 4px solid var(--mustang-red); background: var(--mustang-red-100); border-radius: 6px; font-weight: 500; font-size: 15px; line-height: 1.5; color: var(--mustang-charcoal-900); margin-bottom: 8px; }
     .sched-month { font-weight: 900; font-size: 18px; text-transform: uppercase; color: var(--mustang-red); margin: 28px 0 10px; }
     .sched-day { border: 1px solid var(--mustang-lite-gray); border-radius: 10px; background: #fff; margin-bottom: 12px; overflow: hidden; }
@@ -523,12 +525,15 @@
       });
       return out;
     }
-    var f = { grade: '', gender: '', color: '', kind: '', where: '' };
-    function matches(codes) {
-      return expand(codes).some(function (t) {
-        return (!f.grade || t.n === f.grade) && (!f.gender || t.g === f.gender) && (!f.color || !t.c || t.c === f.color);
-      });
-    }
+    // Each filter holds a list of picked values; an empty list means All. Several picks in one row = any of them.
+    var KEYS = ['grade', 'gender', 'color', 'kind', 'where'];
+    var VALID = { grade: /^[4-8]$/, gender: /^[BG]$/, color: /^[RB]$/, kind: /^(GAME|PRACTICE|OTHER)$/, where: /^(HOME|AWAY)$/ };
+    function blank() { return { grade: [], gender: [], color: [], kind: [], where: [] }; }
+    var f = blank();
+    function has(k, v) { return !f[k].length || f[k].indexOf(v) >= 0; }
+    function teamOk(t) { return has('grade', t.n) && has('gender', t.g) && (!t.c || has('color', t.c)); }  // 8th grade has no color
+    function matches(codes) { return expand(codes).some(teamOk); }
+    function only8() { return f.grade.length === 1 && f.grade[0] === '8'; }
     function spanLabel(a, b) {  // 'Sat–Sun, Feb 20–21' or 'Sat, Feb 27 – Mon, Mar 1'
       var x = a.split('-'), y = b.split('-'), da = new Date(+x[0], +x[1] - 1, +x[2]), db = new Date(+y[0], +y[1] - 1, +y[2]);
       var M = function (d) { return MON[d.getMonth()].slice(0, 3); };
@@ -548,9 +553,9 @@
     var loaded = false;
 
     function render() {
-      if (f.grade === '8') f.color = '';
-      document.getElementById('sf-one').hidden = f.grade !== '8';
-      document.querySelector('.sf-opts[data-key="color"]').hidden = f.grade === '8';
+      if (only8()) f.color = [];
+      document.getElementById('sf-one').hidden = !only8();
+      document.querySelector('.sf-opts[data-key="color"]').hidden = only8();
       // Build one list of rows (practices, games, unassigned gym times), then group by day.
       var rows = [], gameDays = {};
       GAMES.forEach(function (g) { gameDays[g.date] = 1; });
@@ -583,9 +588,7 @@
         if (t.games) lines.push(t.games);
         lines.push(t.location);
         // One line per team playing (only the selected team's when filtered).
-        var teams = expand(t.team).filter(function (x) {
-          return (!f.grade || x.n === f.grade) && (!f.gender || x.g === f.gender) && (!f.color || !x.c || x.c === f.color);
-        }).map(function (x) {
+        var teams = expand(t.team).filter(teamOk).map(function (x) {
           return GR[x.n] + ' Grade ' + (x.g === 'B' ? 'Boys' : 'Girls') + (x.c ? ' ' + (x.c === 'R' ? 'Red' : 'Black') : '');
         });
         rows.push({ date: t.start, end: t.end && t.end !== t.start ? t.end : '', time: 'Times TBD', who: t.name, gym: '', kind: 'Game', tag: 'Tournament', lines: lines, teams: teams });
@@ -599,8 +602,17 @@
         var k = r.kind === 'Game' ? 'GAME' : (r.tba || r.kind === 'Practice') ? 'PRACTICE' : 'OTHER';
         // Home / Away: away games and tournaments have no MHS gym; everything else is at Mundelein High School.
         var w = (r.kind === 'Game' && !r.gym) ? 'AWAY' : 'HOME';
-        return (!f.kind || f.kind === k) && (!f.where || f.where === w);
+        return has('kind', k) && has('where', w);
       });
+      // Counts for what is shown: assigned practices (open gym slots not counted), games, tournaments, other events.
+      var n = { p: 0, g: 0, t: 0, o: 0 };
+      rows.forEach(function (r) {
+        if (r.tag === 'Tournament') n.t++; else if (r.kind === 'Game') n.g++;
+        else if (r.kind === 'Practice') n.p++; else if (r.kind === 'Other') n.o++;
+      });
+      var pl = function (c, one, many) { return '<strong>' + c + '</strong> ' + (c === 1 ? one : many); };
+      document.getElementById('sched-counts').innerHTML = loaded ? 'Upcoming: ' + [pl(n.p, 'practice', 'practices'), pl(n.g, 'game', 'games'), pl(n.t, 'tournament', 'tournaments')]
+        .concat(n.o ? [pl(n.o, 'other event', 'other events')] : []).join(' · ') : '';
       rows.forEach(function (r) { r.box = r.date + '|' + (r.end || ''); });
       function gymRank(g) { return /^Main/i.test(g || '') ? 0 : /^North/i.test(g || '') ? 1 : 2; }  // same time: Main Gym above North Gym
       rows.sort(function (a, b) { return a.box < b.box ? -1 : a.box > b.box ? 1 : (mins(a.time) - mins(b.time)) || (gymRank(a.gym) - gymRank(b.gym)); });
@@ -640,29 +652,33 @@
       document.getElementById('sched-empty').hidden = !loaded || shown > 0;
       calendarButtons();
 
+      var LBL = { gender: { B: 'Boys', G: 'Girls' }, color: { R: 'Red', B: 'Black' },
+        kind: { GAME: 'Games', PRACTICE: 'Practices', OTHER: 'Other' }, where: { HOME: 'Home', AWAY: 'Away' } };
       var parts = [];
-      if (f.grade) parts.push(GR[f.grade] + ' Grade');
-      if (f.gender) parts.push(f.gender === 'B' ? 'Boys' : 'Girls');
-      if (f.color) parts.push(f.color === 'R' ? 'Red' : 'Black');
-      if (f.kind) parts.push({ GAME: 'Games', PRACTICE: 'Practices', OTHER: 'Other' }[f.kind]);
-      if (f.where) parts.push(f.where === 'HOME' ? 'Home' : 'Away');
+      if (f.grade.length) parts.push(f.grade.slice().sort().map(function (g) { return GR[g]; }).join(', ') + ' Grade');
+      ['gender', 'color', 'kind', 'where'].forEach(function (k) {
+        if (f[k].length) parts.push(f[k].map(function (v) { return LBL[k][v]; }).join(' & '));
+      });
       document.getElementById('sf-summary').textContent = parts.length ? 'Showing: ' + parts.join(' · ') : 'Showing all teams';
       document.getElementById('sf-clear').hidden = !parts.length;
       document.querySelectorAll('.sf-opts').forEach(function (g) {
-        g.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === f[g.getAttribute('data-key')])); });
+        var k = g.getAttribute('data-key');
+        g.querySelectorAll('button').forEach(function (b) { var v = b.getAttribute('data-v'); b.setAttribute('aria-pressed', String(v ? f[k].indexOf(v) >= 0 : !f[k].length)); });
       });
     }
 
     // Calendar feeds are built by seo.py into /cal/<team>.ics (b6r = 6th grade boys Red) and /cal/all.ics.
     function calendarButtons() {
-      var full = f.grade && f.gender && (f.color || f.grade === '8'), none = !f.grade && !f.gender && !f.color;
+      var G = f.grade[0], S = f.gender[0], C = f.color[0];
+      var full = f.grade.length === 1 && f.gender.length === 1 && (f.color.length === 1 || G === '8');
+      var none = !f.grade.length && !f.gender.length && !f.color.length;
       var ok = full || none;
       document.getElementById('sf-cal-btns').hidden = !ok;
       document.getElementById('sf-cal-note').hidden = !ok;
       document.getElementById('sf-cal-hint').hidden = ok;
       if (!ok) { document.getElementById('sf-cal-title').textContent = 'Add to your calendar'; return; }
-      var slug = full ? (f.gender + f.grade + (f.grade === '8' ? '' : f.color)).toLowerCase() : 'all';
-      var name = full ? GR[f.grade] + ' Grade ' + (f.gender === 'B' ? 'Boys' : 'Girls') + (f.grade === '8' ? '' : ' ' + (f.color === 'R' ? 'Red' : 'Black')) : 'All Teams';
+      var slug = full ? (S + G + (G === '8' ? '' : C)).toLowerCase() : 'all';
+      var name = full ? GR[G] + ' Grade ' + (S === 'B' ? 'Boys' : 'Girls') + (G === '8' ? '' : ' ' + (C === 'R' ? 'Red' : 'Black')) : 'All Teams';
       var https = 'https://www.mundyball.com/cal/' + slug + '.ics';
       var webcal = 'webcal://www.mundyball.com/cal/' + slug + '.ics';
       var google = 'https://calendar.google.com/calendar/render?cid=' + encodeURIComponent(webcal);
@@ -675,30 +691,35 @@
 
     function save() {
       var q = new URLSearchParams(location.search);
-      ['grade', 'gender', 'color', 'kind', 'where'].forEach(function (k) { if (f[k]) q.set(k, f[k]); else q.delete(k); });
+      KEYS.forEach(function (k) { if (f[k].length) q.set(k, f[k].join(',')); else q.delete(k); });
       var qs = q.toString();
       try { history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash); } catch (e) {}
       try { localStorage.setItem('mundyball-sched-filter', JSON.stringify(f)); } catch (e) {}
     }
 
-    // Start from the link (?grade=6&gender=G&color=R) if present, else the visitor's last choice.
+    // Start from the link (?grade=6,7&gender=G&color=R) if present, else the visitor's last choice.
+    function clean(k, v) {  // accepts a list, or a string (old single-choice links and saves)
+      var arr = Array.isArray(v) ? v : String(v || '').split(',');
+      return arr.map(function (x) { return String(x).trim().toUpperCase(); })
+        .filter(function (x, i, a) { return VALID[k].test(x) && a.indexOf(x) === i; });
+    }
     var q = new URLSearchParams(location.search), fromUrl = false;
-    ['grade', 'gender', 'color', 'kind', 'where'].forEach(function (k) { if (q.get(k)) { f[k] = q.get(k).toUpperCase(); fromUrl = true; } });
-    if (!fromUrl) { try { var saved = JSON.parse(localStorage.getItem('mundyball-sched-filter') || 'null'); if (saved) f = { grade: saved.grade || '', gender: saved.gender || '', color: saved.color || '', kind: saved.kind || '', where: saved.where || '' }; } catch (e) {} }
-    if (!/^[4-8]?$/.test(f.grade)) f.grade = '';
-    if (!/^[BG]?$/.test(f.gender)) f.gender = '';
-    if (!/^[RB]?$/.test(f.color)) f.color = '';
-    if (!/^(GAME|PRACTICE|OTHER)?$/.test(f.kind)) f.kind = '';
-    if (!/^(HOME|AWAY)?$/.test(f.where)) f.where = '';
+    KEYS.forEach(function (k) { if (q.get(k)) { f[k] = clean(k, q.get(k)); fromUrl = true; } });
+    if (!fromUrl) { try { var saved = JSON.parse(localStorage.getItem('mundyball-sched-filter') || 'null'); if (saved) KEYS.forEach(function (k) { f[k] = clean(k, saved[k]); }); } catch (e) {} }
 
     document.querySelectorAll('.sf-opts').forEach(function (g) {
       g.addEventListener('click', function (e) {
         var b = e.target.closest('button'); if (!b) return;
-        f[g.getAttribute('data-key')] = b.getAttribute('data-v');
+        var k = g.getAttribute('data-key'), v = b.getAttribute('data-v');
+        if (!v) f[k] = [];                                   // All
+        else if (f[k].indexOf(v) >= 0) f[k].splice(f[k].indexOf(v), 1);  // tap again to unpick
+        else f[k].push(v);
+        var opts = [].slice.call(g.querySelectorAll('button')).filter(function (x) { return x.getAttribute('data-v'); });
+        if (f[k].length === opts.length) f[k] = [];          // every option picked = All
         render(); save();
       });
     });
-    document.getElementById('sf-clear').addEventListener('click', function () { f = { grade: '', gender: '', color: '', kind: '', where: '' }; render(); save(); });
+    document.getElementById('sf-clear').addEventListener('click', function () { f = blank(); render(); save(); });
     render();
     fetch('/assets/schedule.json', { cache: 'no-cache' })
       .then(function (r) { return r.json(); })
