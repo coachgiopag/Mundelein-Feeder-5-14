@@ -424,7 +424,7 @@
           </div></div>
         <div class="sf-row"><span class="sf-label">Show</span>
           <div class="sf-opts" data-key="kind">
-            <button type="button" data-v="">All</button><button type="button" data-v="GAME">Games</button><button type="button" data-v="PRACTICE">Practices</button><button type="button" data-v="OTHER">Other</button>
+            <button type="button" data-v="">All</button><button type="button" data-v="GAME">Games</button><button type="button" data-v="PRACTICE">Practices</button><button type="button" data-v="TOURNEY">Tournaments</button>
           </div></div>
         <div class="sf-row"><span class="sf-label">Home / Away</span>
           <div class="sf-opts" data-key="where">
@@ -527,7 +527,7 @@
     }
     // Each filter holds a list of picked values; an empty list means All. Several picks in one row = any of them.
     var KEYS = ['grade', 'gender', 'color', 'kind', 'where'];
-    var VALID = { grade: /^[4-8]$/, gender: /^[BG]$/, color: /^[RB]$/, kind: /^(GAME|PRACTICE|OTHER)$/, where: /^(HOME|AWAY)$/ };
+    var VALID = { grade: /^[4-8]$/, gender: /^[BG]$/, color: /^[RB]$/, kind: /^(GAME|PRACTICE|TOURNEY)$/, where: /^(HOME|AWAY)$/ };
     function blank() { return { grade: [], gender: [], color: [], kind: [], where: [] }; }
     var f = blank();
     function has(k, v) { return !f[k].length || f[k].indexOf(v) >= 0; }
@@ -597,9 +597,9 @@
         if (e.date < today || !matches(e.team)) return;
         rows.push({ date: e.date, time: e.time, who: e.title, gym: e.gym || '', kind: 'Other', tag: e.tag || 'Event' });
       });
-      // Show filter: unassigned gym times count as practices; any kind other than Game/Practice is Other.
+      // Show filter: Games, Practices (open gym times included), Tournaments. Other events show only under All.
       rows = rows.filter(function (r) {
-        var k = r.kind === 'Game' ? 'GAME' : (r.tba || r.kind === 'Practice') ? 'PRACTICE' : 'OTHER';
+        var k = r.tag === 'Tournament' ? 'TOURNEY' : r.kind === 'Game' ? 'GAME' : (r.tba || r.kind === 'Practice') ? 'PRACTICE' : 'OTHER';
         // Home / Away: away games and tournaments have no MHS gym; everything else is at Mundelein High School.
         var w = (r.kind === 'Game' && !r.gym) ? 'AWAY' : 'HOME';
         return has('kind', k) && has('where', w);
@@ -653,7 +653,7 @@
       calendarButtons();
 
       var LBL = { gender: { B: 'Boys', G: 'Girls' }, color: { R: 'Red', B: 'Black' },
-        kind: { GAME: 'Games', PRACTICE: 'Practices', OTHER: 'Other' }, where: { HOME: 'Home', AWAY: 'Away' } };
+        kind: { GAME: 'Games', PRACTICE: 'Practices', TOURNEY: 'Tournaments' }, where: { HOME: 'Home', AWAY: 'Away' } };
       var parts = [];
       if (f.grade.length) parts.push(f.grade.slice().sort().map(function (g) { return GR[g]; }).join(', ') + ' Grade');
       ['gender', 'color', 'kind', 'where'].forEach(function (k) {
