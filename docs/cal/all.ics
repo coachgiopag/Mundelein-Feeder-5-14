@@ -1438,4 +1438,18 @@ DESCRIPTION:Away · Grant\, Fox Lake — gym TBD · Game starts 2:35 PM\nT
  imes and gyms may change: https://www.mundyball.com/schedule
 URL:https://www.mundyball.com/schedule
 END:VEVENT
+BEGIN:VEVENT
+UID:cf706c2e7dc839ccf480@mundyball.com
+DTSTAMP:20270212T014500Z
+DTSTART:20270212T014500Z
+DTEND:20270212T024500Z
+SUMMARY:Jr. Mustangs Game: 7th Grade Boys Black at Stevenson
+STATUS:CONFIRMED
+LOCATION:Stevenson High School Fieldhouse (court TBD)\, 1 Stevenson Drive\
+ , Lincolnshire\, IL 60069
+DESCRIPTION:Away · Stevenson High School Fieldhouse (court TBD)\, 1 Steve
+ nson Drive\, Lincolnshire\, IL 60069 · Game starts 7:45 PM\nTimes and gy
+ ms may change: https://www.mundyball.com/schedule
+URL:https://www.mundyball.com/schedule
+END:VEVENT
 END:VCALENDAR
