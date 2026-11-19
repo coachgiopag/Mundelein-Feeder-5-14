@@ -80,7 +80,9 @@ var REQUIRED = {
 // A sign-up for a full session is still saved, with Status "Waitlist" (the website blocks full sessions, so
 // this only happens if two families take the last spot at the same moment).
 // Rows marked Waitlist or Cancelled in the Status column do not count against capacity.
-var WINTER_CAPACITY = { AM: 36, PM: 36 };
+// Capacity comes from the summary table at the top of the winter tab (column A "AM ..." / "PM ...",
+// column B Capacity), so changing it there is enough. These numbers are only a fallback.
+var WINTER_CAPACITY = { AM: 37, PM: 37 };
 
 var MAX_CELL = 2000;
 var MAX_FIELDS = 60;
@@ -174,9 +176,16 @@ function sessionsOf_(session) {
 // Spots left per session, counting every row on the winter tab except Waitlist / Cancelled.
 function winterSpotsLeft_() {
   var used = { AM: 0, PM: 0 };
+  var cap = { AM: WINTER_CAPACITY.AM, PM: WINTER_CAPACITY.PM };
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(TABS.wintercamp);
   if (sheet) {
     var hRow = headerRow_(sheet), headers = headers_(sheet, hRow);
+    if (hRow > 1) {  // read Capacity from the summary rows above the camper list
+      sheet.getRange(1, 1, hRow - 1, 2).getValues().forEach(function (r) {
+        var s = sessionsOf_(r[0]), c = Number(r[1]);
+        if (s.length === 1 && c > 0) cap[s[0]] = c;
+      });
+    }
     var cSession = findColumn_(headers, 'Session'), cStatus = findColumn_(headers, 'Status');
     var n = dataRowCount_(sheet, hRow, headers.length);
     if (cSession >= 0 && n > 0) {
@@ -187,7 +196,7 @@ function winterSpotsLeft_() {
       });
     }
   }
-  return { AM: Math.max(0, WINTER_CAPACITY.AM - used.AM), PM: Math.max(0, WINTER_CAPACITY.PM - used.PM) };
+  return { AM: Math.max(0, cap.AM - used.AM), PM: Math.max(0, cap.PM - used.PM), cap: cap };
 }
 
 // ----- Tryout tab ordering -----

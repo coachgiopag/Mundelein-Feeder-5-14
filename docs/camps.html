@@ -842,7 +842,7 @@
             </div>
           </div>
           <div id="wc-spots" aria-live="polite" style="display:none; margin-top:10px; padding:12px 16px; border:2px solid var(--mustang-red); border-radius:10px; background:#fff; font-weight:600;">
-            <div style="font-size:0.85em; text-transform:uppercase; letter-spacing:0.04em; opacity:0.7; margin-bottom:4px;">Spots remaining (36 per session)</div>
+            <div style="font-size:0.85em; text-transform:uppercase; letter-spacing:0.04em; opacity:0.7; margin-bottom:4px;">Spots remaining (<span id="wc-cap">37</span> per session)</div>
             <div><span id="wc-spots-am"></span> &nbsp;·&nbsp; <span id="wc-spots-pm"></span></div>
           </div>
           <span class="hint" style="display:block; margin-top:8px;"><strong>Full day campers:</strong> we strongly recommend packing a lunch to eat between the AM &amp; PM sessions. A coach supervises lunch from 11:45 to 12:15.<br>Because peanut and tree nut allergies can be life-threatening, in order to limit cross-contamination, we kindly ask that you not pack peanut butter or other nut-based foods.</span>
@@ -1355,7 +1355,7 @@
     }
     var btnHTML = btn.innerHTML;
 
-    // Capacity: 36 campers per session. "Both" needs an AM and a PM spot. Spots left come from the
+    // Capacity: set on the Sheet's winter tab (37 per session as of Nov 19). "Both" needs an AM and a PM spot. Spots left come from the
     // Sheet (Apps Script ?capacity=winter); full sessions are disabled in the picker and re-checked on submit.
     var sessionSel = form.querySelector('select[name="Session"]');
     var spots = null;
@@ -1377,8 +1377,10 @@
           });
           var box = document.getElementById('wc-spots');
           if (box) {
-            var cap = 36;
+            var caps = j.cap || { AM: 37, PM: 37 };   // older script versions don't send capacity
             ['AM','PM'].forEach(function(k){
+              var cap = caps[k];
+              if (k === 'AM') document.getElementById('wc-cap').textContent = caps.AM === caps.PM ? caps.AM : caps.AM + ' AM / ' + caps.PM + ' PM';
               var el = document.getElementById('wc-spots-' + k.toLowerCase());
               el.textContent = k + ' session: ' + (spots[k] <= 0 ? 'FULL' : spots[k] + ' of ' + cap + ' left');
             });
